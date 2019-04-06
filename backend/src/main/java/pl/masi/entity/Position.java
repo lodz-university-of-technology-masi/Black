@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import pl.masi.entity.base.BaseEntity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Getter

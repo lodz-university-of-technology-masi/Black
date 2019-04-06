@@ -14,19 +14,34 @@ public abstract class EntityService<ENTITY extends BaseEntity> {
     }
 
     @Transactional
-    public void delete(Long id) {
-        getEntityRepository().deleteById(id);
+    public void delete(ENTITY entity) {
+        beforeDelete(entity);
+        getEntityRepository().delete(entity);
+        afterDelete(entity);
     }
 
     @Transactional
     public void update(ENTITY entity) {
-        getEntityRepository().save(entity);
+        beforeUpdate(entity);
+        ENTITY e = getEntityRepository().save(entity);
+        afterUpdate(entity);
     }
 
     @Transactional
     public ENTITY create(ENTITY entity) {
-        return getEntityRepository().save(entity);
+        beforeCreate(entity);
+        ENTITY e = getEntityRepository().save(entity);
+        afterCreate(e);
+        return e;
     }
+
+    protected void beforeCreate(ENTITY entity) { }
+    protected void afterCreate(ENTITY entity) { }
+    protected void beforeUpdate(ENTITY entity) { }
+    protected void afterUpdate(ENTITY entity) { }
+    protected void beforeDelete(ENTITY entity) { }
+    protected void afterDelete(ENTITY entity) { }
+
 
     protected abstract JpaRepository<ENTITY, Long> getEntityRepository();
 }

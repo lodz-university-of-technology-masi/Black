@@ -21,8 +21,8 @@ public abstract class EntityController<ENTITY extends BaseEntity> {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteById(@PathVariable Long id) {
-        getEntityService().delete(id);
+    public ResponseEntity deleteById(@PathVariable(name = "id") ENTITY entity) {
+        getEntityService().delete(entity);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

@@ -1,4 +1,4 @@
-drop table if exists evalutation cascade;
+drop table if exists evaluation cascade;
 drop table if exists question cascade;
 drop table if exists test_answer cascade;
 drop table if exists "user" cascade;
@@ -11,8 +11,8 @@ drop table if exists question_answer_evaluation cascade;
 create table "user"
 (
   id                 bigserial primary key,
-  login              varchar(100),
-  email              varchar(50),
+  login              varchar(100) not null ,
+  email              varchar(50) unique not null,
   language           varchar(30),
   password           varchar(100),
   role               varchar(30),
@@ -33,17 +33,18 @@ create table test
   id          bigserial primary key,
   name        varchar(100),
   "group"     bigint,
-  language    varchar(30),
-  position_id bigint references position (id),
+  language    varchar(30) not null ,
+  position_id bigint references position (id) not null,
   unique ("group", language)
 );
 
 create table question
 (
   id      bigserial primary key,
+  number  integer,
   type    varchar(10),
   content text,
-  test_id integer references test (id)
+  test_id bigint references test (id) not null
 );
 
 create table test_answer
@@ -62,7 +63,7 @@ create table question_answer
   content     text
 );
 
-create table evalutation
+create table evaluation
 (
   id        bigserial primary key,
   content   text,
@@ -72,7 +73,7 @@ create table evalutation
 create table question_answer_evaluation
 (
   id                 bigserial primary key,
-  evaluation_id      integer not null references evalutation (id),
+  evaluation_id      integer not null references evaluation (id),
   question_answer_id integer not null references question_answer (id),
   content            text
 );

@@ -6,6 +6,8 @@ import lombok.ToString;
 import pl.masi.entity.base.BaseEntity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,4 +24,8 @@ public class Test extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Position position;
+
+    @OneToMany(mappedBy = "test", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderColumn(name = "number")
+    private List<Question> questions = new ArrayList<>();
 }

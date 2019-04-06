@@ -13,6 +13,20 @@ public class TestService extends EntityService<Test> {
     @Autowired
     private TestRepository testRepository;
 
+    private void processTest(Test test) {
+        test.getQuestions().forEach(question -> question.setTest(test));
+    }
+
+    @Override
+    protected void beforeCreate(Test test) {
+        processTest(test);
+    }
+
+    @Override
+    protected void beforeUpdate(Test test) {
+        processTest(test);
+    }
+
     @Override
     protected JpaRepository<Test, Long> getEntityRepository() {
         return testRepository;
