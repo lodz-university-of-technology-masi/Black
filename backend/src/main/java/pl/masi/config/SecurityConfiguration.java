@@ -10,7 +10,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         // TODO konfiguracja SpringSecurity
-        httpSecurity.authorizeRequests().antMatchers("/").permitAll();
+//        httpSecurity.authorizeRequests().anyRequest().permitAll();
     }
 
 }
