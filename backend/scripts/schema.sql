@@ -1,13 +1,32 @@
-drop table if exists position;
-drop table if exists  evalutation;
-drop table if exists answer;
-drop table if exists "user";
-drop table if exists test;
+drop table if exists evalutation cascade;
+drop table if exists question cascade;
+drop table if exists test_answer cascade;
+drop table if exists "user" cascade;
+drop table if exists position cascade;
+drop table if exists test cascade;
+drop table if exists question_answer cascade;
+drop table if exists question_answer_evaluation cascade;
+
+create table position (
+	id serial primary key,
+	name varchar (100),
+	active boolean
+);
 
 create table test (
 	id serial primary key,
-	polish_test text,
-	english_test text
+	"group" integer,
+	language varchar (10),
+	name varchar (100),
+	position_id integer references position(id),
+	unique ("group", language)
+);
+
+create table question (
+	id serial primary key,
+	type varchar(10),
+	content text,
+	test_id integer references test(id)
 );
 
 create table "user" (
@@ -19,24 +38,30 @@ create table "user" (
 	role varchar (30)
 );
 
-create table answer (
+create table test_answer (
 	id serial primary key,
-	polish_answer text,
-	english_answer text,
+	content text,
 	test_id integer references test(id),
 	user_id integer references "user"(id)
 );
 
-create table evalutation (
+create table question_answer (
 	id serial primary key,
-	polish_evaluation text,
-	english_evaluation text,
-	answer_id integer references answer(id)
+	answer_id integer not null references test_answer(id),
+	question_id integer not null references question(id),
+	content text
 );
 
-create table position (
+create table evalutation (
 	id serial primary key,
-	name varchar (100),
-	active boolean,
-	test_id integer references test(id)
+	content text,
+	answer_id integer references test_answer(id)
+);
+
+create table question_answer_evaluation 
+(
+	id serial primary key,
+	evalutation_id integer not null references evalutation(id),
+	question_answer_id integer not null references question_answer(id),
+	content text
 );
