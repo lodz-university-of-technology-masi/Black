@@ -4,19 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.masi.controller.base.EntityController;
-import pl.masi.entity.Test;
-import pl.masi.service.TestService;
+import pl.masi.entity.User;
+import pl.masi.service.UserService;
 import pl.masi.service.base.EntityService;
 
+
 @Controller
-@RequestMapping(value = "/tests")
-public class TestController extends EntityController<Test> {
+@RequestMapping(value = "/users")
+public class UserController extends EntityController<User> {
 
     @Autowired
-    private TestService service;
+    private UserService service;
 
     @Override
-    protected EntityService<Test> getEntityService() {
+    protected EntityService<User> getEntityService() {
         return service;
     }
 }
