@@ -13,10 +13,10 @@ import pl.masi.service.base.EntityService;
 public class TestController extends EntityController<Test> {
 
     @Autowired
-    private TestService testService;
+    private TestService service;
 
     @Override
     protected EntityService<Test> getEntityService() {
-        return testService;
+        return service;
     }
 }

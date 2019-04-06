@@ -44,6 +44,7 @@ public class User extends BaseEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @JsonIgnore
     private String password;
 
     @JsonIgnore

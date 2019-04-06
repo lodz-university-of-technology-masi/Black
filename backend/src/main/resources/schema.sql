@@ -51,15 +51,15 @@ create table test_answer
 (
   id      bigserial primary key,
   content text,
-  test_id integer references test (id),
-  user_id integer references "user" (id)
+  test_id bigint references test (id),
+  user_id bigint references "user" (id)
 );
 
 create table question_answer
 (
   id          bigserial primary key,
-  answer_id   integer not null references test_answer (id),
-  question_id integer not null references question (id),
+  answer_id   bigint not null references test_answer (id),
+  question_id bigint not null references question (id),
   content     text
 );
 
@@ -67,13 +67,13 @@ create table evaluation
 (
   id        bigserial primary key,
   content   text,
-  answer_id integer references test_answer (id)
+  answer_id bigint references test_answer (id)
 );
 
 create table question_answer_evaluation
 (
   id                 bigserial primary key,
-  evaluation_id      integer not null references evaluation (id),
-  question_answer_id integer not null references question_answer (id),
+  evaluation_id      bigint not null references evaluation (id),
+  question_answer_id bigint not null references question_answer (id),
   content            text
 );
