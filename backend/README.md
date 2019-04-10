@@ -7,3 +7,27 @@ Uruchomienie serwera:
 
 UWAGA: Aktualnie każde uruchomienie serwera czyści bazę i wgrywa jej schemat od nowa.
 Żeby to zmienić trzeba wykomentować linijkę  `spring.datasource.initialization-mode=always` w `application-local.properties`.
+
+Logowanie
+-
+Aby się zalogować należy wysłać zapytanie
+`POST /api/user/login` zawierające dane `multipart/form-data` z loginem oraz hasłem np:
+````
+let data = new FormData()
+data.append('username', 'moderator')
+data.append('password', 'test')
+http.post('/api/user/login', data)
+````
+Wylogowanie następuje po wykonaniu `POST /api/user/logout`
+
+API restowe
+-
+Dla wszystkich encji zaimplementowane zostały podstawowe metody pozwalające na ich pobieranie, dodawanie, usuwanie i modyfikację
+
+- `GET /api/<nazwa_encji>/{id}` - Pobranie encji o danym `id` np `GET /api/tests/1`
+- `DELETE /api/<nazwa_encji>/{id}` - Usunięcie encji o danym `id` 
+- `POST|PATCH /api/<nazwa_encji>/{id}` - Modyfikacja encji o danym `id`. W ciele zapytania musi znajdować się json zawierający pola encji.
+- `PUT /api/<nazwa_encji>/` - Dodanie nowej encji. W ciele zapytania musi znajdować się json zawierający pola encji. Zapytanie zwraca utworzoną encję.
+
+Aktualnie zalogowanego użytkownika można pobrać za pomocą : `GET /api/users/current`
+
