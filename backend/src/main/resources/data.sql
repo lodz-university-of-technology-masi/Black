@@ -9,6 +9,10 @@ values (2, 'kandydat', 'kandydat1234@mailinator.com', 'PL', '$2a$10$s4DIGpWyJMBt
 insert into position(id, name, description)
 values (1, 'Kierownik działu IT', 'Bardzo ciekawy opis stanowiska');
 
+insert into position(id, name, description)
+values (2, 'Kierownik działu HR', 'Bardzo ciekawy opis stanowiska');
+
+
 -- tests
 insert into test(id, name, "group", language, position_id)
 values (1, 'Test na stanowisko kierownika działu IT', 1, 'PL', 1);
@@ -60,3 +64,24 @@ SELECT setval('question_answer_id_seq', (select max(id) from question_answer), t
 SELECT setval('evaluation_id_seq', (select max(id) from evaluation), true);
 SELECT setval('question_answer_evaluation_id_seq', (select max(id) from question_answer_evaluation), true);
 
+INSERT INTO acl_sid (id, principal, sid) VALUES
+(1, true, 'kandydat'),
+(2, true, 'redaktor'),
+(3, false, 'ROLE_EDITOR');
+
+INSERT INTO acl_class (id, class) VALUES
+(1, 'pl.masi.entity.Evaluation'),
+(2, 'pl.masi.entity.Position');
+
+
+INSERT INTO acl_object_identity (id, object_id_class, object_id_identity, parent_object, owner_sid, entries_inheriting) VALUES
+(1, 1, 1, NULL, 1, false),
+(2, 2, 1, NULL, 1, false),
+(3, 2, 2, NULL, 1, false);
+
+
+
+INSERT INTO acl_entry (id, acl_object_identity, ace_order, sid, mask, granting, audit_success, audit_failure) VALUES
+(1, 1, 1, 1, 1, true, true, false),
+-- (2, 2, 1, 1, 0, true, true, false),
+(3, 3, 1, 1, 1, true, true, false);

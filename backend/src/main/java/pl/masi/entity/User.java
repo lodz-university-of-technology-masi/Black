@@ -59,7 +59,7 @@ public class User extends BaseEntity implements UserDetails {
     @Override
     @JsonIgnore
     public String getUsername() {
-        return null;
+        return login;
     }
 
     @Override

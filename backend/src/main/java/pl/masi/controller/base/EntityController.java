@@ -6,10 +6,18 @@ import org.springframework.web.bind.annotation.*;
 import pl.masi.entity.base.BaseEntity;
 import pl.masi.service.base.EntityService;
 
+import java.util.List;
 import java.util.Optional;
 
 public abstract class EntityController<ENTITY extends BaseEntity> {
+
     protected abstract EntityService<ENTITY> getEntityService();
+
+    @GetMapping
+    public ResponseEntity<List<ENTITY>> findAll() {
+        List<ENTITY> entities = getEntityService().findAll();
+        return new ResponseEntity<>(entities, HttpStatus.OK);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<ENTITY> findById(@PathVariable Long id) {
