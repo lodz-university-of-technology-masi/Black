@@ -5,6 +5,5 @@ import org.springframework.stereotype.Repository;
 import pl.masi.entity.Test;
 
 @Repository
-public
-interface TestRepository extends JpaRepository<Test, Long> {
+public interface TestRepository extends JpaRepository<Test, Long> {
 }

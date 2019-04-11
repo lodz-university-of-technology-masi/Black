@@ -17,7 +17,7 @@ public class AclSid {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Boolean principal;
+    private boolean principal;
 
     private String sid;
 }

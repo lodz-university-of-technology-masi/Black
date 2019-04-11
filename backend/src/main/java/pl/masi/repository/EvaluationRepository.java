@@ -5,6 +5,5 @@ import org.springframework.stereotype.Repository;
 import pl.masi.entity.Evaluation;
 
 @Repository
-public
-interface EvaluationRepository extends JpaRepository<Evaluation, Long> {
+public interface EvaluationRepository extends JpaRepository<Evaluation, Long> {
 }

@@ -22,9 +22,9 @@ import java.util.List;
 public class User extends BaseEntity implements UserDetails {
 
     public enum Role implements GrantedAuthority {
-        CANDIDATE,
         MODERATOR,
-        REDACTOR;
+        REDACTOR,
+        CANDIDATE;
 
         @Override
         public String getAuthority() {
