@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import pl.masi.entity.Evaluation;
 import pl.masi.entity.Test;
 import pl.masi.entity.TestAnswer;
 import pl.masi.entity.User;
@@ -30,6 +31,7 @@ public class UserService extends EntityService<User> implements UserDetailsServi
         CANDIDATE_CAN_CREATE.add(TestAnswer.class.getCanonicalName());
 
         REDACTOR_CAN_CREATE.add(Test.class.getCanonicalName());
+        REDACTOR_CAN_CREATE.add(Evaluation.class.getCanonicalName());
     }
 
     public static boolean canUserCreate(User principal, String targetType) {
@@ -37,7 +39,7 @@ public class UserService extends EntityService<User> implements UserDetailsServi
             case MODERATOR:
                 return true;
             case REDACTOR:
-                return REDACTOR_CAN_CREATE.add(targetType);
+                return REDACTOR_CAN_CREATE.contains(targetType);
             case CANDIDATE:
                 return CANDIDATE_CAN_CREATE.contains(targetType);
             default:
