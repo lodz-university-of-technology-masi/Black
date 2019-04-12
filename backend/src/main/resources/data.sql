@@ -3,9 +3,9 @@ INSERT INTO public.acl_class (id, class, class_id_type) VALUES (2, 'pl.masi.enti
 INSERT INTO public.acl_class (id, class, class_id_type) VALUES (3, 'pl.masi.entity.TestAnswer', null);
 INSERT INTO public.acl_class (id, class, class_id_type) VALUES (4, 'pl.masi.entity.Evaluation', null);
 
-INSERT INTO public.acl_sid (id, principal, sid) VALUES (1, false, 'moderator');
-INSERT INTO public.acl_sid (id, principal, sid) VALUES (2, false, 'redaktor');
-INSERT INTO public.acl_sid (id, principal, sid) VALUES (3, false, 'kandydat');
+INSERT INTO public.acl_sid (id, principal, sid) VALUES (1, true, 'moderator');
+INSERT INTO public.acl_sid (id, principal, sid) VALUES (2, true, 'redaktor');
+INSERT INTO public.acl_sid (id, principal, sid) VALUES (3, true, 'kandydat');
 
 INSERT INTO public.acl_object_identity (id, object_id_class, object_id_identity, parent_object, owner_sid, entries_inheriting) VALUES (1, 1, '1', null, 1, false);
 INSERT INTO public.acl_object_identity (id, object_id_class, object_id_identity, parent_object, owner_sid, entries_inheriting) VALUES (2, 1, '2', null, 1, false);

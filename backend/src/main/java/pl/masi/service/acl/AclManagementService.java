@@ -110,6 +110,7 @@ public class AclManagementService {
 
         AclSid newSid = new AclSid();
         newSid.setSid(sid);
+        newSid.setPrincipal(true);
         return aclSidRepository.save(newSid);
     }
 

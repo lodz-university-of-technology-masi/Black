@@ -12,6 +12,7 @@ import org.springframework.security.acls.jdbc.JdbcMutableAclService;
 import org.springframework.security.acls.jdbc.LookupStrategy;
 import org.springframework.security.acls.model.PermissionGrantingStrategy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import pl.masi.security.CustomPermissionGrantingStrategy;
 
 import javax.sql.DataSource;
 
@@ -42,7 +43,7 @@ public class ACLContext {
 
     @Bean
     public PermissionGrantingStrategy permissionGrantingStrategy() {
-        return new DefaultPermissionGrantingStrategy(new ConsoleAuditLogger());
+        return new CustomPermissionGrantingStrategy(new ConsoleAuditLogger());
     }
 
     @Bean
