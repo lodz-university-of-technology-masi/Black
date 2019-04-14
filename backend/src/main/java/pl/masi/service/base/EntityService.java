@@ -36,6 +36,7 @@ public abstract class EntityService<ENTITY extends BaseEntity> {
     public void delete(ENTITY entity) {
         beforeDelete(entity);
         getEntityRepository().delete(entity);
+        aclManagementService.removePermissions(entity);
         afterDelete(entity);
     }
 

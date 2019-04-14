@@ -26,7 +26,6 @@ dependencies {
 	implementation 'org.springframework.security:spring-security-config'
 	implementation 'org.springframework.security:spring-security-acl'
 	implementation 'org.springframework:spring-context-support'
-	compile 'net.sf.ehcache:ehcache:2.9.0'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'

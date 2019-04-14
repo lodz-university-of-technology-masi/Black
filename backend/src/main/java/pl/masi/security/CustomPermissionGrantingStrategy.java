@@ -30,7 +30,7 @@ public class CustomPermissionGrantingStrategy implements PermissionGrantingStrat
 
                 for (AccessControlEntry ace : aces) {
 
-                    if (checkPermissions(ace,p) && ace.getSid().equals(sid)) {
+                    if (ace.getSid().equals(sid) && checkPermissions(ace, p)) {
                         // Found a matching ACE, so its authorization decision will
                         // prevail
                         if (ace.isGranting()) {

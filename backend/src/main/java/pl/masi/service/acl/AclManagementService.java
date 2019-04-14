@@ -5,6 +5,7 @@ import org.springframework.security.acls.domain.BasePermission;
 import org.springframework.security.acls.domain.CumulativePermission;
 import org.springframework.security.acls.model.Permission;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.masi.entity.acl.AclClass;
 import pl.masi.entity.acl.AclEntry;
 import pl.masi.entity.acl.AclObjectIdentity;
@@ -16,7 +17,6 @@ import pl.masi.repository.acl.AclObjectIdentityRepository;
 import pl.masi.repository.acl.AclSidRepository;
 import pl.masi.service.UserService;
 
-import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -120,5 +120,13 @@ public class AclManagementService {
 
     private String getCurrentUserSid() {
         return UserService.currentUser().getLogin();
+    }
+
+    @Transactional
+    public void removePermissions(BaseEntity entity) {
+        AclClass aclClass = getAclClass(entity);
+        Optional<AclObjectIdentity> aclObjectIdentity = aclObjectIdentityRepository.findByObjectIdClassAndObjectIdIdentity(aclClass, entity.getId().toString());
+
+        aclObjectIdentity.ifPresent(aclObjectIdentityRepository::delete);
     }
 }

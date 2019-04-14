@@ -14,6 +14,7 @@ import java.io.Serializable;
 @Setter
 @MappedSuperclass
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//@Cache(usage= CacheConcurrencyStrategy.READ_WRITE)
 public abstract class BaseEntity implements Serializable {
 
     @Id
