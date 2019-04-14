@@ -3,8 +3,12 @@ package pl.masi.service.acl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.acls.domain.BasePermission;
 import org.springframework.security.acls.domain.CumulativePermission;
-import org.springframework.security.acls.model.Permission;
+import org.springframework.security.acls.domain.ObjectIdentityImpl;
+import org.springframework.security.acls.domain.PrincipalSid;
+import org.springframework.security.acls.jdbc.JdbcMutableAclService;
+import org.springframework.security.acls.model.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import pl.masi.entity.acl.AclClass;
 import pl.masi.entity.acl.AclEntry;
@@ -45,22 +49,19 @@ public class AclManagementService {
     @Autowired
     private AclClassRepository aclClassRepository;
 
-    @Transactional
+    @Autowired
+    private JdbcMutableAclService aclService;
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void createDefaultPermissions(BaseEntity entity) {
-        AclSid aclSid = getAclSid(getCurrentUserSid());
+        ObjectIdentity oid = new CustomObjectIdentity(entity.getClass().getCanonicalName(), entity.getId().toString());
 
-        AclClass aclClass = getAclClass(entity);
+        MutableAcl acl = aclService.createAcl(oid);
 
-        Optional<AclObjectIdentity> aclObjectIdentity = aclObjectIdentityRepository.findByObjectIdClassAndObjectIdIdentity(aclClass, entity.getId().toString());
+        acl.insertAce(0, DEFAULT_PERMISSIONS, new PrincipalSid(getCurrentUserSid()), true);
 
-        // Jeżeli istnieje to obiekt posiada już domyślne uprawnienia
-        if (aclObjectIdentity.isPresent()){
-            return;
-        }
-
-        AclObjectIdentity newAclObjectIdentity = createAclObjectIdentity(aclClass, aclSid, entity.getId().toString());
-
-        createAclEntry(DEFAULT_PERMISSIONS, aclSid, newAclObjectIdentity);
+        // TODO dodawanie ACE
+//        aclService.updateAcl(acl);
     }
 
     private void createAclEntry(Permission permission, AclSid aclSid, AclObjectIdentity aclAObjectIdentity) {
@@ -124,9 +125,7 @@ public class AclManagementService {
 
     @Transactional
     public void removePermissions(BaseEntity entity) {
-        AclClass aclClass = getAclClass(entity);
-        Optional<AclObjectIdentity> aclObjectIdentity = aclObjectIdentityRepository.findByObjectIdClassAndObjectIdIdentity(aclClass, entity.getId().toString());
-
-        aclObjectIdentity.ifPresent(aclObjectIdentityRepository::delete);
+        ObjectIdentity oid = new CustomObjectIdentity(entity.getClass().getCanonicalName(), entity.getId().toString());
+        aclService.deleteAcl(oid, true);
     }
 }

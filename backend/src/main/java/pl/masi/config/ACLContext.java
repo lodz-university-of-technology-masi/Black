@@ -50,12 +50,16 @@ public class ACLContext {
 
     @Bean
     public LookupStrategy lookupStrategy() {
-        return new BasicLookupStrategy(dataSource, aclCache(), aclAuthorizationStrategy(), permissionGrantingStrategy());
+        BasicLookupStrategy basicLookupStrategy = new BasicLookupStrategy(dataSource, aclCache(), aclAuthorizationStrategy(), permissionGrantingStrategy());
+        return basicLookupStrategy;
     }
 
     @Bean
     public JdbcMutableAclService aclService() {
-        return new JdbcMutableAclService(dataSource, lookupStrategy(), aclCache());
+        JdbcMutableAclService jdbcMutableAclService = new JdbcMutableAclService(dataSource, lookupStrategy(), aclCache());
+        jdbcMutableAclService.setSidIdentityQuery("select lastval()");
+        jdbcMutableAclService.setClassIdentityQuery("select lastval()");
+        return jdbcMutableAclService;
     }
 
 }
