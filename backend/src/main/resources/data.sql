@@ -13,6 +13,8 @@ INSERT INTO public.acl_sid (id, principal, sid)
 VALUES (2, true, 'redaktor');
 INSERT INTO public.acl_sid (id, principal, sid)
 VALUES (3, true, 'kandydat');
+INSERT INTO public.acl_sid (id, principal, sid)
+VALUES (4, true, 'redaktor2');
 
 INSERT INTO public.acl_object_identity (id, object_id_class, object_id_identity, parent_object, owner_sid,
                                         entries_inheriting)
@@ -54,6 +56,9 @@ VALUES (2, 'kandydat', 'kandydat1234@mailinator.com', 'PL',
         '$2a$10$s4DIGpWyJMBtx/ZAvgvdjOcAEe9XSAGc9XKbjo3pAixg5NEvAtZ0.', 'CANDIDATE', null);
 INSERT INTO public."user" (id, login, email, language, password, role, registration_token)
 VALUES (3, 'redaktor', 'redaktor1234@mailinator.com', 'PL',
+        '$2a$10$s4DIGpWyJMBtx/ZAvgvdjOcAEe9XSAGc9XKbjo3pAixg5NEvAtZ0.', 'REDACTOR', null);
+INSERT INTO public."user" (id, login, email, language, password, role, registration_token)
+VALUES (4, 'redaktor2', 'redaktor21234@mailinator.com', 'PL',
         '$2a$10$s4DIGpWyJMBtx/ZAvgvdjOcAEe9XSAGc9XKbjo3pAixg5NEvAtZ0.', 'REDACTOR', null);
 
 INSERT INTO public.position (id, name, description, active)

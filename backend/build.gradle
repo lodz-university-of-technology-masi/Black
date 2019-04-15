@@ -24,7 +24,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.security:spring-security-config'
-	implementation 'org.springframework.security:spring-security-acl'
+	implementation 'org.springframework.security:spring-security-acl:5.1.5.RELEASE'
 	implementation 'org.springframework:spring-context-support'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'

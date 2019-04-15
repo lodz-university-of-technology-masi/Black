@@ -3,25 +3,15 @@ package pl.masi.service.acl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.acls.domain.BasePermission;
 import org.springframework.security.acls.domain.CumulativePermission;
-import org.springframework.security.acls.domain.ObjectIdentityImpl;
 import org.springframework.security.acls.domain.PrincipalSid;
-import org.springframework.security.acls.jdbc.JdbcMutableAclService;
-import org.springframework.security.acls.model.*;
+import org.springframework.security.acls.model.MutableAcl;
+import org.springframework.security.acls.model.MutableAclService;
+import org.springframework.security.acls.model.ObjectIdentity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import pl.masi.entity.acl.AclClass;
-import pl.masi.entity.acl.AclEntry;
-import pl.masi.entity.acl.AclObjectIdentity;
-import pl.masi.entity.acl.AclSid;
 import pl.masi.entity.base.BaseEntity;
-import pl.masi.repository.acl.AclClassRepository;
-import pl.masi.repository.acl.AclEntryRepository;
-import pl.masi.repository.acl.AclObjectIdentityRepository;
-import pl.masi.repository.acl.AclSidRepository;
 import pl.masi.service.UserService;
-
-import java.util.Optional;
 
 @Service
 public class AclManagementService {
@@ -38,21 +28,9 @@ public class AclManagementService {
     }
 
     @Autowired
-    private AclSidRepository aclSidRepository;
+    private MutableAclService aclService;
 
-    @Autowired
-    private AclEntryRepository aclEntryRepository;
-
-    @Autowired
-    private AclObjectIdentityRepository aclObjectIdentityRepository;
-
-    @Autowired
-    private AclClassRepository aclClassRepository;
-
-    @Autowired
-    private JdbcMutableAclService aclService;
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     public void createDefaultPermissions(BaseEntity entity) {
         ObjectIdentity oid = new CustomObjectIdentity(entity.getClass().getCanonicalName(), entity.getId().toString());
 
@@ -60,63 +38,7 @@ public class AclManagementService {
 
         acl.insertAce(0, DEFAULT_PERMISSIONS, new PrincipalSid(getCurrentUserSid()), true);
 
-        // TODO dodawanie ACE
-//        aclService.updateAcl(acl);
-    }
-
-    private void createAclEntry(Permission permission, AclSid aclSid, AclObjectIdentity aclAObjectIdentity) {
-        AclEntry newAclEntry = new AclEntry();
-        newAclEntry.setAceOrder(getOrder(aclAObjectIdentity));
-        newAclEntry.setGranting(true);
-        newAclEntry.setAuditFailure(true);
-        newAclEntry.setAuditSuccess(false);
-        newAclEntry.setAclObjectIdentity(aclAObjectIdentity);
-        newAclEntry.setSid(aclSid);
-        newAclEntry.setMask(permission.getMask());
-        aclEntryRepository.save(newAclEntry);
-    }
-
-
-    private AclObjectIdentity createAclObjectIdentity(AclClass aclClass, AclSid aclSid, String objectId){
-        AclObjectIdentity aclObjectIdentity = new AclObjectIdentity();
-        aclObjectIdentity.setOwnerSid(aclSid);
-        aclObjectIdentity.setObjectIdClass(aclClass);
-        aclObjectIdentity.setObjectIdIdentity(objectId);
-        aclObjectIdentity.setEntriesInheriting(false);
-        return aclObjectIdentityRepository.save(aclObjectIdentity);
-
-    }
-
-    private AclClass getAclClass(BaseEntity entity) {
-        String className = entity.getClass().getCanonicalName();
-
-        Optional<AclClass> aclClass = aclClassRepository.getByClassName(className);
-
-        if(aclClass.isPresent()){
-            return aclClass.get();
-        }
-
-        AclClass newAclClass = new AclClass();
-        newAclClass.setClassName(className);
-        return aclClassRepository.save(newAclClass);
-    }
-
-    private AclSid getAclSid(String sid){
-
-        Optional<AclSid> aclSid = aclSidRepository.findBySid(sid);
-
-        if (aclSid.isPresent()){
-            return aclSid.get();
-        }
-
-        AclSid newSid = new AclSid();
-        newSid.setSid(sid);
-        newSid.setPrincipal(true);
-        return aclSidRepository.save(newSid);
-    }
-
-    private int getOrder(AclObjectIdentity identity) {
-        return aclEntryRepository.countByAclObjectIdentity(identity);
+        aclService.updateAcl(acl);
     }
 
     private String getCurrentUserSid() {
