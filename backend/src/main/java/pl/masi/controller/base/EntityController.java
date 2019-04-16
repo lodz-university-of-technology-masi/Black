@@ -28,10 +28,13 @@ public abstract class EntityController<ENTITY extends BaseEntity> {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity deleteById(@PathVariable(name = "id") ENTITY entity) {
-        getEntityService().delete(entity);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @RequestMapping(method = RequestMethod.PUT)
+    public ResponseEntity<ENTITY> create(@RequestBody ENTITY entity) {
+        if (entity.getId() != null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        ENTITY created = getEntityService().create(entity);
+        return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
     @RequestMapping(path = "/{id}", method = {RequestMethod.POST, RequestMethod.PATCH})
@@ -43,13 +46,9 @@ public abstract class EntityController<ENTITY extends BaseEntity> {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity<ENTITY> create(@RequestBody ENTITY entity) {
-        if (entity.getId() != null){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        ENTITY created = getEntityService().create(entity);
-        return new ResponseEntity<>(created, HttpStatus.CREATED);
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteById(@PathVariable(name = "id") ENTITY entity) {
+        getEntityService().delete(entity);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }

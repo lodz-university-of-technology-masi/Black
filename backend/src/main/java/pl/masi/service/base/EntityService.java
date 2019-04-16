@@ -20,19 +20,23 @@ public abstract class EntityService<ENTITY extends BaseEntity> {
     protected abstract JpaRepository<ENTITY, Long> getEntityRepository();
 
     @Transactional(readOnly = true)
-    @PostFilter("hasRole('ROLE_MODERATOR') || hasPermission(filterObject, 'READ')")
+    @PostFilter("hasPermission(filterObject, 'READ')")
     public List<ENTITY> findAll() {
-        return getEntityRepository().findAll();
+        List<ENTITY> entities = getEntityRepository().findAll();
+        entities.forEach(this::afterRead);
+        return entities;
     }
 
     @Transactional(readOnly = true)
-    @PostAuthorize("hasRole('ROLE_MODERATOR') || (returnObject.isPresent() && hasPermission(returnObject.get(), 'READ')) ")
+    @PostAuthorize("returnObject.isPresent() && hasPermission(returnObject.get(), 'READ')")
     public Optional<ENTITY> findById(Long id) {
-        return getEntityRepository().findById(id);
+        Optional<ENTITY> entity = getEntityRepository().findById(id);
+        entity.ifPresent(this::afterRead);
+        return entity;
     }
 
     @Transactional
-    @PreAuthorize("hasRole('ROLE_MODERATOR') || hasPermission(#entity, 'DELETE')")
+    @PreAuthorize("hasPermission(#entity, 'DELETE')")
     public void delete(ENTITY entity) {
         beforeDelete(entity);
         getEntityRepository().delete(entity);
@@ -41,7 +45,7 @@ public abstract class EntityService<ENTITY extends BaseEntity> {
     }
 
     @Transactional
-    @PreAuthorize("hasRole('ROLE_MODERATOR') || hasPermission(#entity, 'WRITE')")
+    @PreAuthorize("hasPermission(#entity, 'WRITE')")
     public void update(ENTITY entity) {
         beforeUpdate(entity);
         ENTITY e = getEntityRepository().save(entity);
@@ -49,7 +53,7 @@ public abstract class EntityService<ENTITY extends BaseEntity> {
     }
 
     @Transactional
-    @PreAuthorize("hasRole('ROLE_MODERATOR') || hasPermission(null, #entity.getClass().getCanonicalName(), 'CREATE')")
+    @PreAuthorize("hasPermission(null, #entity.getClass().getCanonicalName(), 'CREATE')")
     public ENTITY create(ENTITY entity) {
         beforeCreate(entity);
         ENTITY e = getEntityRepository().save(entity);
@@ -64,5 +68,6 @@ public abstract class EntityService<ENTITY extends BaseEntity> {
     protected void afterUpdate(ENTITY entity) { }
     protected void beforeDelete(ENTITY entity) { }
     protected void afterDelete(ENTITY entity) { }
+    protected void afterRead(ENTITY entity) { }
 
 }

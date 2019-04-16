@@ -21,10 +21,24 @@ public class CustomPermissionEvaluator extends AclPermissionEvaluator {
     @Override
     public boolean hasPermission(Authentication authentication, Serializable targetId, String targetType, Object permission) {
         String perm = (String) permission;
+        User user = (User) authentication.getPrincipal();
+        if (user.isModerator()) {
+            return true;
+        }
         if (perm.equals("CREATE")) {
-            return UserService.canUserCreate((User)authentication.getPrincipal(), targetType);
+            return UserService.canUserCreate(user, targetType);
         }
 
         return super.hasPermission(authentication, targetId, targetType, permission);
+    }
+
+    @Override
+    public boolean hasPermission(Authentication authentication, Object domainObject, Object permission) {
+        User user = (User) authentication.getPrincipal();
+        if (user.isModerator()) {
+            return true;
+        }
+
+        return super.hasPermission(authentication, domainObject, permission);
     }
 }

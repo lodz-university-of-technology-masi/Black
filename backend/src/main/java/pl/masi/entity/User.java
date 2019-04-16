@@ -86,4 +86,19 @@ public class User extends BaseEntity implements UserDetails {
         return true;
     }
 
+    @JsonIgnore
+    public boolean isModerator() {
+        return role == Role.MODERATOR;
+    }
+
+    @JsonIgnore
+    public boolean isRedactor() {
+        return role == Role.REDACTOR;
+    }
+
+    @JsonIgnore
+    public boolean isCandidate() {
+        return role == Role.CANDIDATE;
+    }
+
 }

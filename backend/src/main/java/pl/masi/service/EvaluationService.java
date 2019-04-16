@@ -14,7 +14,7 @@ public class EvaluationService extends EntityService<Evaluation> {
     private EvaluationRepository repository;
 
     private void processTestAnswer(Evaluation evaluation) {
-        evaluation.getQuestionAnswers().forEach(evAns -> evAns.setEvaluation(evaluation));
+        evaluation.getAnswersEvaluations().forEach(evAns -> evAns.setEvaluation(evaluation));
     }
 
     @Override
