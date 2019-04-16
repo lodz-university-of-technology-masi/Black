@@ -22,9 +22,9 @@ import java.util.List;
 public class User extends BaseEntity implements UserDetails {
 
     public enum Role implements GrantedAuthority {
-        CANDIDATE,
         MODERATOR,
-        REDACTOR;
+        REDACTOR,
+        CANDIDATE;
 
         @Override
         public String getAuthority() {
@@ -59,7 +59,7 @@ public class User extends BaseEntity implements UserDetails {
     @Override
     @JsonIgnore
     public String getUsername() {
-        return null;
+        return login;
     }
 
     @Override
@@ -84,6 +84,21 @@ public class User extends BaseEntity implements UserDetails {
     @JsonIgnore
     public boolean isEnabled() {
         return true;
+    }
+
+    @JsonIgnore
+    public boolean isModerator() {
+        return role == Role.MODERATOR;
+    }
+
+    @JsonIgnore
+    public boolean isRedactor() {
+        return role == Role.REDACTOR;
+    }
+
+    @JsonIgnore
+    public boolean isCandidate() {
+        return role == Role.CANDIDATE;
     }
 
 }

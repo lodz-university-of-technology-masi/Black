@@ -5,6 +5,5 @@ import org.springframework.stereotype.Repository;
 import pl.masi.entity.Position;
 
 @Repository
-public
-interface PositionRepository extends JpaRepository<Position, Long> {
+public interface PositionRepository extends JpaRepository<Position, Long> {
 }
