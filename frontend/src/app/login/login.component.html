@@ -1,12 +1,13 @@
 <section>
   <app-login-header></app-login-header>
 </section>
-<section class="login-block">
+<section class="login_block">
   <div class="container">
     <div class="card card-container">
-      <h2 class='login_title text-center'>Zaloguj się!</h2>
-      <hr>
-      <form [formGroup]="loginForm" name="form" class="form" (ngSubmit)="f.form.valid && onSubmit()">
+      <h2 class='login_title text-center'>Zaloguj się!
+        <hr>
+      </h2>
+      <form [formGroup]="loginForm" name="form" class="form" (ngSubmit)="loginForm.valid && onSubmit()">
         <p class="input_title">Nazwa użytkownika</p>
         <input formControlName="username" type="text" class="form-control" name="username" id="mail"
                class="form-control" placeholder="">
@@ -24,7 +25,7 @@
         <div class="col-md-4 float-right">
           <button class="btn btn-primary" [disabled]="loginForm.invalid" type="submit">Zaloguj się</button>
         </div>
-        <div style="margin-top: 50px" class="alert alert-danger col-md-12" role="alert"
+        <div class="alert alert-danger col-md-12 alert_error" role="alert"
              *ngIf="loginForm.submitted && isLoginFailed">
           <strong translate>Uwaga!</strong> {{errorMessage}}
         </div>

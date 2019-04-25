@@ -7,12 +7,16 @@ import {LoginComponent} from './login/login.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 import { LoginHeaderComponent } from './login-header/login-header.component';
+import { RegistrationComponent } from './registration/registration.component';
+import { RegisterHeaderComponent } from './register-header/register-header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    LoginHeaderComponent
+    LoginHeaderComponent,
+    RegistrationComponent,
+    RegisterHeaderComponent
   ],
   imports: [
     BrowserModule,

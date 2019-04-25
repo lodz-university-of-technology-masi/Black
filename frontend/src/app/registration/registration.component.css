@@ -1,4 +1,4 @@
-.login_block {
+.register_block {
   background: rgb(0, 92, 153);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#b6c7e0', endColorstr='#4d7d7d', GradientType=0);
   float: left;
@@ -12,7 +12,7 @@
   margin-bottom: 2px;
 }
 
-.login_title {
+.register_title {
   font-family: "myriad-pro", sans-serif;
   font-style: normal;
   font-weight: 100;
@@ -41,7 +41,7 @@
   border: none;
 }
 
-.form-signin .form-control:focus {
+.form-register .form-control:focus {
   border-color: rgb(104, 145, 162);
   outline: 0;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgb(104, 145, 162);
