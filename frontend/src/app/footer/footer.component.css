@@ -1,0 +1,73 @@
+.my-footer {
+  color: white;
+  padding-top: 10px;
+  float: left;
+  width: 100%;
+}
+
+.my-footer .row {
+  margin-bottom: 30px;
+}
+
+.my-footer ul {
+  list-style-type: none;
+  padding-left: 0;
+  line-height: 1.7;
+}
+
+.my-footer h5 {
+  font-size: 18px;
+  color: white;
+  font-weight: bold;
+  margin-top: 30px;
+}
+
+.my-footer h2 a {
+  font-size: 50px;
+  text-align: center;
+  color: #fff;
+}
+
+.my-footer a {
+  color: #d2d1d1;
+  text-decoration: none;
+}
+
+.footer {
+  background-color: #191919;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+.reference:hover {
+  cursor: pointer;
+}
+
+.fb_icon {
+  padding-right: 10px;
+  font-size: 28px;
+  color: #3b5998;
+}
+
+.linkedin_icon {
+  padding-right: 10px;
+  font-size: 28px;
+  color: rgb(0, 119, 181);
+}
+
+.twitter_icon {
+  font-size: 28px;
+  color: #00aced;
+}
+
+.account_text {
+  color: white;
+}
+
+.logo {
+  font-size: 37px;
+  color: white;
+  margin-top: 7px;
+}
+

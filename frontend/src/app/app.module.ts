@@ -9,6 +9,7 @@ import {RouterModule} from '@angular/router';
 import { LoginHeaderComponent } from './login-header/login-header.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { RegisterHeaderComponent } from './register-header/register-header.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { RegisterHeaderComponent } from './register-header/register-header.compo
     LoginComponent,
     LoginHeaderComponent,
     RegistrationComponent,
-    RegisterHeaderComponent
+    RegisterHeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
