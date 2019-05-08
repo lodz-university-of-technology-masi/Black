@@ -11,14 +11,14 @@ UWAGA: Aktualnie każde uruchomienie serwera czyści bazę i wgrywa jej schemat 
 Logowanie
 -
 Aby się zalogować należy wysłać zapytanie
-`POST /api/user/login` zawierające dane `multipart/form-data` z loginem oraz hasłem np:
+`POST /api/user/signin` zawierające dane `multipart/form-data` z loginem oraz hasłem np:
 ````
 let data = new FormData()
 data.append('username', 'moderator')
 data.append('password', 'test')
-http.post('/api/user/login', data)
+http.post('/api/user/signin', data)
 ````
-Wylogowanie następuje po wykonaniu `POST /api/user/logout`
+Wylogowanie następuje po wykonaniu `POST /api/user/signout`
 
 API restowe
 -
