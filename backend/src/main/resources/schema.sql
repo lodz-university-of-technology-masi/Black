@@ -72,6 +72,7 @@ create table question
     number  integer,
     type    varchar(10),
     content text,
+    body    text,
     test_id bigint references test (id) not null
 );
 
@@ -88,7 +89,7 @@ create table question_answer
     id          bigserial primary key,
     answer_id   bigint not null references test_answer (id),
     question_id bigint not null references question (id),
-    content     text
+    body     text
 );
 
 create table evaluation

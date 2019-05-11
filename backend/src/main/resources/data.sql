@@ -71,27 +71,27 @@ VALUES (1, 'Test na stanowisko kierownika działu IT', 1, 'PL', 1);
 INSERT INTO public.test (id, name, "group", language, position_id)
 VALUES (3, 'Test na stanowisko kierownika działu HR', 2, 'PL', 2);
 
-INSERT INTO public.question (id, number, type, content, test_id)
-VALUES (1, 0, 'OPEN', 'treść pytania 1', 1);
-INSERT INTO public.question (id, number, type, content, test_id)
-VALUES (2, 1, 'OPEN', 'treść pytania 2', 1);
-INSERT INTO public.question (id, number, type, content, test_id)
-VALUES (3, 2, 'OPEN', 'treść pytania 3', 1);
-INSERT INTO public.question (id, number, type, content, test_id)
-VALUES (4, 0, 'OPEN', 'treść pytania 1', 3);
-INSERT INTO public.question (id, number, type, content, test_id)
-VALUES (5, 1, 'OPEN', 'treść pytania 2', 3);
-INSERT INTO public.question (id, number, type, content, test_id)
-VALUES (6, 2, 'OPEN', 'treść pytania 3', 3);
+INSERT INTO public.question (id, number, type, content, body, test_id)
+VALUES (1, 0, 'CHOICE', 'treść pytania 1', 'odpowiedź1;odpowiedź2;odpowiedź3', 1);
+INSERT INTO public.question (id, number, type, content, body, test_id)
+VALUES (2, 1, 'OPEN', 'treść pytania 2', NULL, 1);
+INSERT INTO public.question (id, number, type, content, body, test_id)
+VALUES (3, 2, 'OPEN', 'treść pytania 3', NULL, 1);
+INSERT INTO public.question (id, number, type, content, body, test_id)
+VALUES (4, 0, 'OPEN', 'treść pytania 1', NULL, 3);
+INSERT INTO public.question (id, number, type, content, body, test_id)
+VALUES (5, 1, 'OPEN', 'treść pytania 2', NULL, 3);
+INSERT INTO public.question (id, number, type, content, body, test_id)
+VALUES (6, 2, 'OPEN', 'treść pytania 3', NULL, 3);
 
 INSERT INTO public.test_answer (id, content, test_id, user_id)
 VALUES (1, 'bardzo istotne pola', 1, 2);
 
-INSERT INTO public.question_answer (id, answer_id, question_id, content)
-VALUES (1, 1, 1, 'odpowiedz na pyt 1');
-INSERT INTO public.question_answer (id, answer_id, question_id, content)
+INSERT INTO public.question_answer (id, answer_id, question_id, body)
+VALUES (1, 1, 1, '1;2');
+INSERT INTO public.question_answer (id, answer_id, question_id, body)
 VALUES (2, 1, 2, 'odpowiedz na pyt 2');
-INSERT INTO public.question_answer (id, answer_id, question_id, content)
+INSERT INTO public.question_answer (id, answer_id, question_id, body)
 VALUES (3, 1, 3, 'odpowiedz na pyt 3');
 
 INSERT INTO public.evaluation (id, content, answer_id)
