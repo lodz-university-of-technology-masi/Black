@@ -26,8 +26,8 @@ Dla wszystkich encji zaimplementowane zostały podstawowe metody pozwalające na
 
 - `GET /api/<nazwa_encji>/{id}` - Pobranie encji o danym `id` np `GET /api/tests/1`
 - `DELETE /api/<nazwa_encji>/{id}` - Usunięcie encji o danym `id` 
-- `POST|PATCH /api/<nazwa_encji>/{id}` - Modyfikacja encji o danym `id`. W ciele zapytania musi znajdować się json zawierający pola encji.
-- `PUT /api/<nazwa_encji>/` - Dodanie nowej encji. W ciele zapytania musi znajdować się json zawierający pola encji. Zapytanie zwraca utworzoną encję.
+- `PUT|PATCH /api/<nazwa_encji>/{id}` - Modyfikacja encji o danym `id`. W ciele zapytania musi znajdować się json zawierający pola encji.
+- `POST /api/<nazwa_encji>/` - Dodanie nowej encji. W ciele zapytania musi znajdować się json zawierający pola encji. Zapytanie zwraca utworzoną encję.
 
 Aktualnie zalogowanego użytkownika można pobrać za pomocą : `GET /api/users/current`
 
