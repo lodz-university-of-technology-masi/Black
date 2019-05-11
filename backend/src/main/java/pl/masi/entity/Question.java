@@ -2,11 +2,14 @@ package pl.masi.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import pl.masi.entity.base.BaseEntity;
+import pl.masi.utils.Range;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,6 +35,8 @@ public class Question extends BaseEntity {
     private String content;
 
     @JsonIgnore
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     private String body;
 
     @JsonIgnore
@@ -41,7 +46,7 @@ public class Question extends BaseEntity {
     @Transient
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public List<String> getAvaliableChoices() {
-        if(type != Type.CHOICE){
+        if (!isChoice()) {
             return null;
         }
 
@@ -51,9 +56,52 @@ public class Question extends BaseEntity {
 
     @Transient
     public void setAvaliableChoices(List<String> choices) {
-        if (type != Type.CHOICE) {
+        if (!isChoice()) {
             throw new RuntimeException("Incompatible question type!");
         }
         body = String.join(SEPARATOR, choices);
+    }
+
+    @Transient
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public Range<BigDecimal> getAvailableRange() {
+        if (!isScale()) {
+            return null;
+        }
+
+        String[] values = body.split(SEPARATOR);
+        BigDecimal min = new BigDecimal(values[0]);
+        BigDecimal max = new BigDecimal(values[1]);
+        BigDecimal step = new BigDecimal(values[2]);
+        return new Range<>(min, max, step);
+    }
+
+    @Transient
+    public void setAvaliableRange(Range<BigDecimal> range) {
+        if (!isScale()) {
+            throw new RuntimeException("Incompatible question type!");
+        }
+
+        body = range.getMin() + SEPARATOR + range.getMax() + SEPARATOR + range.getStep();
+    }
+
+    @JsonIgnore
+    public boolean isOpen() {
+        return type == Type.OPEN;
+    }
+
+    @JsonIgnore
+    public boolean isChoice() {
+        return type == Type.CHOICE;
+    }
+
+    @JsonIgnore
+    public boolean isScale() {
+        return type == Type.SCALE;
+    }
+
+    @JsonIgnore
+    public boolean isNumber() {
+        return type == Type.NUMBER;
     }
 }
