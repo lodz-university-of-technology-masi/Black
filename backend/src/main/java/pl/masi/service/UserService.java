@@ -7,7 +7,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.masi.entity.Evaluation;
 import pl.masi.entity.Test;
 import pl.masi.entity.TestAnswer;
@@ -65,6 +67,20 @@ public class UserService extends EntityService<User> implements UserDetailsServi
     public User getCurrentUser() {
         return currentUser();
     }
+
+    private BCryptPasswordEncoder passwordEncoder;
+    @Transactional
+    public void addUser(User userEntity) {
+        User user= new User();
+        user.setLogin(userEntity.getLogin());
+        user.setEmail(userEntity.getEmail());
+        user.setPassword(this.passwordEncoder.encode(userEntity.getPassword()));
+        this.userRepository.saveAndFlush(userEntity);
+
+    }
+
+
+
 
     @Override
     protected JpaRepository<User, Long> getEntityRepository() {
