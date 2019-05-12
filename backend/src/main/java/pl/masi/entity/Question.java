@@ -45,7 +45,7 @@ public class Question extends BaseEntity {
 
     @Transient
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public List<String> getAvaliableChoices() {
+    public List<String> getAvailableChoices() {
         if (!isChoice()) {
             return null;
         }
@@ -55,7 +55,7 @@ public class Question extends BaseEntity {
     }
 
     @Transient
-    public void setAvaliableChoices(List<String> choices) {
+    public void setAvailableChoices(List<String> choices) {
         if (!isChoice()) {
             throw new RuntimeException("Incompatible question type!");
         }
@@ -77,7 +77,7 @@ public class Question extends BaseEntity {
     }
 
     @Transient
-    public void setAvaliableRange(Range<BigDecimal> range) {
+    public void setAvailableRange(Range<BigDecimal> range) {
         if (!isScale()) {
             throw new RuntimeException("Incompatible question type!");
         }
