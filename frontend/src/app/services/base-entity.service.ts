@@ -16,8 +16,8 @@ export abstract class BaseEntityService {
     return this.http.get<E[]>(this.getEntityUrl())
   }
 
-  getOne<E extends MainEntity>(entity: E): Observable<E> {
-    return this.http.get<E>(`${this.getEntityUrl()}/${entity.id}`)
+  getOne<E extends MainEntity>(id: number): Observable<E> {
+    return this.http.get<E>(`${this.getEntityUrl()}/${id}`)
   }
 
   create<E extends MainEntity>(entity: E): Observable<E> {

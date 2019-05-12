@@ -26,7 +26,7 @@ export interface Position extends MainEntity {
   active: boolean;
 }
 
-export const enum QuestionType {
+export enum QuestionType {
   OPEN = 'OPEN',
   CHOICE = 'CHOICE',
   SCALE = 'SCALE',
