@@ -4,6 +4,7 @@ import {LoginComponent} from './views/login/login.component';
 import {RegistrationComponent} from './views/registration/registration.component';
 import {TestsComponent} from "./views/tests/tests.component";
 import {TestFormComponent} from "./views/test-form/test-form.component";
+import {AuthGuard} from "./auth.guard";
 
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -12,6 +13,10 @@ const routes: Routes = [
   {path: 'tests', component: TestsComponent},
   {path: 'tests/:id', component: TestFormComponent}
 ];
+
+for (let route of routes) {
+  route.canActivate = [AuthGuard]
+}
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
