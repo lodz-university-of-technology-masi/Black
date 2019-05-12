@@ -26,6 +26,6 @@ public class UserController extends EntityController<User> {
 
     @GetMapping("/current")
     public ResponseEntity<User> getCurrentUser() {
-        return new ResponseEntity<>(service.getCurrentUser(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(service.getCurrentUser(), HttpStatus.OK);
     }
 }
