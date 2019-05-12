@@ -2,6 +2,14 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.6.
 
+## Uruchomienie
+
+Wymagane jest posiadanie zainstalowanego:
+ - Node.js: https://nodejs.org/en/
+ - Angular CLI, instalacja: `npm install -g @angular/cli`
+
+Uruchomienie części frontend'owej: `npm run start`
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
