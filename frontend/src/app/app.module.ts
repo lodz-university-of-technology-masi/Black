@@ -13,6 +13,8 @@ import {FooterComponent} from './components/footer/footer.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {APIInterceptor} from "./services/interceptors/api-interceptor";
 import { TestsComponent } from './views/tests/tests.component';
+import { TestFormComponent } from './views/test-form/test-form.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { TestsComponent } from './views/tests/tests.component';
     RegistrationComponent,
     RegisterHeaderComponent,
     FooterComponent,
-    TestsComponent
+    TestsComponent,
+    TestFormComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +33,8 @@ import { TestsComponent } from './views/tests/tests.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [
     {

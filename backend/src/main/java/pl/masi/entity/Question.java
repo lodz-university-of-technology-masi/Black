@@ -57,7 +57,7 @@ public class Question extends BaseEntity {
     @Transient
     public void setAvailableChoices(List<String> choices) {
         if (!isChoice()) {
-            throw new RuntimeException("Incompatible question type!");
+            return;
         }
         body = String.join(SEPARATOR, choices);
     }
@@ -79,7 +79,7 @@ public class Question extends BaseEntity {
     @Transient
     public void setAvailableRange(Range<BigDecimal> range) {
         if (!isScale()) {
-            throw new RuntimeException("Incompatible question type!");
+            return;
         }
 
         body = range.getMin() + SEPARATOR + range.getMax() + SEPARATOR + range.getStep();
