@@ -1,30 +1,36 @@
 
 export enum Role {
-  MODERATOR,
-  REDACTOR,
-  CANDIDATE
+  MODERATOR = 'MODERATOR',
+  REDACTOR = 'REDACTOR',
+  CANDIDATE = 'CANDIDATE'
 }
 
-export interface User {
+/**
+ * Bazowy interfejs dla encji eksponowanych bezpośrednio przez API.
+ * Każda encja dostępna przez dedykowany endpoint MUSI rozszerzać ten interfejs.
+ */
+export interface MainEntity {
   id: number;
+}
+
+export interface User extends MainEntity {
   login: string;
   email: string;
   language: string;
   role: Role;
 }
 
-export interface Position {
-  id: number;
+export interface Position extends MainEntity {
   name: string;
   description: string;
   active: boolean;
 }
 
-export enum QuestionType {
-  OPEN,
-  CHOICE,
-  SCALE,
-  NUMBER
+export const enum QuestionType {
+  OPEN = 'OPEN',
+  CHOICE = 'CHOICE',
+  SCALE = 'SCALE',
+  NUMBER = 'NUMBER'
 }
 
 export interface Range {
@@ -41,8 +47,7 @@ export interface Question {
   availableRange: Range;
 }
 
-export interface Test {
-  id: number;
+export interface Test extends MainEntity {
   name: string;
   group: number;
   language: string;

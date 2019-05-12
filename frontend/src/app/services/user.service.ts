@@ -4,17 +4,22 @@ import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {User} from "../model/entities";
 import { flatMap } from 'rxjs/operators';
+import {BaseEntityService} from "./base-entity.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService extends BaseEntityService{
 
-  private static SIGNIN_URL='user/signin';
+  private static BASE_USER_URL='users';
+  private static CURRENT_USER_URL=`${UserService.BASE_USER_URL}/current`;
+
   private static SIGNOUT_URL='user/signout';
-  private static CURRENT_USER_URL='users/current';
+  private static SIGNIN_URL='user/signin';
 
-  constructor(private http: HttpClient) { }
+  constructor(http: HttpClient) {
+    super(http)
+  }
 
   login(credentials: Credentials) : Observable<User> {
     const formData = new FormData();
@@ -24,10 +29,13 @@ export class UserService {
     return this.http.post(UserService.SIGNIN_URL, formData).pipe(
       flatMap(() => this.http.get<User>(UserService.CURRENT_USER_URL))
     )
-
   }
 
   logout() : Observable<void> {
     return this.http.post<void>(UserService.SIGNOUT_URL, {})
+  }
+
+  getEntityUrl(): string {
+    return UserService.BASE_USER_URL;
   }
 }
