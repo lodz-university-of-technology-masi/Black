@@ -6,12 +6,17 @@ import org.springframework.stereotype.Component;
 import pl.masi.entity.Test;
 import pl.masi.repository.TestRepository;
 import pl.masi.service.base.EntityService;
+import pl.masi.validation.TestValidator;
+import pl.masi.validation.base.EntityValidator;
 
 @Component
 public class TestService extends EntityService<Test> {
 
     @Autowired
     private TestRepository testRepository;
+
+    @Autowired
+    private TestValidator testValidator;
 
     private void processTest(Test test) {
         test.getQuestions().forEach(question -> question.setTest(test));
@@ -30,5 +35,10 @@ public class TestService extends EntityService<Test> {
     @Override
     protected JpaRepository<Test, Long> getEntityRepository() {
         return testRepository;
+    }
+
+    @Override
+    protected EntityValidator<Test> getEntityValidator() {
+        return testValidator;
     }
 }

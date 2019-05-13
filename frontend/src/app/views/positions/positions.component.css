@@ -1,0 +1,31 @@
+.table-container {
+  margin: 60px;
+}
+th {
+  text-align: center;
+}
+.edit-ico {
+  font-size: 25px;
+}
+
+.user-ico {
+  font-size: 25px;
+}
+
+.minus {
+  font-size: 25px;
+  color: red;
+}
+.check {
+  font-size: 25px;
+  color: green;
+}
+
+.table-label {
+  position:relative;
+  top: 15px;
+}
+
+.form-margin {
+  margin-left: 80px;
+}

@@ -10,6 +10,7 @@ import pl.masi.utils.Range;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -45,9 +46,13 @@ public class Question extends BaseEntity {
 
     @Transient
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public List<String> getAvaliableChoices() {
+    public List<String> getAvailableChoices() {
         if (!isChoice()) {
             return null;
+        }
+
+        if (body == null) {
+            return new ArrayList<>();
         }
 
         String[] choices = body.split(SEPARATOR);
@@ -55,9 +60,9 @@ public class Question extends BaseEntity {
     }
 
     @Transient
-    public void setAvaliableChoices(List<String> choices) {
-        if (!isChoice()) {
-            throw new RuntimeException("Incompatible question type!");
+    public void setAvailableChoices(List<String> choices) {
+        if (!isChoice() || choices == null) {
+            return;
         }
         body = String.join(SEPARATOR, choices);
     }
@@ -68,6 +73,9 @@ public class Question extends BaseEntity {
         if (!isScale()) {
             return null;
         }
+        if (body == null) {
+            return new Range<>();
+        }
 
         String[] values = body.split(SEPARATOR);
         BigDecimal min = new BigDecimal(values[0]);
@@ -77,9 +85,9 @@ public class Question extends BaseEntity {
     }
 
     @Transient
-    public void setAvaliableRange(Range<BigDecimal> range) {
-        if (!isScale()) {
-            throw new RuntimeException("Incompatible question type!");
+    public void setAvailableRange(Range<BigDecimal> range) {
+        if (!isScale() || range == null) {
+            return;
         }
 
         body = range.getMin() + SEPARATOR + range.getMax() + SEPARATOR + range.getStep();

@@ -9,6 +9,7 @@ import pl.masi.entity.base.BaseEntity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,14 +42,19 @@ public class QuestionAnswer extends BaseEntity {
         if (!question.isChoice()){
             return null;
         }
+
+        if (body == null) {
+            return new ArrayList<>();
+        }
+
         List<String> split = Arrays.asList(body.split(SEPARATOR));
         return split.stream().map(Integer::parseInt).collect(Collectors.toList());
     }
 
     @Transient
     public void setChoiceAnswer(List<Integer> selections){
-        if (!question.isChoice()) {
-            throw new RuntimeException("Incompatible QuestionAnswer type!");
+        if (!question.isChoice() || selections == null) {
+            return;
         }
         body = selections.stream().map(Object::toString).collect(Collectors.joining(SEPARATOR));
     }
@@ -65,7 +71,7 @@ public class QuestionAnswer extends BaseEntity {
     @Transient
     public void setScaleAnswer(BigDecimal scaleAnswer){
         if (!question.isScale()) {
-            throw new RuntimeException("Incompatible QuestionAnswer type!");
+            return;
         }
         body = scaleAnswer.toString();
     }
@@ -82,7 +88,7 @@ public class QuestionAnswer extends BaseEntity {
     @Transient
     public void setOpenAnswer(String openAnswer){
         if (!question.isOpen()) {
-            throw new RuntimeException("Incompatible QuestionAnswer type!");
+            return;
         }
         body = openAnswer;
     }
@@ -99,7 +105,7 @@ public class QuestionAnswer extends BaseEntity {
     @Transient
     public void setNumberAnswer(BigDecimal numberAnswer){
         if (!question.isNumber()) {
-            throw new RuntimeException("Incompatible QuestionAnswer type!");
+            return;
         }
         body = numberAnswer.toString();
     }

@@ -42,6 +42,7 @@ public class User extends BaseEntity implements UserDetails {
     private String language;
 
     @Enumerated(EnumType.STRING)
+    @NotNull
     private Role role;
 
     @JsonIgnore
