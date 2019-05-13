@@ -26,6 +26,61 @@
     </tbody>
   </table>
 
+  <!--  Add position modal-->
+  <div class="modal fade" id="addPositionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Dodaj stanowisko</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="addPositionGroup" name="form" class="form" novalidate>
+            <div class="form-group col-md-12">
+              <div>
+                <h6><span class="badge badge-default float-left span-alert"
+                          style="background-color: #1f281e; color: white">Nazwa stanowiska</span></h6>
+                <input formControlName="name" type="text" class="form-control" placeholder="nazwa stanowiska"
+                       aria-describedby="basic-addon1">
+                <h6><span *ngIf="!addPositionGroup.get('name').valid && addPositionGroup.get('name').dirty"
+                          class="badge badge-danger float-right span-alert ">To pole jest wymagane</span></h6>
+              </div>
+              <div style="margin-top: 20px">
+                <h6><span class="badge badge-default float-left span-alert"
+                          style="background-color: #1f281e; color: white">Opis</span></h6>
+                <input formControlName="description" type="text" class="form-control" placeholder="opis"
+                       aria-describedby="basic-addon1">
+                <h6><span
+                  *ngIf="!addPositionGroup.get('description').valid && addPositionGroup.get('description').dirty"
+                  class="badge badge-danger float-right span-alert ">To pole jest wymagane</span></h6>
+              </div>
+              <div style="margin-top: 20px">
+                <div class="form-check form-check-inline form-margin">
+                  <input formControlName="active" class="form-check-input" type="radio" name="active" id="inlineRadio1"
+                         value=true checked>
+                  <label class="form-check-label" for="inlineRadio1">Aktywne </label>
+                </div>
+                <div class="form-check form-check-inline form-margin">
+                  <input formControlName="active" class="form-check-input" type="radio" name="active" id="inlineRadio2"
+                         value=false>
+                  <label class="form-check-label" for="inlineRadio2">Nieaktywne</label>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+          <button type="submit" (click)="addPosition()" class="btn btn-success" data-dismiss="modal">Dodaj stanowisko
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <ng-template #noPositionsInfo>
     <div class="alert alert-info" role="alert"
          style="min-width: 100%; min-height: 350px; position: center; text-align: center; padding-top: 200px">

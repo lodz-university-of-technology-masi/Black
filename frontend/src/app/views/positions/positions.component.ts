@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {PositionService} from '../../services/position.service';
 import {Position} from '../../model/entities';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-positions',
@@ -11,9 +12,18 @@ import {Position} from '../../model/entities';
 export class PositionsComponent implements OnInit {
 
   positions: Position[];
+  private position: Position;
+  addPositionGroup: FormGroup;
 
   constructor(private positionsService: PositionService,
-              private router: Router) { }
+              private router: Router) {
+
+    this.addPositionGroup = new FormGroup({
+      name: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required),
+      active: new FormControl('', Validators.required)
+    });
+  }
 
   ngOnInit() {
     this.loadPositions();
@@ -26,4 +36,16 @@ export class PositionsComponent implements OnInit {
     console.log(this.positions);
   }
 
+  async addPosition() {
+
+    const position: Position = {
+      id: null,
+      name: this.addPositionGroup.get('name').value,
+      description: this.addPositionGroup.get('description').value,
+      active: this.addPositionGroup.get('active').value === 'true'
+    };
+    await this.positionsService.create(position).toPromise();
+    await this.loadPositions();
+
+  }
 }

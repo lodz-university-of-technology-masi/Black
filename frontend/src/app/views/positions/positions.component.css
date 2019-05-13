@@ -25,3 +25,7 @@ th {
   position:relative;
   top: 15px;
 }
+
+.form-margin {
+  margin-left: 80px;
+}
