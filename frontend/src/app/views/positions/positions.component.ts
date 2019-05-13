@@ -34,7 +34,7 @@ export class PositionsComponent implements OnInit {
 
   async loadPositions() {
 
-    this.positions = await this.positionsService.getAll<Position>().toPromise()
+    this.positions = await this.positionsService.getAll().toPromise()
     console.log(this.positions);
   }
 

@@ -18,6 +18,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {PositionsComponent} from './views/positions/positions.component';
 import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     FooterComponent,
     TestsComponent,
     TestFormComponent,
-    PositionsComponent
+    PositionsComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

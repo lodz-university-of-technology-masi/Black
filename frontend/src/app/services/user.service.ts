@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {User} from '../model/entities';
 import {flatMap, map} from 'rxjs/operators';
 import {BaseEntityService} from './base-entity.service';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,9 @@ export class UserService extends BaseEntityService<User> {
   private static SIGNIN_URL = 'user/signin';
 
   isLoggedIn = false;
+  role = '' ;
 
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient, private router: Router) {
     super(http);
   }
 
@@ -32,6 +34,7 @@ export class UserService extends BaseEntityService<User> {
       flatMap(() => this.http.get<User>(UserService.CURRENT_USER_URL)),
       map((user) => {
         this.isLoggedIn = true;
+        this.role = user.role;
         return user;
       })
     );
