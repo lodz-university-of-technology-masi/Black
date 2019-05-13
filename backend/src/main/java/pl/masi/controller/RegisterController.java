@@ -19,8 +19,7 @@ public class RegisterController {
     @Autowired
     private UserService userService;
 
-    @POST
-    @RequestMapping(value = "/register")
+
     public UserService registerUser(User user, BindingResult result) {
 
         User userExist = (User) userService.loadUserByUsername(user.getLogin());
