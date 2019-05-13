@@ -16,51 +16,50 @@ import java.util.stream.Collectors;
 @Component
 public class FilesService {
 
-    private static final String SEPARATOR = ";"; //TODO MC Wrzucić w jakiś config?
+    private static final String SEPARATOR = ";"; //
 
     @Autowired
     private TestService testService;
 
     public void importTest(String csv) {
         List<List<String>> rows = new ArrayList<>();
-        List<Question> questions = new ArrayList<Question>();
         Test test = new Test();
+        List<Question> questions = new ArrayList<>();
         try (Scanner scanner = new Scanner(csv)) {
             while (scanner.hasNextLine()) {
                 rows.add(getListFromLine(scanner.nextLine()));
-                List<String> lastRow = rows.get(rows.size() - 1);
-                Question question = new Question();
-                Type type;
-                switch (lastRow.get(1)) { // O, W, S lub L, druga pozycja w każdym wierszu opisującym pytanie
-                    case "O":
-                        type = Type.OPEN;
-                        question.setType(type);
-                        break;
-                    case "W":
-                        type = Type.CHOICE;
-                        question.setType(type);
-                        question.setAvailableChoices(lastRow.stream().skip(5).collect(Collectors.toList()));
-                        break;
-                    case "S":
-                        type = Type.SCALE;
-                        question.setType(type);
-                        question.setAvailableRange(new Range<>(new BigDecimal(lastRow.get(5)), new BigDecimal(lastRow.get(6)), new BigDecimal(lastRow.get(7))));
-                        break;
-                    case "L":
-                        type = Type.NUMBER;
-                        question.setType(type);
-                        break;
-                    default:
-                        throw new Exception();
-                }
-                question.setContent(lastRow.get(3));
-                question.setTest(test);
-                questions.add(question); // TODO MC tutaj zrobić dodawania w odpowiednie miejsce listy w zależności od wielkości liczby w pierwszej pozycji wiersza
+                questions.add(null);
             }
-        } catch (Exception e) {
-            System.err.println("Brak O, W, S lub L w drugiej pozycji wiersza");
-            e.printStackTrace();
         }
+        rows.forEach(row -> {
+            Question question = new Question();
+            Type type;
+            switch (row.get(1)) { // O, W, S lub L, druga pozycja w każdym wierszu opisującym pytanie
+                case "O":
+                    type = Type.OPEN;
+                    question.setType(type);
+                    break;
+                case "W":
+                    type = Type.CHOICE;
+                    question.setType(type);
+                    question.setAvailableChoices(row.stream().skip(5).collect(Collectors.toList()));
+                    break;
+                case "S":
+                    type = Type.SCALE;
+                    question.setType(type);
+                    question.setAvailableRange(new Range<>(new BigDecimal(row.get(5)), new BigDecimal(row.get(6)), new BigDecimal(row.get(7))));
+                    break;
+                case "L":
+                    type = Type.NUMBER;
+                    question.setType(type);
+                    break;
+                default:
+                    System.err.println("Brak O, W, S lub L w drugiej pozycji wiersza");
+            }
+            question.setContent(row.get(3));
+            question.setTest(test);
+            questions.set(Integer.parseInt(row.get(0))-1, question); // Pierwsza pozycja każdego wiersza to numer pytania
+        });
         test.setLanguage(rows.get(0).get(2)); // TODO MC Sprawdzenie czy każde pytanie ma taki sam język
         test.setQuestions(questions);
         testService.create(test);
