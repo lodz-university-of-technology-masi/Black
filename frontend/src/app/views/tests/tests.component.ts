@@ -19,8 +19,10 @@ export class TestsComponent implements OnInit {
   }
 
   async loadTests() {
+
     this.tests = await this.testService.getAll<Test>().toPromise();
     console.log(this.tests);
+
   }
 
   async onDeleteTest(test: Test) {

@@ -6,30 +6,32 @@ import {Observable} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export abstract class BaseEntityService {
+export abstract class BaseEntityService<E extends MainEntity> {
 
   protected constructor(protected http: HttpClient) { }
 
   abstract getEntityUrl(): string;
 
-  getAll<E extends MainEntity>(): Observable<E[]> {
-    return this.http.get<E[]>(this.getEntityUrl());
+
+  getAll(): Observable<E[]> {
+    return this.http.get<E[]>(this.getEntityUrl())
   }
 
-  getOne<E extends MainEntity>(id: number): Observable<E> {
-    return this.http.get<E>(`${this.getEntityUrl()}/${id}`);
+  getOne(id: number): Observable<E> {
+    return this.http.get<E>(`${this.getEntityUrl()}/${id}`)
   }
 
-  create<E extends MainEntity>(entity: E): Observable<E> {
-    return this.http.post<E>(this.getEntityUrl(), entity);
+  create(entity: E): Observable<E> {
+    return this.http.post<E>(this.getEntityUrl(), entity)
   }
 
-  update<E extends MainEntity>(entity: E): Observable<void> {
-    return this.http.put<void>(`${this.getEntityUrl()}/${entity.id}`, entity);
+  update(entity: E): Observable<void> {
+    return this.http.put<void>(`${this.getEntityUrl()}/${entity.id}`, entity)
   }
 
-  delete<E extends MainEntity>(entity: E): Observable<void> {
-    return this.http.delete<void>(`${this.getEntityUrl()}/${entity.id}`);
+  delete(entity: E): Observable<void> {
+    return this.http.delete<void>(`${this.getEntityUrl()}/${entity.id}`)
+
   }
 
 }
