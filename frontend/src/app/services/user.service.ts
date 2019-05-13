@@ -17,10 +17,24 @@ export class UserService extends BaseEntityService<User> {
   private static SIGNOUT_URL = 'user/signout';
   private static SIGNIN_URL = 'user/signin';
 
-  isLoggedIn = false;
+  private loggedIn = false;
 
   constructor(http: HttpClient) {
     super(http);
+  }
+
+  private async loadCurrentUser(): Promise<User> {
+    return this.http.get<User>(UserService.CURRENT_USER_URL).toPromise()
+  }
+
+  async isLoggedIn(): Promise<boolean> {
+    if (this.loggedIn){
+      return this.loggedIn
+    }
+    this.loggedIn = await this.loadCurrentUser()
+      .then((user)=> true)
+      .catch((err)=> false)
+    return this.loggedIn
   }
 
   login(credentials: Credentials): Observable<User> {
@@ -31,7 +45,7 @@ export class UserService extends BaseEntityService<User> {
     return this.http.post(UserService.SIGNIN_URL, formData).pipe(
       flatMap(() => this.http.get<User>(UserService.CURRENT_USER_URL)),
       map((user) => {
-        this.isLoggedIn = true;
+        this.loggedIn = true;
         return user;
       })
     );
@@ -41,7 +55,7 @@ export class UserService extends BaseEntityService<User> {
 
     return this.http.post<void>(UserService.SIGNOUT_URL, {}).pipe(
       map(() => {
-        this.isLoggedIn = false;
+        this.loggedIn = false;
       })
     );
   }

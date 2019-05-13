@@ -59,7 +59,7 @@ public class UserService extends EntityService<User> implements UserDetailsServi
 
     public static User currentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (authentication != null && authentication.getPrincipal() != null) ? (User) authentication.getPrincipal() : null;
+        return (authentication != null && authentication.getPrincipal() instanceof User) ? (User) authentication.getPrincipal() : null;
     }
 
     public User getCurrentUser() {
