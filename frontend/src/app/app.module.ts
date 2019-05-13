@@ -12,10 +12,12 @@ import {RegisterHeaderComponent} from './components/register-header/register-hea
 import {FooterComponent} from './components/footer/footer.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {APIInterceptor} from './services/interceptors/api-interceptor';
-import { TestsComponent } from './views/tests/tests.component';
-import { TestFormComponent } from './views/test-form/test-form.component';
+import {TestsComponent} from './views/tests/tests.component';
+import {TestFormComponent} from './views/test-form/test-form.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { PositionsComponent } from './views/positions/positions.component';
+import {PositionsComponent} from './views/positions/positions.component';
+import {ToastrModule} from 'ngx-toastr';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -31,12 +33,14 @@ import { PositionsComponent } from './views/positions/positions.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     RouterModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     {

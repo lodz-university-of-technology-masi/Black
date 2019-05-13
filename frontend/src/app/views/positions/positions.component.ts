@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {PositionService} from '../../services/position.service';
 import {Position} from '../../model/entities';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-positions',
@@ -16,7 +17,8 @@ export class PositionsComponent implements OnInit {
   addPositionGroup: FormGroup;
 
   constructor(private positionsService: PositionService,
-              private router: Router) {
+              private router: Router,
+              private toastr: ToastrService) {
 
     this.addPositionGroup = new FormGroup({
       name: new FormControl('', Validators.required),
@@ -46,6 +48,11 @@ export class PositionsComponent implements OnInit {
     };
     await this.positionsService.create(position).toPromise();
     await this.loadPositions();
+
+    this.toastr.success('Stanowisko zostało dodane', 'Sukces', {
+      timeOut: 3000,
+      closeButton: true,
+    });
 
   }
 }
