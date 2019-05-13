@@ -4,15 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.masi.utils.RegisterCheck;
-import pl.masi.controller.base.EntityController;
 import pl.masi.entity.User;
 import pl.masi.service.UserService;
-import pl.masi.service.base.EntityService;
+import pl.masi.utils.RegisterCheck;
+
 
 @Controller
 @RequestMapping(value = "/register")
-public class RegisterController extends EntityController<User> {
+public class RegisterController {
 
     @Autowired
     private UserService service;
@@ -21,7 +20,7 @@ public class RegisterController extends EntityController<User> {
     private UserService userService;
 
 
-    public void registerUser(User user, BindingResult result) {
+    public UserService registerUser(User user, BindingResult result) {
 
         User userExist = (User) userService.loadUserByUsername(user.getLogin());
 
@@ -31,12 +30,8 @@ public class RegisterController extends EntityController<User> {
 
         userService.addUser(user);
 
-    }
-
-
-
-    @Override
-    protected EntityService<User> getEntityService() {
-        return service;
+return service;
     }
 }
+
+

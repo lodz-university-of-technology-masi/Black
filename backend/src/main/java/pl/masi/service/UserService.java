@@ -31,7 +31,6 @@ public class UserService extends EntityService<User> implements UserDetailsServi
 
     static {
         CANDIDATE_CAN_CREATE.add(TestAnswer.class.getCanonicalName());
-
         REDACTOR_CAN_CREATE.add(Test.class.getCanonicalName());
         REDACTOR_CAN_CREATE.add(Evaluation.class.getCanonicalName());
     }
@@ -68,7 +67,10 @@ public class UserService extends EntityService<User> implements UserDetailsServi
         return currentUser();
     }
 
+
+
     private BCryptPasswordEncoder passwordEncoder;
+
     @Transactional
     public void addUser(User userEntity) {
         User user= new User();
@@ -78,9 +80,6 @@ public class UserService extends EntityService<User> implements UserDetailsServi
         this.userRepository.saveAndFlush(userEntity);
 
     }
-
-
-
 
     @Override
     protected JpaRepository<User, Long> getEntityRepository() {
