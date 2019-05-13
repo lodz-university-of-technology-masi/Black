@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {MainEntity} from "../model/entities";
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {MainEntity} from '../model/entities';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,8 @@ export abstract class BaseEntityService<E extends MainEntity> {
 
   protected constructor(protected http: HttpClient) { }
 
-  abstract getEntityUrl(): string
+  abstract getEntityUrl(): string;
+
 
   getAll(): Observable<E[]> {
     return this.http.get<E[]>(this.getEntityUrl())
@@ -30,6 +31,7 @@ export abstract class BaseEntityService<E extends MainEntity> {
 
   delete(entity: E): Observable<void> {
     return this.http.delete<void>(`${this.getEntityUrl()}/${entity.id}`)
+
   }
 
 }

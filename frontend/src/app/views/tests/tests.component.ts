@@ -15,24 +15,26 @@ export class TestsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadTests()
+    this.loadTests();
   }
 
   async loadTests() {
-    this.tests = await this.testService.getAll().toPromise()
-    console.log(this.tests)
+
+    this.tests = await this.testService.getAll<Test>().toPromise();
+    console.log(this.tests);
+
   }
 
   async onDeleteTest(test: Test) {
-    await this.testService.delete(test).toPromise()
-    await this.loadTests()
+    await this.testService.delete(test).toPromise();
+    await this.loadTests();
   }
 
   onEditTest(test: Test) {
-    this.router.navigate(['/tests', test.id])
+    this.router.navigate(['/tests', test.id]);
   }
 
   onCreateTest() {
-    this.router.navigate(['/tests', 'new'])
+    this.router.navigate(['/tests', 'new']);
   }
 }
