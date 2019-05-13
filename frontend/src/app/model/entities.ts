@@ -1,4 +1,3 @@
-
 export enum Role {
   MODERATOR = 'MODERATOR',
   REDACTOR = 'REDACTOR',
@@ -26,7 +25,7 @@ export interface Position extends MainEntity {
   active: boolean;
 }
 
-export const enum QuestionType {
+export enum QuestionType {
   OPEN = 'OPEN',
   CHOICE = 'CHOICE',
   SCALE = 'SCALE',
@@ -43,8 +42,8 @@ export interface Question {
   id: number;
   type: QuestionType;
   content: string;
-  availableChoices: string[];
-  availableRange: Range;
+  availableChoices?: string[];
+  availableRange?: Range;
 }
 
 export interface Test extends MainEntity {
@@ -55,4 +54,30 @@ export interface Test extends MainEntity {
   questions: Question[];
 }
 
-// TODO pozostałe encje
+export interface QuestionAnswer {
+  id: number;
+  question: Question;
+  choiceAnswer?: number[];
+  scaleAnswer?: number;
+  numberAnswer?: number;
+  openAnswer?: string;
+}
+
+export interface TestAnswer extends MainEntity  {
+  content: string;
+  test: Test;
+  user: User;
+  questionAnswers: QuestionAnswer[];
+}
+
+export interface QuestionAnswerEvaluation {
+  id: number;
+  content: string;
+  questionAnswer: QuestionAnswer;
+}
+
+export interface Evaluation extends MainEntity {
+  content: string;
+  testAnswer: TestAnswer;
+  answersEvaluations: QuestionAnswerEvaluation[];
+}

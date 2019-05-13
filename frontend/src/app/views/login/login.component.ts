@@ -35,6 +35,8 @@ export class LoginComponent implements OnInit {
       user => {
         switch (user.role) {
           case Role.MODERATOR:
+            this.router.navigateByUrl('/positions')
+            break;
           case Role.REDACTOR:
             this.router.navigateByUrl('/tests')
             break;

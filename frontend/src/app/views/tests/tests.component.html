@@ -1,2 +1,28 @@
-<div *ngFor="let test of tests"> {{test.name}}</div>
-
+Testy
+<button (click)="onCreateTest()" type="button" class="btn btn-success">Dodaj</button>
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Nazwa testu</th>
+    <th scope="col">Stanowisko</th>
+    <th scope="col"></th>
+    <th scope="col"></th>
+    <th scope="col"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let test of tests; let i = index">
+    <td>{{i}}</td>
+    <td>{{test.name}}</td>
+    <td>{{test.position.name}}</td>
+    <td>
+      <button (click)="onEditTest(test)" type="button" class="btn btn-primary">Edytuj</button>
+    </td>
+    <td>przypisz</td>
+    <td>
+      <button (click)="onDeleteTest(test)" type="button" class="btn btn-danger">Usuń</button>
+    </td>
+  </tr>
+  </tbody>
+</table>

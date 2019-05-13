@@ -1,20 +1,18 @@
 import {Injectable} from '@angular/core';
-
 import {BaseEntityService} from "./base-entity.service";
 import {HttpClient} from "@angular/common/http";
-import {Test} from "../model/entities";
-
+import {Evaluation} from "../model/entities";
 
 @Injectable({
   providedIn: 'root'
 })
-export class TestService extends BaseEntityService<Test> {
+export class EvaluationService extends BaseEntityService<Evaluation>{
 
   constructor(http: HttpClient) {
     super(http);
   }
 
   getEntityUrl(): string {
-    return 'tests';
+    return "evaluations";
   }
 }

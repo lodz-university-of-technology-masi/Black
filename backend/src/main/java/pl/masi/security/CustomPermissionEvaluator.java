@@ -5,6 +5,7 @@ import org.springframework.security.acls.AclPermissionEvaluator;
 import org.springframework.security.acls.model.AclService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
+import pl.masi.entity.Position;
 import pl.masi.entity.User;
 import pl.masi.service.UserService;
 
@@ -36,6 +37,10 @@ public class CustomPermissionEvaluator extends AclPermissionEvaluator {
     public boolean hasPermission(Authentication authentication, Object domainObject, Object permission) {
         User user = (User) authentication.getPrincipal();
         if (user.isModerator()) {
+            return true;
+        }
+
+        if (domainObject instanceof Position && user.isRedactor() && "READ".equals(permission)) {
             return true;
         }
 

@@ -1,0 +1,78 @@
+<div *ngIf="test" class="container">
+  <div class="form-group">
+    <label for="testName">Nazwa testu</label>
+    <input [(ngModel)]="test.name" type="text" class="form-control" id="testName">
+  </div>
+  <div class="form-group">
+    <label for="testLang">Język</label>
+    <select [(ngModel)]="test.language" class="form-control" id="testLang">
+      <option value="PL">Polski</option>
+      <option value="EN">English</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="testPosition">Stanowisko</label>
+    <select [(ngModel)]="test.position" class="form-control" id="testPosition">
+      <option *ngFor="let position of positions" [ngValue]="position">{{position.name}}</option>
+    </select>
+  </div>
+
+  Pytania <br>
+  <button (click)="onAddQuestion()" type="button" class="btn btn-primary">Dodaj pytanie</button>
+
+  <div *ngFor="let question of test.questions; let qidx=index" class="card">
+
+    <div class="card-body container">
+      <div class="row">
+        <div class="col-sm-8">
+          <label>Treść pytania</label>
+          <textarea [(ngModel)]="question.content" class="form-control"></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="row">
+            <label>Typ pytania</label>
+          </div>
+          <div class="row">
+            <div class="col-sm-3">
+              <select [(ngModel)]="question.type" class="form-control">
+                <option *ngFor="let type of questionTypes" [ngValue]="type">{{type}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div *ngIf="question.type === 'CHOICE'" class="col-sm-12">
+          <div class="row">
+            <label>Możliwe odpowiedzi</label>
+          </div>
+          <div *ngFor="let choice of question.availableChoices; let idx = index; trackBy: trackChoices" class="row">
+            <div class="col-sm-6">
+              <input [(ngModel)]="question.availableChoices[idx]" type="text" class="form-control">
+            </div>
+            <div class="col">
+              <button (click)="question.availableChoices.splice(idx, 1)" type="button" class="btn small btn-danger">usuń</button>
+            </div>
+          </div>
+          <button (click)="question.availableChoices ? question.availableChoices.push('Odpowiedź'): question.availableChoices=['Odpowiedź']" type="button" class="btn btn-primary">Dodaj odpowiedź</button>
+        </div>
+        <div *ngIf="question.type === 'SCALE'" class="col-sm-12">
+          <label>Wartość minimalna</label>
+          <input [(ngModel)]="question.availableRange.min" type="number" class="form-control">
+          <label>Wartość maksymalna</label>
+          <input [(ngModel)]="question.availableRange.max" type="number" class="form-control">
+          <label>Krok</label>
+          <input [(ngModel)]="question.availableRange.step" type="number" class="form-control">
+        </div>
+      </div>
+      <button (click)="test.questions.splice(qidx,1)" type="button" class="btn small btn-danger">Usuń pytanie</button>
+    </div>
+  </div>
+
+  <button (click)="onSave()" type="button" class="btn btn-primary">Zapisz</button>
+  <button (click)="router.navigate(['tests'])" type="button" class="btn btn-primary">Wróć</button>
+
+</div>
