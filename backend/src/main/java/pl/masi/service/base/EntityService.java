@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import pl.masi.entity.base.BaseEntity;
 import pl.masi.service.acl.AclManagementService;
+import pl.masi.validation.base.EntityValidator;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,9 @@ public abstract class EntityService<ENTITY extends BaseEntity> {
     protected AclManagementService aclManagementService;
 
     protected abstract JpaRepository<ENTITY, Long> getEntityRepository();
+    protected EntityValidator<ENTITY> getEntityValidator() {
+        return null;
+    }
 
     @Transactional(readOnly = true)
     @PostFilter("hasPermission(filterObject, 'READ')")
@@ -47,6 +51,9 @@ public abstract class EntityService<ENTITY extends BaseEntity> {
     @Transactional
     @PreAuthorize("hasPermission(#entity, 'WRITE')")
     public void update(ENTITY entity) {
+        if (getEntityValidator() != null) {
+            getEntityValidator().validate(entity);
+        }
         beforeUpdate(entity);
         ENTITY e = getEntityRepository().save(entity);
         afterUpdate(e);
@@ -55,6 +62,9 @@ public abstract class EntityService<ENTITY extends BaseEntity> {
     @Transactional
     @PreAuthorize("hasPermission(null, #entity.getClass().getCanonicalName(), 'CREATE')")
     public ENTITY create(ENTITY entity) {
+        if (getEntityValidator() != null) {
+            getEntityValidator().validate(entity);
+        }
         beforeCreate(entity);
         ENTITY e = getEntityRepository().save(entity);
         aclManagementService.createDefaultPermissions(e);
