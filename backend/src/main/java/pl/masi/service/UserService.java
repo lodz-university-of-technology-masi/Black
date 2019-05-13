@@ -58,6 +58,10 @@ public class UserService extends EntityService<User> implements UserDetailsServi
         }
     }
 
+    public Optional<User> getByLogin(String login){
+        return userRepository.findByLogin(login);
+    }
+
     public static User currentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return (authentication != null && authentication.getPrincipal() instanceof User) ? (User) authentication.getPrincipal() : null;
@@ -69,7 +73,7 @@ public class UserService extends EntityService<User> implements UserDetailsServi
 
 
 
-    private BCryptPasswordEncoder passwordEncoder;
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(11);
 
     @Transactional
     public void addUser(User userEntity) {

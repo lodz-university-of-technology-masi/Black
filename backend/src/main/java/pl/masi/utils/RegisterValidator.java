@@ -5,10 +5,11 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import pl.masi.entity.User;
 
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RegisterCheck implements Validator{
+public class RegisterValidator implements Validator {
 
     public static final String EMAIL_PATTERN = "^[a-zA-z0-9]+[\\._a-zA-Z0-9]*@[a-zA-Z0-9]+{2,}\\.[a-zA-Z]{2,}[\\.a-zA-Z0-9]*$";
 
@@ -21,13 +22,13 @@ public class RegisterCheck implements Validator{
         return m.matches();
     }
 
-        @Override
-        public boolean supports(Class<?> cls) {
+    @Override
+    public boolean supports(Class<?> cls) {
         return User.class.equals(cls);
     }
 
-        @Override
-        public void validate(Object obj, Errors errors) {
+    @Override
+    public void validate(Object obj, Errors errors) {
         User u = (User) obj;
 
         ValidationUtils.rejectIfEmpty(errors, "username", "error.userName.empty");
@@ -36,24 +37,25 @@ public class RegisterCheck implements Validator{
         ValidationUtils.rejectIfEmpty(errors, "language", "error.language.empty");
 
 
-
-        if (!u.getEmail().equals(null)) {
+        if (u.getEmail() != null) {
             boolean isMatch = checkEmailOrPassword(EMAIL_PATTERN, u.getEmail());
-            if(!isMatch) {
+            if (!isMatch) {
                 errors.rejectValue("email", "error.userEmailIsNotMatch");
             }
         }
 
-        if (!u.getPassword().equals(null)) {
+        if (u.getPassword() != null) {
             boolean isMatch = checkEmailOrPassword(PASSWORD_PATTERN, u.getPassword());
-            if(!isMatch) {
+            if (!isMatch) {
                 errors.rejectValue("password", "error.userPasswordIsNotMatch");
             }
         }
 
     }
-        public void validateEmailExist(User user, Errors errors) {
-        if (user != null) {
+
+    public void validateEmailExist(Optional<User> user, Errors errors) {
+        if (user.isPresent()) {
             errors.rejectValue("email", "error.userEmailExist");
         }
-}}
+    }
+}
