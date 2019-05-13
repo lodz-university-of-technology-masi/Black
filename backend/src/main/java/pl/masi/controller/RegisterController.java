@@ -4,12 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import pl.masi.entity.User;
 import pl.masi.service.UserService;
 import pl.masi.utils.RegisterCheck;
-
-import javax.ws.rs.POST;
 
 
 @Controller
