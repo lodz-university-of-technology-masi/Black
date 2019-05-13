@@ -9,7 +9,7 @@ import {BaseEntityService} from "./base-entity.service";
 @Injectable({
   providedIn: 'root'
 })
-export class UserService extends BaseEntityService {
+export class UserService extends BaseEntityService<User> {
 
   private static BASE_USER_URL='users';
   private static CURRENT_USER_URL=`${UserService.BASE_USER_URL}/current`;

@@ -19,7 +19,7 @@ export class TestsComponent implements OnInit {
   }
 
   async loadTests() {
-    this.tests = await this.testService.getAll<Test>().toPromise()
+    this.tests = await this.testService.getAll().toPromise()
     console.log(this.tests)
   }
 
