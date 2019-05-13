@@ -1,0 +1,37 @@
+<div class="table-container">
+  <button type="button" class="btn btn-success float-right col-md-2" data-toggle="modal"
+          data-target="#addPositionModal">Dodaj stanowisko <i class="fas fa-user user-ico"></i>
+  </button>
+  <label class="table-label"><h5>Stanowiska</h5></label>
+  <table *ngIf="positions && positions.length > 0; else noPositionsInfo" class="table" style="margin-top: 9px">
+    <thead class="thead-dark table-hover">
+    <tr>
+      <th scope="col" class="column-name">Nazwa stanowiska</th>
+      <th scope="col" class="column-name">Opis</th>
+      <th scope="col" class="column-name">Aktywne</th>
+      <th scope="col" class="column-name"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngFor="let position of positions; let i =index">
+      <tr class="tr-style">
+        <th class="row-style">{{position?.name}}</th>
+        <th class="row-style">{{position?.description}}</th>
+        <th class="row-style"><i class="fas fa-check-circle"
+                                 [ngClass]="position?.active===true ? 'fa-check-circle check': 'fa-minus-circle minus'"></i>
+        </th>
+        <th class="row-style"><i class="fas fa-edit edit-ico"></i></th>
+      </tr>
+    </ng-container>
+    </tbody>
+  </table>
+
+  <ng-template #noPositionsInfo>
+    <div class="alert alert-info" role="alert"
+         style="min-width: 100%; min-height: 350px; position: center; text-align: center; padding-top: 200px">
+      <div style="display: inline-block"><strong>Brak stanowisk</strong>
+      </div>
+    </div>
+  </ng-template>
+</div>
+

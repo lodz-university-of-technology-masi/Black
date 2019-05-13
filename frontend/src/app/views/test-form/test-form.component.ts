@@ -39,11 +39,11 @@ export class TestFormComponent implements OnInit {
 
   async onSave() {
     if (this.test.id) {
-      await this.testService.update(this.test).toPromise()
+      await this.testService.update(this.test).toPromise();
     } else {
-      await this.testService.create(this.test).toPromise()
+      await this.testService.create(this.test).toPromise();
     }
-    await this.router.navigate(['/tests'])
+    await this.router.navigate(['/tests']);
   }
 
   onAddQuestion() {

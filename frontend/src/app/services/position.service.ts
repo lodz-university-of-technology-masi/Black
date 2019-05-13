@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {BaseEntityService} from "./base-entity.service";
-import {HttpClient} from "@angular/common/http";
+import {BaseEntityService} from './base-entity.service';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,6 @@ export class PositionService extends BaseEntityService {
   }
 
   getEntityUrl(): string {
-    return "positions";
+    return 'positions';
   }
 }
