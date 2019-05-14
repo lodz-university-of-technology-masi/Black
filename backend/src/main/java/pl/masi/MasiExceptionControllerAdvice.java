@@ -1,4 +1,4 @@
-package pl.masi.validation.base;
+package pl.masi;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -8,11 +8,16 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import pl.masi.exception.ValidationException;
+import pl.masi.validation.base.ErrorDetailDto;
+import pl.masi.validation.base.ValidationErrorDto;
 
 import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
-public class ValidationControllerAdvice {
+public class MasiExceptionControllerAdvice {
+
+    // TODO obsługa wszystkich wyjątków MasiException
 
     @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ExceptionHandler({ValidationException.class})

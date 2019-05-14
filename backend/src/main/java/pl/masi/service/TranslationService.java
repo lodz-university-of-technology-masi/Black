@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pl.masi.entity.Question;
 import pl.masi.entity.Test;
+import pl.masi.exception.TranslationServiceUninitializedException;
 
 import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
@@ -38,12 +39,16 @@ public class TranslationService {
             GoogleCredentials googleCredentials = GoogleCredentials.fromStream(is);
             translate = TranslateOptions.newBuilder().setCredentials(googleCredentials).build().getService();
         } catch (FileNotFoundException e) {
-            logger.warn("Cannot Load Google credentials!", e);
-            throw e;
+            logger.warn("Cannot initialize TranslationService - cannot Load Google credentials!", e);
         }
     }
 
     public Test translate(Test test, String targetLang) {
+        // TODO prawidłowa obsługa Test.group
+
+        if (translate == null) {
+            throw new TranslationServiceUninitializedException("Illegal use of uninitialized TranslationService!");
+        }
 
         String srcLang = test.getLanguage().toLowerCase();
         targetLang = targetLang.toLowerCase();

@@ -5,6 +5,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import pl.masi.exception.ValidationException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ValidatorFactory;
