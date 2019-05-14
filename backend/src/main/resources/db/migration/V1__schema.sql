@@ -38,7 +38,7 @@ create table test
     name        varchar(100),
     "group"     bigint,
     language    varchar(30)                     not null,
-    position_id bigint references position (id) not null
+    position_id bigint references position (id)
 --     unique ("group", language)
 );
 
