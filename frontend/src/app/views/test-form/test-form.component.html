@@ -1,4 +1,6 @@
 <div *ngIf="test" class="container">
+  <button (click)="onTranslate()" type="button" class="btn btn-primary">Przetłumacz na EN</button>
+
   <div class="form-group">
     <label for="testName">Nazwa testu</label>
     <input [(ngModel)]="test.name" type="text" class="form-control" id="testName">

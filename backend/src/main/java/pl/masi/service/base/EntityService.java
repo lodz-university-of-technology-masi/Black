@@ -1,5 +1,7 @@
 package pl.masi.service.base;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.access.prepost.PostAuthorize;
@@ -17,6 +19,8 @@ public abstract class EntityService<ENTITY extends BaseEntity> {
 
     @Autowired
     protected AclManagementService aclManagementService;
+
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected abstract JpaRepository<ENTITY, Long> getEntityRepository();
     protected EntityValidator<ENTITY> getEntityValidator() {

@@ -1,5 +1,6 @@
 package pl.masi.config;
 
+import org.springframework.boot.autoconfigure.flyway.FlywayMigrationStrategy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -15,5 +16,14 @@ public class PersistenceJPAConfig{
         JpaTransactionManager transactionManager
                 = new JpaTransactionManager();
         return transactionManager;
+    }
+
+    // FIXME remove for production
+    @Bean
+    public FlywayMigrationStrategy flywayMigrationStrategy() {
+        return flyway -> {
+            flyway.clean();
+            flyway.migrate();
+        };
     }
 }
