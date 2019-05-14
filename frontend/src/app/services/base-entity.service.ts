@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {MainEntity} from '../model/entities';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,25 +12,24 @@ export abstract class BaseEntityService<E extends MainEntity> {
   abstract getEntityUrl(): string;
 
 
-  getAll(): Observable<E[]> {
-    return this.http.get<E[]>(this.getEntityUrl())
+  getAll(): Promise<E[]> {
+    return this.http.get<E[]>(this.getEntityUrl()).toPromise()
   }
 
-  getOne(id: number): Observable<E> {
-    return this.http.get<E>(`${this.getEntityUrl()}/${id}`)
+  getOne(id: number): Promise<E> {
+    return this.http.get<E>(`${this.getEntityUrl()}/${id}`).toPromise()
   }
 
-  create(entity: E): Observable<E> {
-    return this.http.post<E>(this.getEntityUrl(), entity)
+  create(entity: E): Promise<E> {
+    return this.http.post<E>(this.getEntityUrl(), entity).toPromise()
   }
 
-  update(entity: E): Observable<void> {
-    return this.http.put<void>(`${this.getEntityUrl()}/${entity.id}`, entity)
+  update(entity: E): Promise<void> {
+    return this.http.put<void>(`${this.getEntityUrl()}/${entity.id}`, entity).toPromise()
   }
 
-  delete(entity: E): Observable<void> {
-    return this.http.delete<void>(`${this.getEntityUrl()}/${entity.id}`)
-
+  delete(entity: E): Promise<void> {
+    return this.http.delete<void>(`${this.getEntityUrl()}/${entity.id}`).toPromise()
   }
 
 }

@@ -2,6 +2,7 @@ package pl.masi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +20,7 @@ import pl.masi.repository.UserRepository;
 import pl.masi.service.base.EntityService;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -59,7 +61,7 @@ public class UserService extends EntityService<User> implements UserDetailsServi
         }
     }
 
-    public Optional<User> getByLogin(String login){
+    public Optional<User> getByLogin(String login) {
         return userRepository.findByLogin(login);
     }
 
@@ -73,22 +75,28 @@ public class UserService extends EntityService<User> implements UserDetailsServi
     }
 
 
-
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(11);
 
     @Transactional
     public void addUser(RegistrationReqestDto userEntity) {
-        User user= new User();
+        User user = new User();
         user.setLogin(userEntity.getLogin());
         user.setEmail(userEntity.getEmail());
         user.setPassword(this.passwordEncoder.encode(userEntity.getPassword()));
         user.setRole(User.Role.CANDIDATE);
         user.setLanguage(userEntity.getLanguage());
         this.userRepository.saveAndFlush(user);
+
+
     }
 
-    @Override
+    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    public List<User> findAllByRole(User.Role role) {
+        return userRepository.findAllByRole(role);
+    }
+
     protected JpaRepository<User, Long> getEntityRepository() {
         return userRepository;
     }
+
 }
