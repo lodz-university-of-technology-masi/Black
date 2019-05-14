@@ -34,7 +34,8 @@ export class PositionsComponent implements OnInit {
 
   async loadPositions() {
 
-    this.positions = await this.positionsService.getAll().toPromise()
+    this.positions = await this.positionsService.getAll();
+
     console.log(this.positions);
   }
 
@@ -46,7 +47,7 @@ export class PositionsComponent implements OnInit {
       description: this.addPositionGroup.get('description').value,
       active: this.addPositionGroup.get('active').value === 'true'
     };
-    await this.positionsService.create(position).toPromise();
+    await this.positionsService.create(position);
     await this.loadPositions();
 
     this.toastr.success('Stanowisko zostało dodane', 'Sukces', {

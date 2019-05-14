@@ -6,6 +6,8 @@ import lombok.ToString;
 import pl.masi.entity.base.BaseEntity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,9 +22,11 @@ public class Test extends BaseEntity {
     @Column(name = "\"group\"")
     private Long group;
 
+    @NotEmpty
     private String language;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull
     private Position position;
 
     @OneToMany(mappedBy = "test", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)

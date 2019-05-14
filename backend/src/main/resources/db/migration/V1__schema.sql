@@ -1,17 +1,16 @@
-drop table if exists evaluation cascade;
-drop table if exists question cascade;
-drop table if exists test_answer cascade;
-drop table if exists "user" cascade;
-drop table if exists position cascade;
-drop table if exists test cascade;
-drop table if exists question_answer cascade;
-drop table if exists question_answer_evaluation cascade;
-
-drop table if exists acl_entry cascade;
-drop table if exists acl_object_identity cascade;
-drop table if exists acl_class cascade;
-drop table if exists acl_sid cascade;
-
+-- drop table if exists evaluation cascade;
+-- drop table if exists question cascade;
+-- drop table if exists test_answer cascade;
+-- drop table if exists "user" cascade;
+-- drop table if exists position cascade;
+-- drop table if exists test cascade;
+-- drop table if exists question_answer cascade;
+-- drop table if exists question_answer_evaluation cascade;
+--
+-- drop table if exists acl_entry cascade;
+-- drop table if exists acl_object_identity cascade;
+-- drop table if exists acl_class cascade;
+-- drop table if exists acl_sid cascade;
 
 create table "user"
 (
@@ -39,32 +38,28 @@ create table test
     name        varchar(100),
     "group"     bigint,
     language    varchar(30)                     not null,
-    position_id bigint references position (id) not null
+    position_id bigint references position (id)
 --     unique ("group", language)
 );
 
--- FIXME ws https://stackoverflow.com/questions/12596023/import-postgresql-triggers-on-startup-hibernate
--- create sequence if not exists test_group_seq;
---
--- CREATE OR REPLACE FUNCTION fill_test_group_if_empty()
---     RETURNS trigger
---     LANGUAGE plpgsql VOLATILE
---     AS
--- $BODY$
--- BEGIN
---     IF NEW.group IS NULL THEN
---         NEW.group:= nextval('test_group_seq');
---     END IF;
---
---     RETURN NEW;
--- END
--- $BODY$;
---
--- CREATE TRIGGER fill_test_group
---     BEFORE INSERT
---     ON test
---     FOR EACH ROW
--- EXECUTE PROCEDURE fill_test_group_if_empty();
+create sequence if not exists test_group_seq;
+CREATE OR REPLACE FUNCTION fill_test_group_if_empty()
+    RETURNS trigger
+    LANGUAGE plpgsql VOLATILE
+    AS
+$BODY$
+BEGIN
+    IF NEW.group IS NULL THEN
+        NEW.group:= nextval('test_group_seq');
+    END IF;
+    RETURN NEW;
+END
+$BODY$;
+CREATE TRIGGER fill_test_group
+    BEFORE INSERT
+    ON test
+    FOR EACH ROW
+EXECUTE PROCEDURE fill_test_group_if_empty();
 
 create table question
 (

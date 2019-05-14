@@ -2,12 +2,16 @@ package pl.masi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import pl.masi.dto.RegistrationReqestDto;
 import pl.masi.entity.Evaluation;
 import pl.masi.entity.Test;
 import pl.masi.entity.TestAnswer;
@@ -16,6 +20,7 @@ import pl.masi.repository.UserRepository;
 import pl.masi.service.base.EntityService;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,7 +34,6 @@ public class UserService extends EntityService<User> implements UserDetailsServi
 
     static {
         CANDIDATE_CAN_CREATE.add(TestAnswer.class.getCanonicalName());
-
         REDACTOR_CAN_CREATE.add(Test.class.getCanonicalName());
         REDACTOR_CAN_CREATE.add(Evaluation.class.getCanonicalName());
     }
@@ -57,17 +61,42 @@ public class UserService extends EntityService<User> implements UserDetailsServi
         }
     }
 
+    public Optional<User> getByLogin(String login) {
+        return userRepository.findByLogin(login);
+    }
+
     public static User currentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (authentication != null && authentication.getPrincipal() != null) ? (User) authentication.getPrincipal() : null;
+        return (authentication != null && authentication.getPrincipal() instanceof User) ? (User) authentication.getPrincipal() : null;
     }
 
     public User getCurrentUser() {
         return currentUser();
     }
 
-    @Override
+
+    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(11);
+
+    @Transactional
+    public void addUser(RegistrationReqestDto userEntity) {
+        User user = new User();
+        user.setLogin(userEntity.getLogin());
+        user.setEmail(userEntity.getEmail());
+        user.setPassword(this.passwordEncoder.encode(userEntity.getPassword()));
+        user.setRole(User.Role.CANDIDATE);
+        user.setLanguage(userEntity.getLanguage());
+        this.userRepository.saveAndFlush(user);
+
+
+    }
+
+    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    public List<User> findAllByRole(User.Role role) {
+        return userRepository.findAllByRole(role);
+    }
+
     protected JpaRepository<User, Long> getEntityRepository() {
         return userRepository;
     }
+
 }

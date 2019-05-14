@@ -72,7 +72,7 @@ INSERT INTO public.test (id, name, "group", language, position_id)
 VALUES (3, 'Test na stanowisko kierownika działu HR', 2, 'PL', 2);
 
 INSERT INTO public.question (id, number, type, content, body, test_id)
-VALUES (1, 0, 'CHOICE', 'treść pytania 1 - pytanie wyboru', 'odpowiedź1;odpowiedź2;odpowiedź3', 1);
+VALUES (1, 0, 'CHOICE', 'treść pytania 1 - pytanie wyboru', 'odpowiedź 1;odpowiedź 2;odpowiedź 3', 1);
 INSERT INTO public.question (id, number, type, content, body, test_id)
 VALUES (2, 1, 'SCALE', 'treść pytania 2 - pytanie skali', '1;0.5;15.5', 1);
 INSERT INTO public.question (id, number, type, content, body, test_id)
@@ -119,4 +119,6 @@ SELECT setval('acl_class_id_seq', (select max(id) from acl_class), true);
 SELECT setval('acl_sid_id_seq', (select max(id) from acl_sid), true);
 SELECT setval('acl_object_identity_id_seq', (select max(id) from acl_object_identity), true);
 SELECT setval('acl_entry_id_seq', (select max(id) from acl_entry), true);
+
+SELECT setval('test_group_seq', (select max("group") from test), true);
 

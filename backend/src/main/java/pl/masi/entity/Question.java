@@ -10,6 +10,7 @@ import pl.masi.utils.Range;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -50,13 +51,17 @@ public class Question extends BaseEntity {
             return null;
         }
 
+        if (body == null) {
+            return new ArrayList<>();
+        }
+
         String[] choices = body.split(SEPARATOR);
         return Arrays.asList(choices);
     }
 
     @Transient
     public void setAvailableChoices(List<String> choices) {
-        if (!isChoice()) {
+        if (!isChoice() || choices == null) {
             return;
         }
         body = String.join(SEPARATOR, choices);
@@ -68,6 +73,9 @@ public class Question extends BaseEntity {
         if (!isScale()) {
             return null;
         }
+        if (body == null) {
+            return new Range<>();
+        }
 
         String[] values = body.split(SEPARATOR);
         BigDecimal min = new BigDecimal(values[0]);
@@ -78,7 +86,7 @@ public class Question extends BaseEntity {
 
     @Transient
     public void setAvailableRange(Range<BigDecimal> range) {
-        if (!isScale()) {
+        if (!isScale() || range == null) {
             return;
         }
 

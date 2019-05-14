@@ -11,6 +11,8 @@ import pl.masi.entity.User;
 import pl.masi.service.UserService;
 import pl.masi.service.base.EntityService;
 
+import java.util.List;
+
 
 @Controller
 @RequestMapping(value = "/users")
@@ -26,6 +28,16 @@ public class UserController extends EntityController<User> {
 
     @GetMapping("/current")
     public ResponseEntity<User> getCurrentUser() {
-        return new ResponseEntity<>(service.getCurrentUser(), HttpStatus.OK);
+
+        User currentUser = service.getCurrentUser();
+        if (currentUser == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(currentUser, HttpStatus.OK);
+    }
+
+    @GetMapping("/redactors")
+    public ResponseEntity<List<User>> getRedactors() {
+        return new ResponseEntity<>(service.findAllByRole(User.Role.REDACTOR), HttpStatus.OK);
     }
 }
