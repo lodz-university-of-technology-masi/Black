@@ -42,8 +42,7 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl('/tests')
           break;
         case Role.CANDIDATE:
-          // TODO
-          console.warn('TODO domyślny route dla kandydata')
+          this.router.navigateByUrl('/tests')
           break;
       }
     } catch (err) {
