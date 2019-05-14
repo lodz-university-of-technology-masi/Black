@@ -9,6 +9,7 @@ import pl.masi.validation.base.EntityValidator;
 public class TestValidator extends EntityValidator<Test> {
 
     @Override
-    public void validate(Test test, Errors errors) {
+    public void validateObj(Test test, Errors errors) {
+        // TODO walidacja dostępnych języków
     }
 }
