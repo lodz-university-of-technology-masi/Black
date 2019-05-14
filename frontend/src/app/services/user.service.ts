@@ -23,6 +23,34 @@ export class UserService extends BaseEntityService<User> {
     super(http);
   }
 
+  async getRedactors(): Promise<User[]> {
+    return this.http.get<User[]>(UserService.BASE_USER_URL + "/redactors").toPromise()
+  }
+
+  async login(credentials: Credentials): Promise<User> {
+    const formData = new FormData();
+    formData.append('username', credentials.username);
+    formData.append('password', credentials.password);
+
+    return this.http.post<void>(UserService.SIGNIN_URL, formData)
+      .toPromise()
+      .then(() => this.http.get<User>(UserService.CURRENT_USER_URL).toPromise())
+      .then((user) => {
+        this.loggedIn = true;
+        return user;
+      })
+  }
+
+  async logout(): Promise<void> {
+    await this.http.post<void>(UserService.SIGNOUT_URL, {}).toPromise();
+    this.loggedIn = false;
+    return
+  }
+
+  getEntityUrl(): string {
+    return UserService.BASE_USER_URL;
+  }
+
   private async loadCurrentUser(): Promise<User> {
     return this.http.get<User>(UserService.CURRENT_USER_URL).toPromise()
   }
@@ -35,32 +63,5 @@ export class UserService extends BaseEntityService<User> {
       .then((user)=> true)
       .catch((err)=> false)
     return this.loggedIn
-  }
-
-  login(credentials: Credentials): Observable<User> {
-    const formData = new FormData();
-    formData.append('username', credentials.username);
-    formData.append('password', credentials.password);
-
-    return this.http.post(UserService.SIGNIN_URL, formData).pipe(
-      flatMap(() => this.http.get<User>(UserService.CURRENT_USER_URL)),
-      map((user) => {
-        this.loggedIn = true;
-        return user;
-      })
-    );
-  }
-
-  logout(): Observable<void> {
-
-    return this.http.post<void>(UserService.SIGNOUT_URL, {}).pipe(
-      map(() => {
-        this.loggedIn = false;
-      })
-    );
-  }
-
-  getEntityUrl(): string {
-    return UserService.BASE_USER_URL;
   }
 }
