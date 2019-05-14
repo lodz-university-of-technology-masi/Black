@@ -39,7 +39,7 @@ public class TranslationService {
             GoogleCredentials googleCredentials = GoogleCredentials.fromStream(is);
             translate = TranslateOptions.newBuilder().setCredentials(googleCredentials).build().getService();
         } catch (FileNotFoundException e) {
-            logger.warn("Cannot initialize TranslationService - cannot Load Google credentials!", e);
+            logger.warn("Cannot initialize TranslationService - cannot Load Google credentials! Set correct path in google.api.credentials.path property", e);
         }
     }
 
