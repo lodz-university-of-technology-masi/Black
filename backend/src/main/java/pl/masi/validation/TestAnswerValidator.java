@@ -9,6 +9,6 @@ import pl.masi.validation.base.EntityValidator;
 public class TestAnswerValidator extends EntityValidator<TestAnswer> {
 
     @Override
-    public void validate(TestAnswer testAnswer, Errors errors) {
+    public void validateObj(TestAnswer testAnswer, Errors errors) {
     }
 }
