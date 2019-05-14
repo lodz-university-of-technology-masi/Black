@@ -6,9 +6,9 @@ import lombok.Setter;
 @Setter
 @Getter
 public class RegistrationReqestDto {
-    private  String Login;
+    private  String login;
     private  String password;
-    private  String Email;
+    private  String email;
     private String language;
 
 

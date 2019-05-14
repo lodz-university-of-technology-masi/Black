@@ -3,6 +3,7 @@ package pl.masi.utils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+import pl.masi.dto.RegistrationReqestDto;
 import pl.masi.entity.User;
 
 import java.util.Optional;
@@ -29,9 +30,9 @@ public class RegisterValidator implements Validator {
 
     @Override
     public void validate(Object obj, Errors errors) {
-        User u = (User) obj;
+        RegistrationReqestDto u = (RegistrationReqestDto) obj;
 
-        ValidationUtils.rejectIfEmpty(errors, "username", "error.userName.empty");
+        ValidationUtils.rejectIfEmpty(errors, "login", "error.userName.empty");
         ValidationUtils.rejectIfEmpty(errors, "password", "error.userPassword.empty");
         ValidationUtils.rejectIfEmpty(errors, "email", "error.userEmail.empty");
         ValidationUtils.rejectIfEmpty(errors, "language", "error.language.empty");
