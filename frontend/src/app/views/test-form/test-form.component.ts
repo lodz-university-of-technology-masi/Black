@@ -19,6 +19,13 @@ export class TestFormComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.route.url.subscribe(queryParams => {
+      this.reloadComponent()
+    });
+    await this.reloadComponent()
+  }
+
+  async reloadComponent(){
     let id = this.route.snapshot.paramMap.get('id');
 
     if (id === 'new') {
@@ -61,6 +68,11 @@ export class TestFormComponent implements OnInit {
     };
 
     this.test.questions.push(question)
+  }
+
+  async onTranslate(){
+    let translatedTest = await this.testService.translateTest(this.test.id, "EN")
+    await this.router.navigate(['/tests', translatedTest.id]);
   }
 
   trackChoices(index, choice) {

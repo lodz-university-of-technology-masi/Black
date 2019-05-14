@@ -2,14 +2,14 @@ package pl.masi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import pl.masi.entity.Evaluation;
 import pl.masi.repository.EvaluationRepository;
 import pl.masi.service.base.EntityService;
 import pl.masi.validation.EvaluationValidator;
 import pl.masi.validation.base.EntityValidator;
 
-@Component
+@Service
 public class EvaluationService extends EntityService<Evaluation> {
 
     @Autowired

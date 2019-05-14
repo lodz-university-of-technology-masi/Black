@@ -33,8 +33,8 @@ export class PositionsComponent implements OnInit {
 
 
   async loadPositions() {
+
     this.positions = await this.positionsService.getAll();
-    console.log(this.positions);
   }
 
   async addPosition() {

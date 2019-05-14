@@ -9,6 +9,6 @@ import pl.masi.validation.base.EntityValidator;
 public class EvaluationValidator extends EntityValidator<Evaluation> {
 
     @Override
-    public void validate(Evaluation evaluation, Errors errors) {
+    public void validateObj(Evaluation evaluation, Errors errors) {
     }
 }

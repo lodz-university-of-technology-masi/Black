@@ -1,8 +1,9 @@
-package pl.masi.validation.base;
+package pl.masi.exception;
 
 import org.springframework.validation.Errors;
+import pl.masi.exception.MasiException;
 
-public class ValidationException extends RuntimeException {
+public class ValidationException extends MasiException {
 
     private Errors errors;
 

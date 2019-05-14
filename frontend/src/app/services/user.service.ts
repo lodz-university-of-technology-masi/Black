@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {User} from '../model/entities';
 import {flatMap, map} from 'rxjs/operators';
 import {BaseEntityService} from './base-entity.service';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +18,11 @@ export class UserService extends BaseEntityService<User> {
   private static SIGNOUT_URL = 'user/signout';
   private static SIGNIN_URL = 'user/signin';
 
-  private loggedIn = false;
+  private loggedIn: boolean = false;
+  role = '' ;
 
-  constructor(http: HttpClient) {
+
+  constructor(http: HttpClient, private router: Router) {
     super(http);
   }
 
@@ -37,6 +40,8 @@ export class UserService extends BaseEntityService<User> {
       .then(() => this.http.get<User>(UserService.CURRENT_USER_URL).toPromise())
       .then((user) => {
         this.loggedIn = true;
+      this.role = user.role;
+
         return user;
       })
   }
