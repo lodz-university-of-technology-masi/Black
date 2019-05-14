@@ -27,6 +27,7 @@ dependencies {
 	implementation 'org.springframework.security:spring-security-acl:5.1.5.RELEASE'
 	implementation 'org.springframework:spring-context-support'
 	implementation 'com.google.cloud:google-cloud-translate:1.70.0'
+    implementation "org.flywaydb:flyway-core:5.2.4"
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'

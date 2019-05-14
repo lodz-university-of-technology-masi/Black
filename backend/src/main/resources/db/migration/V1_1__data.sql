@@ -120,3 +120,5 @@ SELECT setval('acl_sid_id_seq', (select max(id) from acl_sid), true);
 SELECT setval('acl_object_identity_id_seq', (select max(id) from acl_object_identity), true);
 SELECT setval('acl_entry_id_seq', (select max(id) from acl_entry), true);
 
+SELECT setval('test_group_seq', (select max("group") from test), true);
+

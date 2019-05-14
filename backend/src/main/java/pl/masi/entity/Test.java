@@ -7,6 +7,7 @@ import pl.masi.entity.base.BaseEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class Test extends BaseEntity {
     private String language;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull
     private Position position;
 
     @OneToMany(mappedBy = "test", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
