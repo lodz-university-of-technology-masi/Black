@@ -21,18 +21,14 @@ export class HeaderComponent implements OnInit {
     this.userService = userService;
 
   }
-  ngOnInit(): void {
-
-    this.isLoggedIn = this.userService.isLoggedIn;
+  async ngOnInit() {
+    this.isLoggedIn = await this.userService.isLoggedIn();
     this.role = this.userService.role;
-
-    console.log(this.isLoggedIn);
-    console.log(this.role);
   }
 
-  logout() {
-    this.userService.logout().subscribe();
-    this.router.navigate(['/login']);
+  async logout() {
+    await this.userService.logout();
+    await this.router.navigate(['/login']);
     this.toastr.info('Zostałeś wylogowany', 'Sukces', {
       timeOut: 3000,
       closeButton: true,

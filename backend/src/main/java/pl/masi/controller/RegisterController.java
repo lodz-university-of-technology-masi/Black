@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.masi.entity.User;
+import pl.masi.exception.ValidationException;
 import pl.masi.service.UserService;
 import pl.masi.utils.RegisterValidator;
-import pl.masi.validation.base.ValidationException;
 import pl.masi.dto.RegistrationReqestDto;
 import java.util.Optional;
 

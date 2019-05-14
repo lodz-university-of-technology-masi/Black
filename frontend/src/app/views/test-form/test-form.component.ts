@@ -20,7 +20,6 @@ export class TestFormComponent implements OnInit {
 
   async ngOnInit() {
     this.route.url.subscribe(queryParams => {
-      console.log(queryParams)
       this.reloadComponent()
     });
     await this.reloadComponent()
@@ -74,7 +73,6 @@ export class TestFormComponent implements OnInit {
   async onTranslate(){
     let translatedTest = await this.testService.translateTest(this.test.id, "EN")
     await this.router.navigate(['/tests', translatedTest.id]);
-    console.log(translatedTest)
   }
 
   trackChoices(index, choice) {

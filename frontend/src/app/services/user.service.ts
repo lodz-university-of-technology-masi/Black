@@ -18,8 +18,7 @@ export class UserService extends BaseEntityService<User> {
   private static SIGNOUT_URL = 'user/signout';
   private static SIGNIN_URL = 'user/signin';
 
-
-  isLoggedIn = false;
+  private loggedIn: boolean = false;
   role = '' ;
 
 

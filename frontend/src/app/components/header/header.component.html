@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand logo" href="login">MASI <i class="fas fa-rocket"></i> </a>
-  <div class="collapse navbar-collapse" id="navbarText">
+  <div *ngIf="isLoggedIn" class="collapse navbar-collapse" id="navbarText">
     <ul class="navbar-nav mr-auto">
       <li *ngIf="role === 'MODERATOR'" class="nav-item">
         <a class="nav-link" [routerLink]="'/login'">Redaktorzy</a>
@@ -9,7 +9,7 @@
         <a class="nav-link" [routerLink]="'/positions'">Stanowiska</a>
       </li>
       <li *ngIf="role === 'MODERATOR'" class="nav-item">
-        <a class="nav-link" [routerLink]="'/login'">Testy</a>
+        <a class="nav-link" [routerLink]="'/tests'">Testy</a>
       </li>
       <li *ngIf="role === 'REDACTOR'" class="nav-item">
         <a class="nav-link" [routerLink]="'/tests'">Wszystkie testy</a>
