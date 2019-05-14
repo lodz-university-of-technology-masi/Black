@@ -29,28 +29,28 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit() {
+  async onSubmit() {
     let credentials = new Credentials(this.loginForm.get('username').value, this.loginForm.get('password').value)
-    this.userService.login(credentials).subscribe(
-      user => {
-        switch (user.role) {
-          case Role.MODERATOR:
-            this.router.navigateByUrl('/positions')
-            break;
-          case Role.REDACTOR:
-            this.router.navigateByUrl('/tests')
-            break;
-          case Role.CANDIDATE:
-            // TODO
-            console.warn('TODO domyślny route dla kandydata')
-            break;
-        }
-      },
-      err => {
-        // TODO obsługa błędów
-        alert("Logowanie nie powiodło się:" + err)
-        console.error('login error', err)
-      })
+    try {
+      let user = await this.userService.login(credentials)
+
+      switch (user.role) {
+        case Role.MODERATOR:
+          this.router.navigateByUrl('/positions')
+          break;
+        case Role.REDACTOR:
+          this.router.navigateByUrl('/tests')
+          break;
+        case Role.CANDIDATE:
+          // TODO
+          console.warn('TODO domyślny route dla kandydata')
+          break;
+      }
+    } catch (err) {
+      // TODO obsługa błędów
+      alert("Logowanie nie powiodło się:" + err)
+      console.error('login error', err)
+    }
 
   }
 
