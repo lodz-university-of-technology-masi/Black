@@ -31,17 +31,17 @@ export class TestFormComponent implements OnInit {
         questions: [],
       }
     } else {
-      this.test = await this.testService.getOne(Number.parseInt(id)).toPromise();
+      this.test = await this.testService.getOne(Number.parseInt(id));
     }
 
-    this.positions = await this.positionService.getAll().toPromise()
+    this.positions = await this.positionService.getAll();
   }
 
   async onSave() {
     if (this.test.id) {
-      await this.testService.update(this.test).toPromise();
+      await this.testService.update(this.test);
     } else {
-      await this.testService.create(this.test).toPromise();
+      await this.testService.create(this.test);
     }
     await this.router.navigate(['/tests']);
   }
