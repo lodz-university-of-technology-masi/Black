@@ -46,7 +46,7 @@ public class ACLContext {
 
     @Bean
     public AclAuthorizationStrategy aclAuthorizationStrategy() {
-        return new AclAuthorizationStrategyImpl(new SimpleGrantedAuthority(User.Role.MODERATOR.name()));
+        return new AclAuthorizationStrategyImpl(new SimpleGrantedAuthority(User.Role.MODERATOR.getAuthority()));
     }
 
     @Bean
