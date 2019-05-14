@@ -2,11 +2,13 @@ package pl.masi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 import pl.masi.entity.Question;
 import pl.masi.entity.Test;
 import pl.masi.entity.Question.Type;
 import pl.masi.utils.Range;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +18,13 @@ import java.util.stream.Collectors;
 @Component
 public class FilesService {
 
-    private static final String SEPARATOR = ";"; //
+    private static final String SEPARATOR = ";";
 
     @Autowired
     private TestService testService;
 
-    public void importTest(String csv) {
+    public void importTest(MultipartFile multipartFile) throws IOException {
+        String csv = new String(multipartFile.getBytes());
         List<List<String>> rows = new ArrayList<>();
         Test test = new Test();
         List<Question> questions = new ArrayList<>();
