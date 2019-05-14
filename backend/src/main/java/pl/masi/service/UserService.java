@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.masi.dto.RegistrationReqestDto;
 import pl.masi.entity.Evaluation;
 import pl.masi.entity.Test;
 import pl.masi.entity.TestAnswer;
@@ -76,13 +77,14 @@ public class UserService extends EntityService<User> implements UserDetailsServi
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(11);
 
     @Transactional
-    public void addUser(User userEntity) {
+    public void addUser(RegistrationReqestDto userEntity) {
         User user= new User();
         user.setLogin(userEntity.getLogin());
         user.setEmail(userEntity.getEmail());
         user.setPassword(this.passwordEncoder.encode(userEntity.getPassword()));
-        this.userRepository.saveAndFlush(userEntity);
-
+        user.setRole(User.Role.CANDIDATE);
+        user.setLanguage(userEntity.getLanguage());
+        this.userRepository.saveAndFlush(user);
     }
 
     @Override
