@@ -1,0 +1,12 @@
+version: "3"
+services:
+  masi_db:
+    image: postgres:10-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=masi
+      - POSTGRES_PASSWORD=masi
+      - POSTGRES_DB=masi
+volumes:
+  pg_data:
