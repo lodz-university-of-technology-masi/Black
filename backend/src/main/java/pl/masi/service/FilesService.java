@@ -78,8 +78,10 @@ public class FilesService {
             List<Question> questions = test.getQuestions();
             questions.forEach(question -> {
                 String type = "";
-                Boolean isBody = false;
+                boolean isBody = false;
                 StringBuilder body = new StringBuilder();
+                //W switch'u sprawdzany i zapisywany jest typ pytania oraz wybory (możliwe odpowiedz) pytania wyboru
+                // lub liczby dotyczące pytania skali
                 switch (question.getType()) {
                     case OPEN:
                         type = "O";
@@ -105,6 +107,7 @@ public class FilesService {
                         type = "L";
                         break;
                 }
+                //W csvLine budowany jest każdy wiersz pliku .csv
                 StringBuilder csvLine = new StringBuilder();
                 csvLine.append(questions.indexOf(question) + 1).append(SEPARATOR).append(type).append(SEPARATOR)
                         .append(test.getLanguage()).append(SEPARATOR).append(question.getContent());
@@ -115,7 +118,6 @@ public class FilesService {
                 }
                 csv.append(csvLine);
             });
-            System.out.println(csv.toString()); // TODO MC Usunąć
             ByteArrayResource resource = new ByteArrayResource(csv.toString().getBytes());
             return Optional.of(resource);
         }
