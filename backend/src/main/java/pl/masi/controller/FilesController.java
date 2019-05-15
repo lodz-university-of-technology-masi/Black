@@ -1,8 +1,11 @@
 package pl.masi.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -27,12 +30,17 @@ public class FilesController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Resource> exportTest(@PathVariable Long id) {
-        Optional<MultipartFile> file = service.exportTest(id);
-        //TODO MC Wysyłanie danych na front
-//        if (file.isPresent()) {
-//            return new ResponseEntity<>(file.get(), HttpStatus.OK);
-//        }
+    public ResponseEntity<ByteArrayResource> exportTest(@PathVariable Long id) {
+        Optional<ByteArrayResource> optionalResource = service.exportTest(id);
+        if (optionalResource.isPresent()) {
+            ByteArrayResource resource = optionalResource.get();
+            return ResponseEntity
+                    .ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=test.csv")
+                    .contentType(MediaType.TEXT_PLAIN)
+                    .contentLength(resource.contentLength())
+                    .body(resource);
+        }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

@@ -1,6 +1,7 @@
 package pl.masi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import pl.masi.entity.Question;
@@ -69,7 +70,7 @@ public class FilesService {
         testService.create(test);
     }
 
-    public Optional<MultipartFile> exportTest(Long id) {
+    public Optional<ByteArrayResource> exportTest(Long id) {
         Optional<Test> optionalTest = testService.findById(id);
         if (optionalTest.isPresent()) {
             StringBuilder csv = new StringBuilder();
@@ -114,8 +115,9 @@ public class FilesService {
                 }
                 csv.append(csvLine);
             });
-            System.out.println(csv); // TODO MC Usunąć
-//            return // TODO MC Zwracanie danych w odpowiedniej formie
+            System.out.println(csv.toString()); // TODO MC Usunąć
+            ByteArrayResource resource = new ByteArrayResource(csv.toString().getBytes());
+            return Optional.of(resource);
         }
         return Optional.empty();
     }
