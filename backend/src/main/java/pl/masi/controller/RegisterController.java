@@ -12,7 +12,7 @@ import pl.masi.entity.User;
 import pl.masi.exception.ValidationException;
 import pl.masi.service.UserService;
 import pl.masi.utils.RegisterValidator;
-import pl.masi.dto.RegistrationReqestDto;
+import pl.masi.dto.RegistrationRequestDto;
 import java.util.Optional;
 
 
@@ -24,7 +24,7 @@ public class RegisterController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<Void> registerUser(@RequestBody RegistrationReqestDto register, BindingResult result) {
+    public ResponseEntity<Void> registerUser(@RequestBody RegistrationRequestDto register, BindingResult result) {
 
         Optional<User> oldUser = userService.getByLogin(register.getLogin());
 

@@ -16,11 +16,10 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class EntityService<ENTITY extends BaseEntity> {
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     protected AclManagementService aclManagementService;
-
-    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected abstract JpaRepository<ENTITY, Long> getEntityRepository();
     protected EntityValidator<ENTITY> getEntityValidator() {
