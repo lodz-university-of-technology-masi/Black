@@ -6,6 +6,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Range<T extends Number & Comparable<T>> {
+
+    private static final String SEPARATOR = ";";
+
     private T min;
     private T max;
     private T step;
@@ -26,4 +29,7 @@ public class Range<T extends Number & Comparable<T>> {
         return false;
     }
 
+    public String toCsvString() {
+        return min + SEPARATOR + max + SEPARATOR + step;
+    }
 }

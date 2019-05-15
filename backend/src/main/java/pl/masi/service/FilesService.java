@@ -1,6 +1,7 @@
 package pl.masi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import pl.masi.entity.Question;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -61,11 +63,65 @@ public class FilesService {
             }
             question.setContent(row.get(3));
             question.setTest(test);
-            questions.set(Integer.parseInt(row.get(0))-1, question); // Pierwsza pozycja każdego wiersza to numer pytania
+            questions.set(Integer.parseInt(row.get(0)) - 1, question); // Pierwsza pozycja każdego wiersza to numer pytania
         });
         test.setLanguage(rows.get(0).get(2)); // TODO MC Sprawdzenie czy każde pytanie ma taki sam język
         test.setQuestions(questions);
         testService.create(test);
+    }
+
+    public Optional<ByteArrayResource> exportTest(Long id) {
+        Optional<Test> optionalTest = testService.findById(id);
+        if (optionalTest.isPresent()) {
+            StringBuilder csv = new StringBuilder();
+            Test test = optionalTest.get();
+            List<Question> questions = test.getQuestions();
+            questions.forEach(question -> {
+                String type = "";
+                boolean isBody = false;
+                StringBuilder body = new StringBuilder();
+                //W switch'u sprawdzany i zapisywany jest typ pytania oraz wybory (możliwe odpowiedz) pytania wyboru
+                // lub liczby dotyczące pytania skali
+                switch (question.getType()) {
+                    case OPEN:
+                        type = "O";
+                        break;
+                    case CHOICE:
+                        type = "W";
+                        isBody = true;
+                        List<String> choices = question.getAvailableChoices();
+                        body.append(choices.size()).append(SEPARATOR);
+                        for (String choice : choices) {
+                            body.append(choice);
+                            if (choices.indexOf(choice) != choices.size() - 1) {
+                                body.append(SEPARATOR);
+                            }
+                        }
+                        break;
+                    case SCALE:
+                        type = "S";
+                        isBody = true;
+                        body.append("|").append(SEPARATOR).append(question.getAvailableRange().toCsvString());
+                        break;
+                    case NUMBER:
+                        type = "L";
+                        break;
+                }
+                //W csvLine budowany jest każdy wiersz pliku .csv
+                StringBuilder csvLine = new StringBuilder();
+                csvLine.append(questions.indexOf(question) + 1).append(SEPARATOR).append(type).append(SEPARATOR)
+                        .append(test.getLanguage()).append(SEPARATOR).append(question.getContent());
+                if (isBody) {
+                    csvLine.append(SEPARATOR).append(body).append("\n");
+                } else {
+                    csvLine.append(SEPARATOR).append("|").append(SEPARATOR).append("\n");
+                }
+                csv.append(csvLine);
+            });
+            ByteArrayResource resource = new ByteArrayResource(csv.toString().getBytes());
+            return Optional.of(resource);
+        }
+        return Optional.empty();
     }
 
     private List<String> getListFromLine(String line) {

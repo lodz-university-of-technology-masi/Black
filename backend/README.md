@@ -3,6 +3,7 @@ Uruchomienie serwera:
 
 - Zainstaluj docker oraz docker-compose 
 - W katalogu `backend` uruchom polecenie `docker-compose up --build` lub skrypt `start_postgres.sh`
+lub skrypt `start_postgres.bat`.
 
 - Uruchom aplikację serwerową (`SPRING_PROFILES_ACTIVE=local ./gradlew bootRun` lub za pomocą IDE)
 
