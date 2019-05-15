@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import pl.masi.entity.Position;
 import pl.masi.repository.PositionRepository;
 import pl.masi.service.base.EntityService;
+import pl.masi.validation.PositionValidator;
+import pl.masi.validation.base.EntityValidator;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +17,9 @@ public class PositionService extends EntityService<Position> {
 
     @Autowired
     private PositionRepository repository;
+
+    @Autowired
+    private PositionValidator positionValidator;
 
     @Override
     protected JpaRepository<Position, Long> getEntityRepository() {
@@ -29,5 +34,10 @@ public class PositionService extends EntityService<Position> {
     @Override
     public Optional<Position> findById(Long id) {
         return super.findById(id);
+    }
+
+    @Override
+    protected EntityValidator<Position> getEntityValidator() {
+        return positionValidator;
     }
 }
