@@ -1,7 +1,6 @@
 package pl.masi.exception;
 
 import org.springframework.validation.Errors;
-import pl.masi.exception.MasiException;
 
 public class ValidationException extends MasiException {
 
