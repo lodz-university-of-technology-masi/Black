@@ -1,0 +1,42 @@
+.panel-block {
+  float: left;
+  width: 100%;
+  padding: 50px 0;
+  background: rgb(0, 92, 153);
+  min-height: 30rem;
+}
+
+.edit-panel-container {
+  clear: both;
+  margin: auto;
+  display: block;
+  min-height: 300px;
+  max-width: 30%;
+}
+
+.panel-container {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 15px 20px 0px rgba(0, 0, 0, 0.1);
+  padding-bottom: 15px;
+}
+
+.form-margin {
+  margin-left: 15%;
+}
+
+.btn-margin {
+  margin-left: 15px;
+}
+
+.div-margin {
+  margin-top: 20px;
+}
+
+.div-padding {
+  padding-top: 30px;
+}
+.span-validate {
+  background-color: #1f281e;
+  color: white;
+}

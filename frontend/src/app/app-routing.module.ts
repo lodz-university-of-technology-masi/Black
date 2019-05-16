@@ -6,6 +6,7 @@ import {TestsComponent} from './views/tests/tests.component';
 import {TestFormComponent} from './views/test-form/test-form.component';
 import {AuthGuard} from './auth.guard';
 import {PositionsComponent} from './views/positions/positions.component';
+import {PositionFormComponent} from './views/position-form/position-form.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -13,11 +14,12 @@ const routes: Routes = [
   {path: 'register', component: RegistrationComponent},
   {path: 'tests', component: TestsComponent},
   {path: 'tests/:id', component: TestFormComponent},
-  {path: 'positions', component: PositionsComponent}
+  {path: 'positions', component: PositionsComponent},
+  {path: 'positions/:id', component: PositionFormComponent}
 ];
 
-for (let route of routes) {
-  route.canActivate = [AuthGuard]
+for (const route of routes) {
+  route.canActivate = [AuthGuard];
 }
 
 @NgModule({
