@@ -3,7 +3,8 @@ import {Router} from '@angular/router';
 import {PositionService} from '../../services/position.service';
 import {Position} from '../../model/entities';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ToastrService} from "ngx-toastr";
+import {ToastrService} from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-positions',
@@ -15,6 +16,7 @@ export class PositionsComponent implements OnInit {
   positions: Position[];
   private position: Position;
   addPositionGroup: FormGroup;
+  active: boolean;
 
   constructor(private positionsService: PositionService,
               private router: Router,
@@ -31,9 +33,7 @@ export class PositionsComponent implements OnInit {
     this.loadPositions();
   }
 
-
   async loadPositions() {
-
     this.positions = await this.positionsService.getAll();
   }
 
@@ -52,6 +52,6 @@ export class PositionsComponent implements OnInit {
       timeOut: 3000,
       closeButton: true,
     });
-
   }
+
 }

@@ -1,0 +1,42 @@
+<app-header></app-header>
+<div class="panel-block" *ngIf="editPositionGroup">
+  <form [formGroup]="editPositionGroup" name="form" class="form" novalidate>
+    <div class="form-group col-md-5 panel-container edit-panel-container">
+      <div class="div-padding">
+        <h6><span class="badge badge-default float-left span-alert span-validate">Nazwa stanowiska</span></h6>
+        <input [formControlName]="'name'" type="text" class="form-control" placeholder="nazwa stanowiska"
+               aria-describedby="basic-addon1" value="{{positionToEdit?.name}}">
+        <h6><span *ngIf="!editPositionGroup.get('name').valid && editPositionGroup.get('name').dirty"
+                  class="badge badge-danger float-right span-alert ">To pole jest wymagane</span></h6>
+      </div>
+      <div class="div-margin">
+        <h6><span class="badge badge-default float-left span-alert span-validate">Opis</span></h6>
+        <input [formControlName]="'description'" type="text" class="form-control" placeholder="opis"
+               aria-describedby="basic-addon1" value="{{positionToEdit?.description}}">
+        <h6><span
+          *ngIf="!editPositionGroup.get('description').valid && editPositionGroup.get('description').dirty"
+          class="badge badge-danger float-right span-alert ">To pole jest wymagane</span></h6>
+      </div>
+      <div style="margin-top: 20px">
+        <div class="form-check form-check-inline form-margin">
+          <input [formControlName]="'active'" class="form-check-input" type="radio" name="active" id="inlineRadio1"
+                 value=true [checked]="positionToEdit?.active === true">
+          <label class="form-check-label" for="inlineRadio1">Aktywne </label>
+        </div>
+        <div class="form-check form-check-inline form-margin">
+          <input [formControlName]="'active'" class="form-check-input" type="radio" name="active" id="inlineRadio2"
+                 value=false [checked]="positionToEdit?.active === false">
+          <label class="form-check-label" for="inlineRadio2">Nieaktywne</label>
+        </div>
+      </div>
+      <div class="float-right div-padding">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancelEditPosition()">Anuluj
+        </button>
+        <button [disabled]="editPositionGroup.invalid" (click)="editPosition()" type="submit"
+                class="btn btn-success btn-margin"
+                data-dismiss="modal">Edytuj stanowisko
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

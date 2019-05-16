@@ -21,7 +21,11 @@
         <th class="row-style"><i class="fas fa-check-circle"
                                  [ngClass]="position?.active===true ? 'fa-check-circle check': 'fa-minus-circle minus'"></i>
         </th>
-        <th class="row-style"><i class="fas fa-edit edit-ico"></i></th>
+        <th class="row-style">
+          <a class="list-item reference edit-icon" routerLink="/positions/{{position.id}}">
+            <i class="fas fa-edit edit-ico"></i>
+          </a>
+        </th>
       </tr>
     </ng-container>
     </tbody>
@@ -61,7 +65,7 @@
               <div style="margin-top: 20px">
                 <div class="form-check form-check-inline form-margin">
                   <input formControlName="active" class="form-check-input" type="radio" name="active" id="inlineRadio1"
-                          value=true checked>
+                         value=true checked>
                   <label class="form-check-label" for="inlineRadio1">Aktywne </label>
                 </div>
                 <div class="form-check form-check-inline form-margin">
@@ -81,7 +85,6 @@
       </div>
     </div>
   </div>
-
   <ng-template #noPositionsInfo>
     <div class="alert alert-info" role="alert"
          style="min-width: 100%; min-height: 350px; position: center; text-align: center; padding-top: 200px">

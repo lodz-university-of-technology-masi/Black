@@ -1,6 +1,16 @@
 .table-container {
   margin: 60px;
+  min-height: 25rem;
 }
+
+th {
+  text-align: center;
+}
+.table-label {
+  position:relative;
+  top: 15px;
+}
+
 th {
   text-align: center;
 }
@@ -28,4 +38,11 @@ th {
 
 .form-margin {
   margin-left: 80px;
+}
+.reference:hover {
+  cursor: pointer;
+}
+
+.edit-ico {
+  color: #343434;
 }
