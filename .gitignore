@@ -1,2 +1,4 @@
 *.iml
 .idea/
+MASI-Black-google-credentials.json
+masi_deploy*
