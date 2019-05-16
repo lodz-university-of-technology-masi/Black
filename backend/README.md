@@ -7,6 +7,8 @@ lub skrypt `start_postgres.bat`.
 
 - Uruchom aplikację serwerową (`SPRING_PROFILES_ACTIVE=local ./gradlew bootRun` lub za pomocą IDE)
 
+Do developmentu klucz `MASI-Black-google-credentials.json` należy umieścić w głównym katalogu projektu.
+
 Bazę danych można również uruchomić natywnie:
 - Zainstaluj postgreSQL 10 (https://www.postgresql.org/download/) (dla Windows przy instalacji należy podać hasło "postgres") **Musi to być wersja 10!**
 - Utwórz użytkownika `postgres` z hasłem `postgres` (tylko Linux)
