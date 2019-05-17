@@ -1,0 +1,63 @@
+<app-header></app-header>
+<div class="table-container">
+  <button type="button" class="btn btn-success float-right col-md-2" data-toggle="modal"
+          data-target="#addRedactorModal">Dodaj redaktora <i class="fas fa-user user-ico"></i>
+  </button>
+  <label class="table-label"><h5>Redaktorzy</h5></label>
+  <table *ngIf="redactors && redactors.length > 0; else noRedactorsInfo" class="table" style="margin-top: 9px">
+    <thead class="thead-dark table-hover">
+    <tr>
+      <th scope="col" class="column-name">Nazwa użytkownika</th>
+      <th scope="col" class="column-name">Adres e-mail</th>
+      <th scope="col" class="column-name">Język</th>
+      <th scope="col" class="column-name"></th>
+      <th scope="col" class="column-name"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngFor="let redactor of redactors; let i =index">
+      <tr class="tr-style">
+        <th class="row-style">{{redactor?.login}}</th>
+        <th class="row-style">{{redactor?.email}}</th>
+        <th class="row-style">{{redactor?.language}}</th>
+        <th class="row-style">
+          <a class="list-item reference edit-icon" routerLink="/redactors/{{redactor.id}}">
+            <i class="fas fa-edit edit-ico"></i>
+          </a>
+        </th>
+        <th class="row-style"><i class="fas fa-trash-alt remove-ico"></i></th>
+      </tr>
+    </ng-container>
+    </tbody>
+  </table>
+
+  <!--  Add redactor modal-->
+  <div class="modal fade" id="addRedactorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Dodaj redaktora</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Tutaj będzie dodawanie</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+          <button type="submit" (click)="addRedactor()" class="btn btn-success" data-dismiss="modal">Dodaj redaktora
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #noRedactorsInfo>
+    <div class="alert alert-info" role="alert"
+         style="min-width: 100%; min-height: 350px; position: center; text-align: center; padding-top: 200px">
+      <div style="display: inline-block"><strong>Brak redaktorów</strong>
+      </div>
+    </div>
+  </ng-template>
+</div>

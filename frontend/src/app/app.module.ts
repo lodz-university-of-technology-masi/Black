@@ -20,6 +20,7 @@ import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { HeaderComponent } from './components/header/header.component';
 import { PositionFormComponent } from './views/position-form/position-form.component';
+import { RedactorsComponent } from './views/redactors/redactors.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { PositionFormComponent } from './views/position-form/position-form.compo
     TestFormComponent,
     PositionsComponent,
     HeaderComponent,
-    PositionFormComponent
+    PositionFormComponent,
+    RedactorsComponent
   ],
   imports: [
     BrowserModule,

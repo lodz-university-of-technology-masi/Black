@@ -3,7 +3,7 @@
   <div *ngIf="isLoggedIn" class="collapse navbar-collapse" id="navbarText">
     <ul class="navbar-nav mr-auto">
       <li *ngIf="role === 'MODERATOR'" class="nav-item">
-        <a class="nav-link" [routerLink]="'/login'">Redaktorzy</a>
+        <a class="nav-link" [routerLink]="'/redactors'">Redaktorzy</a>
       </li>
       <li *ngIf="role === 'MODERATOR'" class="nav-item">
         <a class="nav-link" [routerLink]="'/positions'">Stanowiska</a>
