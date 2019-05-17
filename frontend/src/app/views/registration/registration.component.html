@@ -7,7 +7,7 @@
       <h2 class='register_title text-center'>Zarejestruj się!
         <hr>
       </h2>
-      <form [formGroup]="registerForm" name="form" class="form" (ngSubmit)="registerForm.valid && onSubmit()">
+      <form [formGroup]="registerForm" name="form" class="form" (ngSubmit)="registerForm.valid">
         <p class="input_title">Nazwa użytkownika</p>
         <input formControlName="username" type="text" class="form-control" name="username" id="username"
                class="form-control" placeholder="">

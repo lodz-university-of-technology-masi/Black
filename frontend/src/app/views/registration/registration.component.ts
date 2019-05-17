@@ -8,8 +8,8 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 })
 export class RegistrationComponent implements OnInit {
 
-  private registerForm: FormGroup;
-  private languages: string[];
+  registerForm: FormGroup;
+  languages: string[];
 
   constructor() {
     this.registerForm = new FormGroup({

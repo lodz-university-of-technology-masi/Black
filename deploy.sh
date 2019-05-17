@@ -15,7 +15,7 @@ cp ./backend/src/main/resources/application-production.properties masi_deploy/ba
 
 # budowanie frontendu
 cd ./frontend/
-npm run ng build --prod
+npm run build-prod
 cd ..
 cp ./frontend/dist/frontend/** ./masi_deploy/frontend/
 
