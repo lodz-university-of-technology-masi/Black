@@ -13,12 +13,12 @@ import {UtilsService} from "../../services/utils.service";
 })
 export class TestFormComponent implements OnInit {
 
-  private test: Test;
+  test: Test;
   private positions: Position[];
   private questionTypes = Object.keys(QuestionType);
 
-  private selectedText: string;
-  private foundSynonyms: string[] = [];
+  selectedText: string;
+  foundSynonyms: string[] = [];
 
 
   @ViewChild(ContextMenuComponent) public basicMenu: ContextMenuComponent;

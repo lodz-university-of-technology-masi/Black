@@ -7,7 +7,7 @@ import {HttpClient} from "@angular/common/http";
 })
 export class UtilsService {
 
-  private static SYNONYMS_URL = "/synonyms";
+  private static SYNONYMS_URL = "synonyms";
 
   constructor(private http: HttpClient) {
   }
