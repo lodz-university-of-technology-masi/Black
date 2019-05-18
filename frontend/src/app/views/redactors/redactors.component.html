@@ -43,14 +43,41 @@
           </button>
         </div>
         <div class="modal-body">
-          <p>Tutaj będzie dodawanie</p>
+          <form [formGroup]="addRedactorGroup" name="form" class="form" novalidate>
+            <div class="form-group col-md-12">
+          <div>
+            <h6><span class="badge badge-default float-left span-alert"
+                      style="background-color: #1f281e; color: white">Nazwa Użytkownika</span></h6>
+            <input formControlName="login" type="text" class="form-control" placeholder="nazwa użytkownika"
+                   aria-describedby="basic-addon1">
+            <h6><span *ngIf="!addRedactorGroup.get('login').valid && addRedactorGroup.get('login').dirty"
+                      class="badge badge-danger float-right span-alert ">To pole jest wymagane</span></h6>
+          </div>
+              <div>
+                <h6><span class="badge badge-default float-left span-alert"
+                          style="background-color: #1f281e; color: white">Adres e-mail</span></h6>
+                <input formControlName="e-mail" type="text" class="form-control" placeholder="adres e-mail"
+                       aria-describedby="basic-addon1">
+                <h6><span *ngIf="!addRedactorGroup.get('e-mail').valid && addRedactorGroup.get('e-mail').dirty"
+                          class="badge badge-danger float-right span-alert ">To pole jest wymagane</span></h6>
+              </div>
+              <p class="input_title">Wybierz język:</p>
+              <select formControlName="language" id="inputState" class="form-control">
+                <option *ngFor="let language of languages" [ngValue]="language">
+                  {{ language }}
+                </option>
+              </select>
+<!--              <span *ngIf="language.touched && language.invalid"-->
+<!--                    class="badge badge-danger float-right span-alert ">To pole jest wymagane </span>-->
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
           <button type="submit" (click)="addRedactor()" class="btn btn-success" data-dismiss="modal">Dodaj redaktora
           </button>
         </div>
+        </form>
       </div>
+
     </div>
   </div>
   <ng-template #noRedactorsInfo>

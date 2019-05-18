@@ -4,6 +4,8 @@ import {HttpClient} from '@angular/common/http';
 import {User} from '../model/entities';
 import {BaseEntityService} from './base-entity.service';
 import {Router} from '@angular/router';
+import {RegisterCredential} from '../model/RegisterCredential';
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,7 @@ export class UserService extends BaseEntityService<User> {
 
   private static SIGNOUT_URL = 'user/signout';
   private static SIGNIN_URL = 'user/signin';
+  private static REGISTER_URL = 'register';
 
   private loggedIn = false;
   role = '';
@@ -43,10 +46,18 @@ export class UserService extends BaseEntityService<User> {
       });
   }
 
+  createNewAccount(registerCredentials: RegisterCredential): Observable<any> {
+    return this.http.post<any>(UserService.REGISTER_URL, registerCredentials);
+  }
+
+  createNewAccountPromise(registerCredentials: RegisterCredential): Promise<any> {
+    return this.http.post<any>(UserService.REGISTER_URL, registerCredentials).toPromise();
+  }
+
   async logout(): Promise<void> {
     await this.http.post<void>(UserService.SIGNOUT_URL, {}).toPromise();
     this.loggedIn = false;
-    return
+    return;
   }
 
   getEntityUrl(): string {
