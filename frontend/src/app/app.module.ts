@@ -18,10 +18,11 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {PositionsComponent} from './views/positions/positions.component';
 import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { HeaderComponent } from './components/header/header.component';
-import { PositionFormComponent } from './views/position-form/position-form.component';
-import { RedactorsComponent } from './views/redactors/redactors.component';
-import { RedactorFormComponent } from './views/redactor-form/redactor-form.component';
+import {HeaderComponent} from './components/header/header.component';
+import {PositionFormComponent} from './views/position-form/position-form.component';
+import {RedactorsComponent} from './views/redactors/redactors.component';
+import {RedactorFormComponent} from './views/redactor-form/redactor-form.component';
+
 
 @NgModule({
   declarations: [
