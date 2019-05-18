@@ -1,12 +1,11 @@
-
 export enum ReqOperation {
-  GRANT='GRANT',
-  REVOKE='REVOKE'
+  GRANT = 'GRANT',
+  REVOKE = 'REVOKE'
 }
 
 export enum ReqPermission {
-  READ='READ',
-  ALL='ALL'
+  READ = 'READ',
+  ALL = 'ALL'
 }
 
 export interface ChangePermsRequest {

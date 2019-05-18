@@ -25,6 +25,10 @@
         <div class="col-md-4 float-right">
           <button class="btn btn-primary" [disabled]="loginForm.invalid" type="submit">Zaloguj się</button>
         </div>
+        <div class="alert alert-danger col-md-12 alert_error" role="alert"
+             *ngIf="isLoginFailed">
+          <strong translate>Uwaga!</strong> {{errorMessage}}
+        </div>
       </form>
     </div>
   </div>

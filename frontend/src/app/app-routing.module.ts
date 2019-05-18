@@ -7,6 +7,8 @@ import {TestFormComponent} from './views/test-form/test-form.component';
 import {AuthGuard} from './auth.guard';
 import {PositionsComponent} from './views/positions/positions.component';
 import {PositionFormComponent} from './views/position-form/position-form.component';
+import {RedactorsComponent} from './views/redactors/redactors.component';
+import {RedactorFormComponent} from './views/redactor-form/redactor-form.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -15,7 +17,9 @@ const routes: Routes = [
   {path: 'tests', component: TestsComponent},
   {path: 'tests/:id', component: TestFormComponent},
   {path: 'positions', component: PositionsComponent},
-  {path: 'positions/:id', component: PositionFormComponent}
+  {path: 'positions/:id', component: PositionFormComponent},
+  {path: 'redactors', component: RedactorsComponent},
+  {path: 'redactors/:id', component: RedactorFormComponent}
 ];
 
 for (const route of routes) {

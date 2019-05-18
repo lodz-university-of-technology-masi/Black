@@ -1,0 +1,139 @@
+<app-header></app-header>
+<div class="table-container">
+  <button type="button" class="btn btn-success float-right col-md-2" data-toggle="modal"
+          data-target="#addRedactorModal">Dodaj redaktora <i class="fas fa-user user-ico"></i>
+  </button>
+  <label class="table-label"><h5>Redaktorzy</h5></label>
+  <table *ngIf="redactors && redactors.length > 0; else noRedactorsInfo" class="table" style="margin-top: 9px">
+    <thead class="thead-dark table-hover">
+    <tr>
+      <th scope="col" class="column-name">Nazwa użytkownika</th>
+      <th scope="col" class="column-name">Adres e-mail</th>
+      <th scope="col" class="column-name">Język</th>
+      <th scope="col" class="column-name"></th>
+      <th scope="col" class="column-name"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngFor="let redactor of redactors; let i =index">
+      <tr class="tr-style">
+        <th class="row-style">{{redactor?.login}}</th>
+        <th class="row-style">{{redactor?.email}}</th>
+        <th class="row-style">{{redactor?.language}}</th>
+        <th class="row-style">
+          <a class="reference edit-icon" routerLink="/redactors/{{redactor.id}}">
+            <i class="fas fa-edit edit-ico"></i>
+          </a>
+        </th>
+        <th class="row-style">
+          <a class="reference remove-ico" data-toggle="modal"
+             data-target="#removeRedactorModal" (click)="getRedactorToRemove(redactor?.id)">
+            <i class="fas fa-trash-alt remove-ico"></i>
+          </a>
+        </th>
+      </tr>
+    </ng-container>
+    </tbody>
+  </table>
+
+  <!--  Add redactor modal-->
+  <div class="modal fade" id="addRedactorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Dodaj redaktora</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="addRedactorFormGroup" name="form" class="form"
+                (ngSubmit)="addRedactorFormGroup.valid && onSubmit()">
+            <div>
+              <h6><span class="badge badge-default float-left span-alert"
+                        style="background-color: #1f281e; color: white">Nazwa użytkownika</span></h6>
+              <input formControlName="login" type="text" class="form-control" name="login" id="login"
+                     class="form-control" placeholder="">
+              <span *ngIf="!addRedactorFormGroup.get('login').valid && addRedactorFormGroup.get('login').dirty"
+                    class="badge badge-danger float-right span-alert ">To pole jest wymagane</span>
+            </div>
+            <div>
+              <h6><span class="badge badge-default float-left span-alert"
+                        style="background-color: #1f281e; color: white">E-mail</span></h6>
+              <input formControlName="mail" type="text" class="form-control" name="mail" id="mail"
+                     class="form-control" placeholder="">
+              <span *ngIf="!addRedactorFormGroup.get('mail').valid && addRedactorFormGroup.get('mail').dirty"
+                    class="badge badge-danger float-right span-alert ">Zły format danych</span>
+            </div>
+            <div>
+              <h6><span class="badge badge-default float-left span-alert"
+                        style="background-color: #1f281e; color: white">Hasło</span></h6>
+              <input formControlName="password" type="password" class="form-control" id="password" name="password"
+                     class="form-control" placeholder="">
+              <span *ngIf="!addRedactorFormGroup.get('password').valid && addRedactorFormGroup.get('password').dirty"
+                    class="badge badge-danger float-right span-alert ">To pole jest wymagane (min. 4 znaki)</span>
+            </div>
+            <div>
+              <h6><span class="badge badge-default float-left span-alert"
+                        style="background-color: #1f281e; color: white">Wybierz język</span></h6>
+              <select formControlName="language" id="inputState" class="form-control">
+                <option *ngFor="let language of languages" [ngValue]="language">
+                  {{ language }}
+                </option>
+              </select>
+              <span *ngIf="language.touched && language.invalid"
+                    class="badge badge-danger float-right span-alert ">To pole jest wymagane </span>
+              <div id="remember" class="checkbox">
+                <label>
+                </label>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+          <button type="submit" [disabled]="addRedactorFormGroup.invalid" (click)="addRedactorAccount()"
+                  class="btn btn-success" data-dismiss="modal">Dodaj redaktora
+          </button>
+          <div class="alert alert-danger col-md-12 alert_error" role="alert"
+               *ngIf="isCreateRedactorAccountFailed">
+            <strong translate>Uwaga!</strong> {{errorMessage}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--  Delete redactor account modal-->
+  <div class="modal fade" id="removeRedactorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="removeRedactorModalLabel">Usuń konto redaktora</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+         <p>Czy na pewno chcesz usunąć konto redaktora?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+          <button type="submit" (click)="removeRedactorAccount()"
+                  class="btn btn-danger" data-dismiss="modal">Usuń konto redaktora
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <ng-template #noRedactorsInfo>
+    <div class="alert alert-info" role="alert"
+         style="min-width: 100%; min-height: 350px; position: center; text-align: center; padding-top: 200px">
+      <div style="display: inline-block"><strong>Brak redaktorów</strong>
+      </div>
+    </div>
+  </ng-template>
+</div>

@@ -86,8 +86,17 @@ public class UserService extends EntityService<User> implements UserDetailsServi
         user.setRole(User.Role.CANDIDATE);
         user.setLanguage(userEntity.getLanguage());
         this.userRepository.saveAndFlush(user);
+    }
 
-
+    @Transactional
+    public void addRedactor(RegistrationRequestDto userEntity) {
+        User user = new User();
+        user.setLogin(userEntity.getLogin());
+        user.setEmail(userEntity.getEmail());
+        user.setPassword(this.passwordEncoder.encode(userEntity.getPassword()));
+        user.setRole(User.Role.REDACTOR);
+        user.setLanguage(userEntity.getLanguage());
+        this.userRepository.saveAndFlush(user);
     }
 
     @PreAuthorize("hasRole('ROLE_MODERATOR')")

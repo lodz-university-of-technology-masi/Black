@@ -1,0 +1,48 @@
+<app-header></app-header>
+<div class="panel-block" *ngIf="editRedactorForm">
+  <form [formGroup]="editRedactorForm" name="form" class="form" novalidate>
+    <div class="form-group col-md-5 panel-container edit-panel-container">
+      <div class="div-padding">
+        <h6><span class="badge badge-default float-left span-alert span-validate">Nazwa użytkownika</span></h6>
+        <input [formControlName]="'login'" type="text" class="form-control" placeholder="nazwa stanowiska"
+               aria-describedby="basic-addon1" value="{{redactorToEdit?.login}}">
+        <h6><span *ngIf="!editRedactorForm.get('login').valid && editRedactorForm.get('login').dirty"
+                  class="badge badge-danger float-right span-alert ">To pole jest wymagane</span></h6>
+      </div>
+      <div class="div-margin">
+        <h6><span class="badge badge-default float-left span-alert span-validate">E-mail</span></h6>
+        <input [formControlName]="'email'" type="text" class="form-control" placeholder="opis"
+               aria-describedby="basic-addon1" value="{{redactorToEdit?.email}}">
+        <h6><span
+          *ngIf="!editRedactorForm.get('email').valid && editRedactorForm.get('email').dirty"
+          class="badge badge-danger float-right span-alert ">To pole jest wymagane</span></h6>
+      </div>
+      <div>
+        <h6><span class="badge badge-default float-left span-alert"
+                  style="background-color: #1f281e; color: white">Język</span></h6>
+        <select formControlName="language" id="inputState" class="form-control">
+          <option *ngFor="let language of languages" [ngValue]="language">
+            {{ language }}
+          </option>
+        </select>
+        <span *ngIf="language.touched && language.invalid"
+              class="badge badge-danger float-right span-alert ">To pole jest wymagane </span>
+        <div id="remember" class="checkbox">
+          <label>
+          </label>
+        </div>
+        <div class="float-right">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancelEditRedactorAccount()">
+            Anuluj
+          </button>
+          <button [disabled]="editRedactorForm.invalid" (click)="editRedactorAccount()" type="submit"
+                  class="btn btn-success btn-margin"
+                  data-dismiss="modal">Edytuj stanowisko
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </form>
+</div>

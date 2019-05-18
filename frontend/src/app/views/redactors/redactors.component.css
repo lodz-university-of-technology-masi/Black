@@ -1,0 +1,40 @@
+.table-container {
+  margin: 60px;
+  min-height: 25rem;
+}
+
+th {
+  text-align: center;
+}
+.table-label {
+  position:relative;
+  top: 15px;
+}
+
+th {
+  text-align: center;
+}
+.user-ico {
+  font-size: 25px;
+}
+
+.table-label {
+  position:relative;
+  top: 15px;
+}
+
+.form-margin {
+  margin-left: 80px;
+}
+.reference:hover {
+  cursor: pointer;
+}
+
+.edit-ico {
+  color: #343434;
+  font-size: 25px;
+}
+.remove-ico {
+  color: red;
+  font-size: 25px;
+}

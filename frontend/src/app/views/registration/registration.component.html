@@ -9,9 +9,9 @@
       </h2>
       <form [formGroup]="registerForm" name="form" class="form" (ngSubmit)="registerForm.valid">
         <p class="input_title">Nazwa użytkownika</p>
-        <input formControlName="username" type="text" class="form-control" name="username" id="username"
+        <input formControlName="login" type="text" class="form-control" name="login" id="login"
                class="form-control" placeholder="">
-        <span *ngIf="!registerForm.get('username').valid && registerForm.get('username').dirty"
+        <span *ngIf="!registerForm.get('login').valid && registerForm.get('login').dirty"
               class="badge badge-danger float-right span-alert ">To pole jest wymagane</span>
         <p class="input_title">E-mail</p>
         <input formControlName="mail" type="text" class="form-control" name="mail" id="mail"
@@ -37,6 +37,10 @@
         </div>
         <div class="col-md-5 float-right">
           <button class="btn btn-primary" [disabled]="registerForm.invalid" type="submit">Zarejestruj się</button>
+        </div>
+        <div class="alert alert-danger col-md-12 alert_error" role="alert"
+             *ngIf="isRegistrationFailed">
+          <strong translate>Uwaga!</strong> {{errorMessage}}
         </div>
       </form>
     </div>

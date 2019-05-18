@@ -18,8 +18,11 @@ import {PositionsComponent} from './views/positions/positions.component';
 import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { PositionFormComponent } from './views/position-form/position-form.component';
+import { RedactorsComponent } from './views/redactors/redactors.component';
+import { RedactorFormComponent } from './views/redactor-form/redactor-form.component';
 import {HeaderComponent} from './components/header/header.component';
 import {ContextMenuModule} from "ngx-contextmenu";
+
 
 @NgModule({
   declarations: [
@@ -33,7 +36,9 @@ import {ContextMenuModule} from "ngx-contextmenu";
     TestFormComponent,
     PositionsComponent,
     HeaderComponent,
-    PositionFormComponent
+    PositionFormComponent,
+    RedactorsComponent,
+    RedactorFormComponent
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {BaseEntityService} from "./base-entity.service";
-import {HttpClient} from "@angular/common/http";
-import {TestAnswer} from "../model/entities";
+import {BaseEntityService} from './base-entity.service';
+import {HttpClient} from '@angular/common/http';
+import {TestAnswer} from '../model/entities';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,6 @@ export class TestAnswerService extends BaseEntityService<TestAnswer> {
   }
 
   getEntityUrl(): string {
-    return "answers";
+    return 'answers';
   }
 }
