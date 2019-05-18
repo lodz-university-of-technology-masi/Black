@@ -14,14 +14,15 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {APIInterceptor} from './services/interceptors/api-interceptor';
 import {TestsComponent} from './views/tests/tests.component';
 import {TestFormComponent} from './views/test-form/test-form.component';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {PositionsComponent} from './views/positions/positions.component';
 import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { HeaderComponent } from './components/header/header.component';
 import { PositionFormComponent } from './views/position-form/position-form.component';
 import { RedactorsComponent } from './views/redactors/redactors.component';
 import { RedactorFormComponent } from './views/redactor-form/redactor-form.component';
+import {HeaderComponent} from './components/header/header.component';
+import {ContextMenuModule} from "ngx-contextmenu";
+
 
 @NgModule({
   declarations: [
@@ -47,8 +48,10 @@ import { RedactorFormComponent } from './views/redactor-form/redactor-form.compo
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgbModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    ContextMenuModule.forRoot({
+      useBootstrap4: true,
+    })
   ],
   providers: [
     {

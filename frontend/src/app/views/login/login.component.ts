@@ -13,6 +13,8 @@ import {Role} from '../../model/entities';
 export class LoginComponent implements OnInit {
 
   private loginForm: FormGroup;
+  private isLoggedIn = false;
+
   private userService: UserService;
   private router: Router;
   private isLoginFailed = false;

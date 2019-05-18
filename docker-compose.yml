@@ -1,0 +1,33 @@
+version: '3.6'
+services:
+  masi_backend:
+    image: openjdk:8-alpine
+    container_name: masi_backend
+    restart: always
+    volumes:
+      - ./backend/:/opt/assets/
+    environment:
+      - SPRING_PROFILES_ACTIVE=production
+    command: java -jar /opt/assets/masi.jar
+  masi_db:
+    image: postgres:10-alpine
+    container_name: masi_db
+    restart: always
+    environment:
+      - POSTGRES_USER=masi
+      - POSTGRES_PASSWORD=masi
+      - POSTGRES_DB=masi
+#    ports:
+#      - "5432:5432"
+  masi_proxy:
+    image: nginx:latest
+    container_name: masi_proxy
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./frontend/:/usr/share/nginx/html
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    environment:
+      - NGINX_HOST=localhost
+      - NGINX_PORT=80
