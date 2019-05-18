@@ -14,7 +14,9 @@ public class RegisterValidator implements Validator {
 
     public static final String EMAIL_PATTERN = "^[a-zA-z0-9]+[\\._a-zA-Z0-9]*@[a-zA-Z0-9]+{2,}\\.[a-zA-Z]{2,}[\\.a-zA-Z0-9]*$";
 
-    public static final String PASSWORD_PATTERN = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\\!\\@\\#\\$\\*])(?!.*\\s).{8,12}$";
+    //    Validates a strong password. It must be between 8 and 10 characters, contain at least one digit and one alphabetic character,
+    //    and must not contain special characters
+    public static final String PASSWORD_PATTERN = "(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,10})$";
 
     public static boolean checkEmailOrPassword(String pattern, String pStr) {
 

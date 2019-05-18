@@ -13,6 +13,8 @@ export class RegistrationComponent implements OnInit {
 
   private registerForm: FormGroup;
   private languages: string[];
+  private isRegistrationFailed = false;
+  errorMessage: string;
 
   constructor(private userService: UserService,
               private toastr: ToastrService,
@@ -29,22 +31,25 @@ export class RegistrationComponent implements OnInit {
   ngOnInit() {
   }
 
-  async onSubmit() {
+  onSubmit() {
     const account = {
       login: this.registerForm.get('login').value,
       password: this.registerForm.get('password').value,
-      email:  this.registerForm.get('mail').value,
+      email: this.registerForm.get('mail').value,
       language: this.registerForm.get('language').value
     };
 
-    await this.userService.createNewAccount(account)
-      .catch(() => {
-        this.router.navigateByUrl('login');
-        this.toastr.success('Konto zostało utworzone', 'Sukces', {
-          timeOut: 3000,
-          closeButton: true,
+    this.userService.createNewAccount(account).subscribe(() => {
+          this.router.navigateByUrl('login');
+          this.toastr.success('Konto zostało utworzone', 'Sukces', {
+            timeOut: 3000,
+            closeButton: true,
+          });
+        },
+        (error) => {
+          this.isRegistrationFailed = true;
+          this.errorMessage = error;
         });
-      });
   }
 
   get language() {

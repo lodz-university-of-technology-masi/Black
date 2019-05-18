@@ -96,9 +96,12 @@
           <button type="submit" [disabled]="addRedactorFormGroup.invalid" (click)="addRedactorAccount()"
                   class="btn btn-success" data-dismiss="modal">Dodaj redaktora
           </button>
+          <div class="alert alert-danger col-md-12 alert_error" role="alert"
+               *ngIf="isCreateRedactorAccountFailed">
+            <strong translate>Uwaga!</strong> {{errorMessage}}
+          </div>
         </div>
       </div>
-
     </div>
   </div>
 

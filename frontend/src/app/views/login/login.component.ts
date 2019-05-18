@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Credentials} from "../../model/Credentials";
-import {UserService} from "../../services/user.service";
-import {Router} from "@angular/router";
-import {Role} from "../../model/entities";
+import {Credentials} from '../../model/Credentials';
+import {UserService} from '../../services/user.service';
+import {Router} from '@angular/router';
+import {Role} from '../../model/entities';
 
 @Component({
   selector: 'app-login',
@@ -13,9 +13,10 @@ import {Role} from "../../model/entities";
 export class LoginComponent implements OnInit {
 
   private loginForm: FormGroup;
-  private isLoggedIn = false;
   private userService: UserService;
   private router: Router;
+  private isLoginFailed = false;
+  errorMessage: string;
 
   constructor(restService: UserService, router: Router) {
     this.userService = restService;
@@ -30,10 +31,9 @@ export class LoginComponent implements OnInit {
   }
 
   async onSubmit() {
-    let credentials = new Credentials(this.loginForm.get('username').value, this.loginForm.get('password').value)
-    try {
-      let user = await this.userService.login(credentials)
+    const credentials = new Credentials(this.loginForm.get('username').value, this.loginForm.get('password').value)
 
+    await this.userService.login(credentials).then((user) => {
       switch (user.role) {
         case Role.MODERATOR:
           this.router.navigateByUrl('/positions')
@@ -45,12 +45,11 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl('/tests')
           break;
       }
-    } catch (err) {
-      // TODO obsługa błędów
-      alert("Logowanie nie powiodło się:" + err)
-      console.error('login error', err)
-    }
-
+    })
+      .catch((error) => {
+        this.isLoginFailed = true;
+        this.errorMessage = error;
+      });
   }
 
 }

@@ -16,6 +16,8 @@ export class RedactorsComponent implements OnInit {
   private addRedactorFormGroup: FormGroup;
   languages: string[];
   private redactor: User;
+  private isCreateRedactorAccountFailed = false;
+  errorMessage: string;
 
   constructor(private userService: UserService,
               private router: Router,
@@ -36,7 +38,7 @@ export class RedactorsComponent implements OnInit {
     });
   }
 
-  async addRedactorAccount() {
+  addRedactorAccount() {
     const account = {
       login: this.addRedactorFormGroup.get('login').value,
       password: this.addRedactorFormGroup.get('password').value,
@@ -44,8 +46,7 @@ export class RedactorsComponent implements OnInit {
       language: this.addRedactorFormGroup.get('language').value
     };
 
-    await this.userService.createNewRedactorAccount(account)
-      .then(() => {
+    this.userService.createNewRedactorAccount(account).subscribe(() => {
         this.userService.getRedactors().then((item) => {
           this.redactors = item;
         });
@@ -54,6 +55,10 @@ export class RedactorsComponent implements OnInit {
           timeOut: 3000,
           closeButton: true,
         });
+      },
+      (error) => {
+        this.isCreateRedactorAccountFailed = true;
+        this.errorMessage = error;
       });
   }
 
