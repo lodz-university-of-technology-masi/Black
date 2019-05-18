@@ -37,7 +37,7 @@ export class RegistrationComponent implements OnInit {
       language: this.registerForm.get('language').value
     };
 
-    await this.userService.createNewAccountPromise(account)
+    await this.userService.createNewAccount(account)
       .catch(() => {
         this.router.navigateByUrl('login');
         this.toastr.success('Konto zostało utworzone', 'Sukces', {

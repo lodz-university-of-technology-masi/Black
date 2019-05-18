@@ -5,7 +5,6 @@ import {User} from '../model/entities';
 import {BaseEntityService} from './base-entity.service';
 import {Router} from '@angular/router';
 import {RegisterCredential} from '../model/RegisterCredential';
-import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -45,13 +44,12 @@ export class UserService extends BaseEntityService<User> {
         return user;
       });
   }
-
-  createNewAccount(registerCredentials: RegisterCredential): Observable<any> {
-    return this.http.post<any>(UserService.REGISTER_URL, registerCredentials);
+  createNewAccount(registerCredentials: RegisterCredential): Promise<any> {
+    return this.http.post<any>(UserService.REGISTER_URL, registerCredentials).toPromise();
   }
 
-  createNewAccountPromise(registerCredentials: RegisterCredential): Promise<any> {
-    return this.http.post<any>(UserService.REGISTER_URL, registerCredentials).toPromise();
+  createNewRedactorAccount(registerCredentials: RegisterCredential): Promise<any> {
+    return this.http.post<any>(UserService.REGISTER_URL + '/redactor', registerCredentials).toPromise();
   }
 
   async logout(): Promise<void> {
