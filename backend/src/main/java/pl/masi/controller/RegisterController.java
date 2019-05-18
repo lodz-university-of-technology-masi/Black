@@ -44,17 +44,7 @@ public class RegisterController {
     @PostMapping(path = "/redactor")
     public ResponseEntity<Void> registerRedactor(@RequestBody RegistrationRequestDto register, BindingResult result) {
 
-        Optional<User> oldUser = userService.getByLogin(register.getLogin());
-
-        new RegisterValidator().validateEmailExist(oldUser, result);
-
-        new RegisterValidator().validate(register, result);
-
-        if (result.hasErrors()) {
-            throw new ValidationException(result);
-        }
-
-        userService.addRedactor(register);
+        userService.addRedactor(register,result);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
