@@ -1,0 +1,78 @@
+.container-block {
+  margin-top: 40px;
+  min-height: 25rem;
+}
+
+.panel-block {
+  float: left;
+  width: 100%;
+  padding: 50px 0;
+  background: rgb(0, 92, 153);
+  min-height: 30rem;
+}
+
+.panel-container {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 15px 20px 0px rgba(0, 0, 0, 0.1);
+  padding-bottom: 15px;
+}
+
+.test-panel-container {
+  clear: both;
+  margin: auto;
+  display: block;
+  min-height: 300px;
+  max-width: 80%;
+}
+
+.span-validate {
+  background-color: #1f281e;
+  color: white;
+  font-weight: 700;
+}
+
+.col-margin {
+  margin-left: 4.5%;
+}
+
+.translate-btn {
+  margin-top: 5px;
+  margin-right: 4%;
+}
+
+.add-quest-btn {
+  margin-right: 8%;
+  margin-bottom: 0.35%;
+}
+
+.mg-1{
+  margin-top: 1%;
+}
+
+.answers {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.answer {
+  margin-right: 2%;
+  margin-bottom: 1%;
+}
+.delete-answer {
+  margin-right: 5.35%;
+  margin-top: 0.5%;
+}
+
+.btn-save {
+  margin-right: 0.7%;
+}
+
+.btn-can-sav {
+  margin-right: 8%;
+  margin-top: 0.35%;
+}
+
+.answer-input {
+  margin-right: 1%;
+}
