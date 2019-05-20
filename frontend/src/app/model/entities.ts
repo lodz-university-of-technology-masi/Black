@@ -81,3 +81,18 @@ export interface Evaluation extends MainEntity {
   testAnswer: TestAnswer;
   answersEvaluations: QuestionAnswerEvaluation[];
 }
+
+export interface UsabilityData extends MainEntity{
+  ip?: string;
+  browser: string;
+  username?: any;
+  measurementNumber?: any;
+  saveTime?: Date;
+  screenWidth: number;
+  screenHeight: number;
+  mouseClicks: number;
+  timeElapsed: number;
+  distance: number;
+  fail: boolean;
+  error?: number;
+}
