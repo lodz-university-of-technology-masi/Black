@@ -16,22 +16,22 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let test of tests; let i = index">
-      <td>{{i}}</td>
-      <td>{{test.name}}</td>
-      <td>{{test.position.name}}</td>
-      <td class="row-style">
+    <tr *ngFor="let test of tests; let i = index" class="tr-style">
+      <th class="row-style">{{i}}</th>
+      <th class="row-style">{{test.name}}</th>
+      <th class="row-style">{{test.position.name}}</th>
+      <th class="row-style">
         <a class="reference edit-icon" (click)="onEditTest(test)">
           <i class="fas fa-edit edit-ico"></i>
         </a>
-      </td>
-      <td class="row-style">
+      </th>
+      <th class="row-style">
         <a class="reference remove-ico" data-toggle="modal"
            data-target="#removeRedactorModal" (click)="onDeleteTest(test)">
           <i class="fas fa-trash-alt remove-ico"></i>
         </a>
-      </td>
-      <td class="btn-assign"><button type="button" class="btn btn-primary ">Przypisz do stanowiska</button></td>
+      </th>
+      <th class="btn-assign"><button type="button" class="btn btn-primary ">Przypisz do stanowiska</button></th>
     </tr>
     </tbody>
   </table>
