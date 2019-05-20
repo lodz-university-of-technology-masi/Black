@@ -12,8 +12,8 @@ import {Router} from '@angular/router';
 export class RegistrationComponent implements OnInit {
 
 
-  private registerForm: FormGroup;
-  private isRegistrationFailed = false;
+  registerForm: FormGroup;
+  isRegistrationFailed = false;
   errorMessage: string;
   languages: string[];
 

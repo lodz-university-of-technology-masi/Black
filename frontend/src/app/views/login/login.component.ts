@@ -12,12 +12,12 @@ import {Role} from '../../model/entities';
 })
 export class LoginComponent implements OnInit {
 
-  private loginForm: FormGroup;
+  loginForm: FormGroup;
   private isLoggedIn = false;
 
   private userService: UserService;
   private router: Router;
-  private isLoginFailed = false;
+  isLoginFailed = false;
   errorMessage: string;
 
   constructor(restService: UserService, router: Router) {

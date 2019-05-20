@@ -12,7 +12,7 @@ import {ToastrService} from 'ngx-toastr';
 })
 export class RedactorFormComponent implements OnInit {
   private id: number;
-  private editRedactorForm: FormGroup;
+  editRedactorForm: FormGroup;
   private redactorToEdit: User;
   languages: string[];
 
