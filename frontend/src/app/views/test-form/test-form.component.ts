@@ -1,8 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {TestService} from "../../services/test.service";
 import {Position, Question, QuestionType, Test} from "../../model/entities";
 import {PositionService} from "../../services/position.service";
+import {ContextMenuComponent, ContextMenuService} from "ngx-contextmenu";
+import {UtilsService} from "../../services/utils.service";
 
 @Component({
   selector: 'app-test-form',
@@ -11,11 +13,21 @@ import {PositionService} from "../../services/position.service";
 })
 export class TestFormComponent implements OnInit {
 
-  private test: Test;
+  test: Test;
   private positions: Position[];
   private questionTypes = Object.keys(QuestionType);
 
-  constructor(private testService: TestService, private router: Router, private route: ActivatedRoute, private positionService: PositionService) {
+  selectedText: string;
+  foundSynonyms: string[] = [];
+
+
+  @ViewChild(ContextMenuComponent) public basicMenu: ContextMenuComponent;
+
+  constructor(private testService: TestService,
+              private router: Router,
+              private route: ActivatedRoute,
+              private positionService: PositionService,
+              private utilsService: UtilsService ) {
   }
 
   async ngOnInit() {
@@ -77,6 +89,32 @@ export class TestFormComponent implements OnInit {
 
   trackChoices(index, choice) {
     return index
+  }
+
+  onSelectionChange(evt) {
+    const start = evt.target.selectionStart;
+    const end = evt.target.selectionEnd;
+
+    this.selectedText = evt.target.value.substr(start, end - start);
+  }
+
+  onContextMenuClosed(){
+    this.selectedText = null;
+    this.foundSynonyms = null;
+  }
+
+  async searchSynonyms(){
+    this.foundSynonyms = await this.utilsService.findSynonyms(this.selectedText);
+    this.selectedText = null;
+  }
+
+  searchWiki() {
+    // TODO obsługa wikipedii
+    console.log('search wikipedia: ', this.selectedText)
+  }
+
+  public showContextMenuItems = (item: any): boolean => {
+    return !this.foundSynonyms;
   }
 
 }

@@ -11,10 +11,12 @@ import {Router} from '@angular/router';
 })
 export class RegistrationComponent implements OnInit {
 
+
   private registerForm: FormGroup;
-  private languages: string[];
   private isRegistrationFailed = false;
   errorMessage: string;
+  languages: string[];
+
 
   constructor(private userService: UserService,
               private toastr: ToastrService,

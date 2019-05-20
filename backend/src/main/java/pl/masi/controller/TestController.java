@@ -11,8 +11,6 @@ import pl.masi.entity.Test;
 import pl.masi.service.TestService;
 import pl.masi.service.base.EntityService;
 
-import java.util.Optional;
-
 @Controller
 @RequestMapping(value = "/tests")
 public class TestController extends EntityController<Test> {
