@@ -39,4 +39,5 @@ public class TestController extends EntityController<Test> {
         service.changePerms(changePermsRequest);
         return ResponseEntity.ok().build();
     }
+    
 }

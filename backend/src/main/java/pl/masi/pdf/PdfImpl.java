@@ -7,11 +7,12 @@ import com.lowagie.text.pdf.PdfWriter;
 import pl.masi.entity.Question;
 import pl.masi.entity.Test;
 import pl.masi.exception.PdfException;
+import pl.masi.service.PdfService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class PdfImpl {
+public class PdfImpl implements PdfService {
 
     public byte[] pdfCreator(Test test) throws PdfException {
         try {
@@ -32,8 +33,16 @@ public class PdfImpl {
                     for (int j = 0; j < 4; j++) {
                         doc.add(Chunk.NEWLINE);
                     }
-                } else {
-                    createListOfAnswers(test, doc, i);
+                } if (typeName.equals(String.valueOf(Question.Type.CHOICE))){
+                    test.getQuestions().get(i).getAvailableChoices();
+                    doc.add(Chunk.NEWLINE);
+                }
+                if (typeName.equals(String.valueOf(Question.Type.SCALE))){
+                    test.getQuestions().get(i).getAvailableRange();
+                    doc.add(Chunk.NEWLINE);
+                }
+                if(typeName.equals(String.valueOf(Question.Type.NUMBER))){
+                    doc.add(Chunk.NEWLINE);
                 }
                 doc.add(Chunk.NEWLINE);
             }
@@ -45,7 +54,5 @@ public class PdfImpl {
         }
     }
 
-    private void createListOfAnswers(Test test, Document document, int i) {
-      //TO DO
-    }
+
 }
