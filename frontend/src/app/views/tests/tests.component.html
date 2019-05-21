@@ -1,4 +1,6 @@
-<app-header></app-header>
+<section>
+  <app-header></app-header>
+</section>
 <div class="table-container">
   <button type="button" (click)="onCreateTest()" class="btn btn-success float-right col-md-2">
     <i class="fas fa-plus plus-ico"></i> Dodaj test
@@ -30,7 +32,9 @@
            data-target="#removeRedactorModal" (click)="onDeleteTest(test)">
           <i class="fas fa-trash-alt remove-ico"></i>
         </a>
-      </th>
+        <th>
+        <a (click)="onExportTest(test)" [href]="fileUrl" download="test_number.txt" class="btn btn-primary">Eksportuj</a>
+    </th>
       <th class="btn-assign"><button type="button" class="btn btn-primary ">Przypisz do stanowiska</button></th>
     </tr>
     </tbody>
