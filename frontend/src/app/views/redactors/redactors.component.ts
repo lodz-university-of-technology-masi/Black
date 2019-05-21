@@ -13,10 +13,10 @@ import {ToastrService} from 'ngx-toastr';
 export class RedactorsComponent implements OnInit {
 
   redactors: User[];
-  private addRedactorFormGroup: FormGroup;
+  addRedactorFormGroup: FormGroup;
   languages: string[];
   private redactor: User;
-  private isCreateRedactorAccountFailed = false;
+  isCreateRedactorAccountFailed = false;
   errorMessage: string;
 
   constructor(private userService: UserService,
@@ -84,6 +84,9 @@ export class RedactorsComponent implements OnInit {
 
   get language() {
     return this.addRedactorFormGroup.get('language');
+  }
+  onSubmit(){
+
   }
 
 }
