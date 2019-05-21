@@ -51,4 +51,10 @@ public class UsabilityDataController {
         UsabilityData created = getEntityService().create(data);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
+
+    @PostMapping(path = "/screenshot")
+    public ResponseEntity uploadScreenshot() {
+        // TODO
+        return ResponseEntity.badRequest().build();
+    }
 }

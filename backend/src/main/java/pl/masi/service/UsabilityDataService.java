@@ -26,6 +26,8 @@ public class UsabilityDataService extends EntityService<UsabilityData> {
     @Override
     protected void beforeCreate(UsabilityData entity) {
         entity.setUsername(userService.getCurrentUser().getUsername());
+        Integer num = repository.getMeasurementNumber(entity.getUsername());
+        entity.setMeasurementNumber(num == null ? 0 : num + 1);
         entity.setSaveTime(ZonedDateTime.now());
     }
 }

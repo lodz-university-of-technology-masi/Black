@@ -5,6 +5,7 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {UsabilityData} from '../model/entities';
 import {DeviceDetectorService} from "ngx-device-detector";
 import {ToastrService} from "ngx-toastr";
+import {ViewportScroller} from "@angular/common";
 
 
 const DEBUG = false;
@@ -31,7 +32,7 @@ export class UsabilityDataService extends BaseEntityService<UsabilityData> {
   private lastX: number = 0;
   private lastY: number = 0;
 
-  constructor(http: HttpClient, private deviceDetector: DeviceDetectorService, private toastr: ToastrService) {
+  constructor(http: HttpClient, private deviceDetector: DeviceDetectorService, private toastr: ToastrService, private scroller: ViewportScroller) {
     super(http);
     let info = this.deviceDetector.getDeviceInfo();
     this.browserCode = info.browser.charAt(0);
@@ -53,7 +54,15 @@ export class UsabilityDataService extends BaseEntityService<UsabilityData> {
       error: fail ? this.errorCode: null
     };
 
-    data = await this.create(data)
+    try {
+      data = await this.create(data)
+    } catch (err) {
+      this.toastr.error('Wystąpił błąd podczas próby zapisu', 'Błąd', {
+        timeOut: 3000,
+        closeButton: true,
+      });
+      throw err
+    }
     log('UsabilityData:', data)
     // TODO screenshot
   }
@@ -131,16 +140,22 @@ export class UsabilityDataService extends BaseEntityService<UsabilityData> {
   }
 
   onMouseClick(evt: any) {
-    // TODO obsługa scrolla
     if(!this.measurementStarted) {
       return;
     }
+
+    let [xScrollOffset, yScrollOffset]= this.scroller.getScrollPosition();
+
+    let currentX = evt.clientX + xScrollOffset;
+    let currentY = evt.clientY + yScrollOffset;
+
     this.clickCounter++;
 
-    this.distance += this.calculateDistance(this.lastX, this.lastY, evt.clientX, evt.clientY);
-    this.lastX = evt.clientX;
-    this.lastY = evt.clientY;
+    this.distance += this.calculateDistance(this.lastX, this.lastY, currentX, currentY);
+    this.lastX = currentX;
+    this.lastY = currentY;
 
+    log('scroll offset:', xScrollOffset, yScrollOffset);
     log('distance: ', this.distance);
     log('clicks: ', this.clickCounter);
   }
