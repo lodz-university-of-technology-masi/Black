@@ -59,6 +59,7 @@ export class RedactorsComponent implements OnInit {
       (error) => {
         this.isCreateRedactorAccountFailed = true;
         this.errorMessage = error;
+        throw error;
       });
   }
 
