@@ -37,7 +37,7 @@ create table test
     id          bigserial primary key,
     name        varchar(100),
     "group"     bigint,
-    language    varchar(30)                     not null,
+    language    varchar(30) not null,
     position_id bigint references position (id)
 --     unique ("group", language)
 );
@@ -45,12 +45,13 @@ create table test
 create sequence if not exists test_group_seq;
 CREATE OR REPLACE FUNCTION fill_test_group_if_empty()
     RETURNS trigger
-    LANGUAGE plpgsql VOLATILE
-    AS
+    LANGUAGE plpgsql
+    VOLATILE
+AS
 $BODY$
 BEGIN
     IF NEW.group IS NULL THEN
-        NEW.group:= nextval('test_group_seq');
+        NEW.group := nextval('test_group_seq');
     END IF;
     RETURN NEW;
 END
@@ -84,7 +85,7 @@ create table question_answer
     id          bigserial primary key,
     answer_id   bigint not null references test_answer (id),
     question_id bigint not null references question (id),
-    body     text
+    body        text
 );
 
 create table evaluation
@@ -148,3 +149,20 @@ create table acl_entry
     constraint foreign_fk_4 foreign key (acl_object_identity) references acl_object_identity (id),
     constraint foreign_fk_5 foreign key (sid) references acl_sid (id)
 );
+
+create table USABILITY_DATA
+(
+    ID       bigserial primary key,
+    IP       text,
+    BROWSER  varchar(1),
+    USERNAME text,
+    M_ID     integer,
+    SAVETIME timestamp with time zone,
+    RES_W    integer,
+    RES_H    integer,
+    MC       integer,
+    "time"   integer,
+    DIST     integer,
+    FAIL     boolean,
+    ERROR    integer
+)

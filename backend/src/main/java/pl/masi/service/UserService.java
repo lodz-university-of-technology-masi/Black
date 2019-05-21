@@ -13,10 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import pl.masi.dto.RegistrationRequestDto;
-import pl.masi.entity.Evaluation;
-import pl.masi.entity.Test;
-import pl.masi.entity.TestAnswer;
-import pl.masi.entity.User;
+import pl.masi.entity.*;
 import pl.masi.exception.ValidationException;
 import pl.masi.repository.UserRepository;
 import pl.masi.service.base.EntityService;
@@ -37,8 +34,11 @@ public class UserService extends EntityService<User> implements UserDetailsServi
 
     static {
         CANDIDATE_CAN_CREATE.add(TestAnswer.class.getCanonicalName());
+        CANDIDATE_CAN_CREATE.add(UsabilityData.class.getCanonicalName());
+
         REDACTOR_CAN_CREATE.add(Test.class.getCanonicalName());
         REDACTOR_CAN_CREATE.add(Evaluation.class.getCanonicalName());
+        REDACTOR_CAN_CREATE.add(UsabilityData.class.getCanonicalName());
     }
 
     public static boolean canUserCreate(User principal, String targetType) {
