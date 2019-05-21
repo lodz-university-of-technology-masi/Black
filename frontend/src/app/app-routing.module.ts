@@ -9,6 +9,7 @@ import {PositionsComponent} from './views/positions/positions.component';
 import {PositionFormComponent} from './views/position-form/position-form.component';
 import {RedactorsComponent} from './views/redactors/redactors.component';
 import {RedactorFormComponent} from './views/redactor-form/redactor-form.component';
+import {SolveTestFormComponent} from "./views/solve-test-form/solve-test-form.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -20,7 +21,8 @@ const routes: Routes = [
   {path: 'positions', component: PositionsComponent},
   {path: 'positions/:id', component: PositionFormComponent},
   {path: 'redactors', component: RedactorsComponent},
-  {path: 'redactors/:id', component: RedactorFormComponent}
+  {path: 'redactors/:id', component: RedactorFormComponent},
+  {path: 'solve/:id', component: SolveTestFormComponent},
 ];
 
 for (const route of routes) {

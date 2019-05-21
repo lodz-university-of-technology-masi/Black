@@ -24,6 +24,7 @@ import {PositionFormComponent} from './views/position-form/position-form.compone
 import {RedactorsComponent} from './views/redactors/redactors.component';
 import {RedactorFormComponent} from './views/redactor-form/redactor-form.component';
 import {ContextMenuModule} from 'ngx-contextmenu';
+import { SolveTestFormComponent } from './views/solve-test-form/solve-test-form.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import {ContextMenuModule} from 'ngx-contextmenu';
     HeaderComponent,
     PositionFormComponent,
     RedactorsComponent,
-    RedactorFormComponent
+    RedactorFormComponent,
+    SolveTestFormComponent
   ],
   imports: [
     BrowserModule,
