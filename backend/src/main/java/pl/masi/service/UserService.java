@@ -11,10 +11,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
 import pl.masi.dto.RegistrationRequestDto;
 import pl.masi.entity.*;
+import pl.masi.exception.ValidationException;
 import pl.masi.repository.UserRepository;
 import pl.masi.service.base.EntityService;
+import pl.masi.utils.RegisterValidator;
 
 import java.util.HashSet;
 import java.util.List;
@@ -89,7 +92,19 @@ public class UserService extends EntityService<User> implements UserDetailsServi
     }
 
     @Transactional
-    public void addRedactor(RegistrationRequestDto userEntity) {
+    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    public void addRedactor(RegistrationRequestDto userEntity, BindingResult result) {
+
+        Optional<User> oldUser = this.getByLogin(userEntity.getLogin());
+
+        new RegisterValidator().validateEmailExist(oldUser, result);
+
+        new RegisterValidator().validate(userEntity, result);
+
+        if (result.hasErrors()) {
+            throw new ValidationException(result);
+        }
+
         User user = new User();
         user.setLogin(userEntity.getLogin());
         user.setEmail(userEntity.getEmail());

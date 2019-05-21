@@ -3,6 +3,7 @@ package pl.masi.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,21 +42,11 @@ public class RegisterController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
+    @PreAuthorize("hasRole('ROLE_MODERATOR')")
     @PostMapping(path = "/redactor")
     public ResponseEntity<Void> registerRedactor(@RequestBody RegistrationRequestDto register, BindingResult result) {
 
-        Optional<User> oldUser = userService.getByLogin(register.getLogin());
-
-        new RegisterValidator().validateEmailExist(oldUser, result);
-
-        new RegisterValidator().validate(register, result);
-
-        if (result.hasErrors()) {
-            throw new ValidationException(result);
-        }
-
-        userService.addRedactor(register);
+        userService.addRedactor(register,result);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
