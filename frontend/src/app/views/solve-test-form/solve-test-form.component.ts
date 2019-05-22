@@ -12,6 +12,9 @@ export class SolveTestFormComponent implements OnInit {
 
   test: Test;
   private selectedChoices: boolean[][] = [];
+  private scaleValue: number[] = [];
+  private numberValue: number[] = [];
+  private openValue: string[] = [];
 
   constructor(private testService: TestService,
               private route: ActivatedRoute) {
@@ -32,5 +35,9 @@ export class SolveTestFormComponent implements OnInit {
         this.selectedChoices[i] = [].fill(false);
       }
     }
+  }
+
+  change() { // TODO MC Usunąć
+    console.log(this.scaleValue)
   }
 }

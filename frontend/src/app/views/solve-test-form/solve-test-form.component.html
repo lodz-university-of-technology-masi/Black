@@ -34,14 +34,29 @@
             <div class="col-md-12 col-margin">
               <div *ngIf="question.type === 'CHOICE'" class="col-sm-12">
                 <div class="row mg-1">
-                  <label class="answers"> Możliwe odpowiedzi:</label>
+                  <label class="answers">Możliwe odpowiedzi:</label>
                 </div>
                 <label *ngFor="let choice of question.availableChoices; let idx = index;" class="row">
-                  <input type="checkbox" [(ngModel)]="selectedChoices[qidx][idx]"> {{choice}} | {{qidx}} {{idx}}
+                  <input type="checkbox" [(ngModel)]="selectedChoices[qidx][idx]"> {{choice}} | {{qidx}} {{idx}} <!--TODO MC Usunąć indeksy-->
                 </label>
               </div>
               <div *ngIf="question.type === 'SCALE'" class="col-sm-12">
-                {{question.availableRange.min}} {{question.availableRange.max}}
+                <label class="answers">Odpowiedź:</label>
+                <div class="row">
+                  {{question.availableRange.min}}
+                  <mv-slider [(value)]="scaleValue[qidx]" [min]="question.availableRange.min" [max]="question.availableRange.max"
+                             [step]="question.availableRange.step" (change)="change()"></mv-slider>
+                  {{question.availableRange.max}}
+                </div>
+                <div>Wybrano: {{scaleValue[qidx]}}</div>
+              </div>
+              <div *ngIf="question.type === 'NUMBER'" class="col-sm-12">
+                <label class="answers">Odpowiedź:</label>
+                <input [(ngModel)]="numberValue[qidx]" type="number">
+              </div>
+              <div *ngIf="question.type === 'OPEN'" class="col-sm-12">
+                <label class="answers">Odpowiedź:</label>
+                <input [(ngModel)]="openValue[qidx]" type="text" class="form-control">
               </div>
             </div>
           </div>
