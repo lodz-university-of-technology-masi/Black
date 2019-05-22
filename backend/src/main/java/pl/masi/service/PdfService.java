@@ -5,6 +5,7 @@ import com.lowagie.text.*;
 import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfWriter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import pl.masi.entity.Question;
 import pl.masi.entity.Test;
 import pl.masi.exception.PdfException;
@@ -12,6 +13,7 @@ import pl.masi.exception.PdfException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+@Service
 public class PdfService  {
 
     @Autowired
