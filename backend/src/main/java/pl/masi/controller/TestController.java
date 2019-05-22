@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.masi.controller.base.EntityController;
 import pl.masi.dto.ChangePermsRequestDto;
-import pl.masi.dto.TestInfoRequest;
 import pl.masi.entity.Test;
 import pl.masi.exception.BadRequestException;
 import pl.masi.exception.PdfException;
@@ -52,7 +51,7 @@ public class TestController extends EntityController<Test> {
     }
 
     @PostMapping(path = "/{id}/pdfexport", produces = MediaType.APPLICATION_PDF_VALUE, consumes = MediaType.ALL_VALUE)
-    ResponseEntity<byte[]> pdfCreator(@PathVariable(name=  "id") Long id, @RequestBody TestInfoRequest infoRequest) throws BadRequestException, PdfException {
+    ResponseEntity<byte[]> pdfCreator(@PathVariable(name=  "id") Long id) throws BadRequestException, PdfException {
         try {
             Test test= service.findById(id).get();
 
@@ -61,9 +60,9 @@ public class TestController extends EntityController<Test> {
             headers.setContentType(MediaType.APPLICATION_PDF);
 
             // Czy infoRequest jest potrzebne? Nie można tutaj użyć po prostu test.getName(), test.getPosition() itd?
-            String testname = infoRequest.getName() + "_" +
-                    infoRequest.getPosition() + "_" +
-                    infoRequest.getLanguage() + ".pdf";
+            String testname = test.getName() + "_" +
+                    test.getPosition() + "_" +
+                    test.getLanguage() + ".pdf";
             testname = testname.replaceAll("\\s+", "_");
             headers.setContentDispositionFormData(testname, testname);
             headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");

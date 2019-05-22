@@ -27,8 +27,9 @@ public class PdfService  {
 
             PdfWriter.getInstance(doc, byt);
             doc.open();
-            BaseFont times_roman = BaseFont.createFont(BaseFont.TIMES_ROMAN, BaseFont.TIMES_ROMAN, BaseFont.EMBEDDED);
-            Font font = new Font(times_roman, 12, Font.NORMAL);
+
+            BaseFont roman = BaseFont.createFont(BaseFont.TIMES_ROMAN, BaseFont.CP1250, BaseFont.EMBEDDED);
+            Font font = new Font(roman, 12, Font.NORMAL);
             for (int i = 0; i < test.getQuestions().size(); i++) {
                 doc.add(new Paragraph(i + 1 + ". " + test.getQuestions().get(i).getContent(), font));
                 doc.add(Chunk.NEWLINE);
