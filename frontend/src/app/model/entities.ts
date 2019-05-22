@@ -72,8 +72,8 @@ export interface TestAnswer extends MainEntity  {
 
 export interface QuestionAnswerEvaluation {
   id: number;
-  content: string;
-  questionAnswer: QuestionAnswer;
+  content?: string;
+  points: number
 }
 
 export interface Evaluation extends MainEntity {
