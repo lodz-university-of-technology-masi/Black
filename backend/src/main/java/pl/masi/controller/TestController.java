@@ -58,8 +58,6 @@ public class TestController extends EntityController<Test> {
             byte[] contents = pdfService.pdfCreator(test);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_PDF);
-
-            // Czy infoRequest jest potrzebne? Nie można tutaj użyć po prostu test.getName(), test.getPosition() itd?
             String testname = test.getName() + "_" +
                     test.getPosition() + "_" +
                     test.getLanguage() + ".pdf";
