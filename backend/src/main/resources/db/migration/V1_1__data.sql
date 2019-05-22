@@ -74,7 +74,7 @@ VALUES (3, 'Test na stanowisko kierownika działu HR', 2, 'PL', 2);
 INSERT INTO public.question (id, number, type, content, body, test_id)
 VALUES (1, 0, 'CHOICE', 'treść pytania 1 - pytanie wyboru', 'odpowiedź 1;odpowiedź 2;odpowiedź 3', 1);
 INSERT INTO public.question (id, number, type, content, body, test_id)
-VALUES (2, 1, 'SCALE', 'treść pytania 2 - pytanie skali', '1;0.5;15.5', 1);
+VALUES (2, 1, 'SCALE', 'treść pytania 2 - pytanie skali', '1;15.5;0.5', 1);
 INSERT INTO public.question (id, number, type, content, body, test_id)
 VALUES (3, 2, 'NUMBER', 'treść pytania 3 - pytanie liczbowe', NULL, 1);
 INSERT INTO public.question (id, number, type, content, body, test_id)

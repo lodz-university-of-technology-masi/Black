@@ -11,7 +11,7 @@ import {TestService} from "../../services/test.service";
 export class SolveTestFormComponent implements OnInit {
 
   test: Test;
-  private selectedChoices: boolean[] = [false, false, false];
+  private selectedChoices: boolean[][] = [];
 
   constructor(private testService: TestService,
               private route: ActivatedRoute) {
@@ -27,5 +27,10 @@ export class SolveTestFormComponent implements OnInit {
   async reloadComponent() {
     let id = this.route.snapshot.paramMap.get('id');
     this.test = await this.testService.getOne(Number.parseInt(id));
+    for (let i = 0; i < this.test.questions.length; i++) {
+      if (this.test.questions[i].type === 'CHOICE') {
+        this.selectedChoices[i] = [].fill(false);
+      }
+    }
   }
 }

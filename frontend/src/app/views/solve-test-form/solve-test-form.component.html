@@ -37,11 +37,13 @@
                   <label class="answers"> Możliwe odpowiedzi:</label>
                 </div>
                 <label *ngFor="let choice of question.availableChoices; let idx = index;" class="row">
-                  <input type="checkbox" [(ngModel)]="selectedChoices[idx]"> {{choice}}
+                  <input type="checkbox" [(ngModel)]="selectedChoices[qidx][idx]"> {{choice}} | {{qidx}} {{idx}}
                 </label>
               </div>
+              <div *ngIf="question.type === 'SCALE'" class="col-sm-12">
+                {{question.availableRange.min}} {{question.availableRange.max}}
+              </div>
             </div>
-
           </div>
         </div>
       </div>
