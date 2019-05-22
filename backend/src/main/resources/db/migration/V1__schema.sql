@@ -82,10 +82,11 @@ create table test_answer
 
 create table question_answer
 (
-    id          bigserial primary key,
-    answer_id   bigint not null references test_answer (id),
-    question_id bigint not null references question (id),
-    body        text
+    id        bigserial primary key,
+    answer_id bigint not null references test_answer (id),
+    type      varchar(10),
+    body      text,
+    number    integer
 );
 
 create table evaluation
@@ -97,10 +98,11 @@ create table evaluation
 
 create table question_answer_evaluation
 (
-    id                 bigserial primary key,
-    evaluation_id      bigint not null references evaluation (id),
-    question_answer_id bigint not null references question_answer (id),
-    content            text
+    id            bigserial primary key,
+    evaluation_id bigint not null references evaluation (id),
+    content       text,
+    points        integer,
+    number        integer
 );
 
 -- spring-acl tables

@@ -70,7 +70,7 @@ public abstract class EntityService<ENTITY extends BaseEntity> {
         }
         beforeCreate(entity);
         ENTITY e = getEntityRepository().save(entity);
-        aclManagementService.createDefaultPermissions(e);
+        aclManagementService.createOwnerPermissions(e);
         afterCreate(e);
         return e;
     }

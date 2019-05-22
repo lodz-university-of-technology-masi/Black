@@ -28,9 +28,8 @@ public class QuestionAnswer extends BaseEntity {
     @Setter(AccessLevel.NONE)
     private String body;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "question_id")
-    private Question question;
+    @Enumerated(EnumType.STRING)
+    private Question.Type type;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -39,7 +38,7 @@ public class QuestionAnswer extends BaseEntity {
     @Transient
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public List<Integer> getChoiceAnswer() {
-        if (!question.isChoice()){
+        if (!isChoice()){
             return null;
         }
 
@@ -53,7 +52,7 @@ public class QuestionAnswer extends BaseEntity {
 
     @Transient
     public void setChoiceAnswer(List<Integer> selections){
-        if (!question.isChoice() || selections == null) {
+        if (!isChoice() || selections == null) {
             return;
         }
         body = selections.stream().map(Object::toString).collect(Collectors.joining(SEPARATOR));
@@ -62,7 +61,7 @@ public class QuestionAnswer extends BaseEntity {
     @Transient
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public BigDecimal getScaleAnswer() {
-        if (!question.isScale()){
+        if (!isScale() || body == null){
             return null;
         }
         return new BigDecimal(body);
@@ -70,7 +69,7 @@ public class QuestionAnswer extends BaseEntity {
 
     @Transient
     public void setScaleAnswer(BigDecimal scaleAnswer){
-        if (!question.isScale()) {
+        if (!isScale()) {
             return;
         }
         body = scaleAnswer.toString();
@@ -79,7 +78,7 @@ public class QuestionAnswer extends BaseEntity {
     @Transient
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public String getOpenAnswer() {
-        if (!question.isOpen()){
+        if (!isOpen()){
             return null;
         }
         return body;
@@ -87,7 +86,7 @@ public class QuestionAnswer extends BaseEntity {
 
     @Transient
     public void setOpenAnswer(String openAnswer){
-        if (!question.isOpen()) {
+        if (!isOpen()) {
             return;
         }
         body = openAnswer;
@@ -96,7 +95,7 @@ public class QuestionAnswer extends BaseEntity {
     @Transient
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public BigDecimal getNumberAnswer() {
-        if (!question.isNumber()){
+        if (!isNumber() || body == null){
             return null;
         }
         return new BigDecimal(body);
@@ -104,10 +103,30 @@ public class QuestionAnswer extends BaseEntity {
 
     @Transient
     public void setNumberAnswer(BigDecimal numberAnswer){
-        if (!question.isNumber()) {
+        if (!isNumber()) {
             return;
         }
         body = numberAnswer.toString();
+    }
+
+    @JsonIgnore
+    public boolean isOpen() {
+        return type == Question.Type.OPEN;
+    }
+
+    @JsonIgnore
+    public boolean isChoice() {
+        return type == Question.Type.CHOICE;
+    }
+
+    @JsonIgnore
+    public boolean isScale() {
+        return type == Question.Type.SCALE;
+    }
+
+    @JsonIgnore
+    public boolean isNumber() {
+        return type == Question.Type.NUMBER;
     }
 
 }
