@@ -1,3 +1,50 @@
-<p>
-  solve-test-form works!
-</p>
+<section>
+  <app-header></app-header>
+</section>
+<div class="panel-block">
+  <div class="container-block">
+    <div class="panel-container test-panel-container" *ngIf="test">
+      <div class="container">
+        <div class="row">
+          <div class="form-group col-md-11 col-margin">
+            <h6>Test o nazwie: </h6>
+            <h2>{{test.name}}</h2>
+            <h6>Język testu: </h6>
+            <label>{{test.language}}</label>
+            <h6>Test na stanowisko: </h6>
+            <label>{{test.position.name}}</label>
+          </div>
+        </div>
+      </div>
+      <div *ngFor="let question of test.questions; let qidx=index" class="card">
+        <div class="card-body container">
+          <div class="row">
+            <div class="col-md-11 col-margin">
+              <h6>Treść pytania:</h6>
+              <label>{{question.content}}</label>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 2%">
+            <div class="col-md-11 col-margin">
+              <h6>Typ pytania</h6>
+              <label>{{question.type}}</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 col-margin">
+              <div *ngIf="question.type === 'CHOICE'" class="col-sm-12">
+                <div class="row mg-1">
+                  <label class="answers"> Możliwe odpowiedzi:</label>
+                </div>
+                <label *ngFor="let choice of question.availableChoices; let idx = index;" class="row">
+                  <input type="checkbox" [(ngModel)]="selectedChoices[idx]"> {{choice}}
+                </label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Test} from "../../model/entities";
+import {ActivatedRoute} from "@angular/router";
+import {TestService} from "../../services/test.service";
 
 @Component({
   selector: 'app-solve-test-form',
@@ -7,9 +10,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SolveTestFormComponent implements OnInit {
 
-  constructor() { }
+  test: Test;
+  private selectedChoices: boolean[] = [false, false, false];
 
-  ngOnInit() {
+  constructor(private testService: TestService,
+              private route: ActivatedRoute) {
   }
 
+  async ngOnInit() {
+    this.route.url.subscribe(queryParams => {
+      this.reloadComponent()
+    });
+    await this.reloadComponent()
+  }
+
+  async reloadComponent() {
+    let id = this.route.snapshot.paramMap.get('id');
+    this.test = await this.testService.getOne(Number.parseInt(id));
+  }
 }
