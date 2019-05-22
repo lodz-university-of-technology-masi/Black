@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {ErrorHandler, NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -17,11 +17,13 @@ import {TestFormComponent} from './views/test-form/test-form.component';
 import {PositionsComponent} from './views/positions/positions.component';
 import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { PositionFormComponent } from './views/position-form/position-form.component';
-import { RedactorsComponent } from './views/redactors/redactors.component';
-import { RedactorFormComponent } from './views/redactor-form/redactor-form.component';
+import {DeviceDetectorModule} from "ngx-device-detector";
+import {GlobalErrorHandler} from "./global-error-handler";
 import {HeaderComponent} from './components/header/header.component';
-import {ContextMenuModule} from "ngx-contextmenu";
+import {PositionFormComponent} from './views/position-form/position-form.component';
+import {RedactorsComponent} from './views/redactors/redactors.component';
+import {RedactorFormComponent} from './views/redactor-form/redactor-form.component';
+import {ContextMenuModule} from 'ngx-contextmenu';
 
 
 @NgModule({
@@ -51,7 +53,8 @@ import {ContextMenuModule} from "ngx-contextmenu";
     ToastrModule.forRoot(),
     ContextMenuModule.forRoot({
       useBootstrap4: true,
-    })
+    }),
+    DeviceDetectorModule.forRoot()
   ],
   providers: [
     {
@@ -62,6 +65,10 @@ import {ContextMenuModule} from "ngx-contextmenu";
       provide: HTTP_INTERCEPTORS,
       useClass: APIInterceptor,
       multi: true,
+    },
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler
     }
   ],
   bootstrap: [AppComponent]

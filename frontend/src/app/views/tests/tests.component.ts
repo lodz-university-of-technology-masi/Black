@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {TestService} from "../../services/test.service";
 import {Test} from "../../model/entities";
 import {Router} from "@angular/router";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-tests',
@@ -11,7 +12,10 @@ import {Router} from "@angular/router";
 export class TestsComponent implements OnInit {
   tests: Test[]
 
-  constructor(private testService: TestService, private router: Router) {
+  //Download file
+  fileUrl;
+
+  constructor(private sanitizer: DomSanitizer, private testService: TestService, private router: Router) {
   }
 
   ngOnInit() {
@@ -31,6 +35,12 @@ export class TestsComponent implements OnInit {
 
   onEditTest(test: Test) {
     this.router.navigate(['/tests', test.id]);
+  }
+
+  onExportTest(test: Test) {
+    const data = 'some text';
+    const blob = new Blob([data], { type: 'application/octet-stream' });
+    this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
   }
 
   onCreateTest() {

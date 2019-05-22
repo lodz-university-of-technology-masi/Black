@@ -65,7 +65,7 @@ public class TestService extends EntityService<Test> {
         return create(translated);
     }
 
-    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    @PreAuthorize("hasRole('ROLE_MODERATOR') || hasRole('ROLE_REDACTOR')")
     public void changePerms(ChangePermsRequestDto req) {
         changePermsRequestValidator.validate(req);
 

@@ -1,0 +1,47 @@
+.container{
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+.table-container {
+  margin: 60px;
+  min-height: 25rem;
+}
+
+th {
+  text-align: center;
+}
+
+td {
+  text-align: center;
+}
+
+.table-label {
+  position: relative;
+  top: 15px;
+}
+
+.main-table {
+  margin-top: 7px;
+}
+
+.plus-ico {
+  font-size: 20px;
+}
+
+.reference:hover {
+  cursor: pointer;
+}
+
+.edit-ico {
+  color: #343434;
+  font-size: 25px;
+}
+
+.remove-ico {
+  color: red;
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+.btn-assign {
+  margin-bottom: 10px;
+}
