@@ -17,12 +17,10 @@ public class QuestionAnswerEvaluation extends BaseEntity {
 
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "question_answer_id")
-    private QuestionAnswer questionAnswer;
-
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Evaluation evaluation;
+
+    private Integer points;
 
 }

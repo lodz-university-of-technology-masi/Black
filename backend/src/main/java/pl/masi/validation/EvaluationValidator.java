@@ -10,5 +10,8 @@ public class EvaluationValidator extends EntityValidator<Evaluation> {
 
     @Override
     public void validateObj(Evaluation evaluation, Errors errors) {
+        if(evaluation.getTestAnswer() == null || evaluation.getTestAnswer().getId() == null) {
+            errors.rejectValue("testAnswer", "testAnswer.id cannot be null");
+        }
     }
 }
