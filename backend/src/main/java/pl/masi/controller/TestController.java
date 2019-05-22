@@ -1,15 +1,22 @@
 package pl.masi.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.masi.controller.base.EntityController;
 import pl.masi.dto.ChangePermsRequestDto;
 import pl.masi.entity.Test;
+import pl.masi.exception.BadRequestException;
+import pl.masi.exception.PdfException;
+import pl.masi.service.PdfService;
 import pl.masi.service.TestService;
 import pl.masi.service.base.EntityService;
+
+import javax.persistence.EntityNotFoundException;
 
 @Controller
 @RequestMapping(value = "/tests")
@@ -17,6 +24,9 @@ public class TestController extends EntityController<Test> {
 
     @Autowired
     private TestService service;
+
+    @Autowired
+    private PdfService pdfService;
 
     @Override
     protected EntityService<Test> getEntityService() {
@@ -39,4 +49,29 @@ public class TestController extends EntityController<Test> {
         service.changePerms(changePermsRequest);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping(path = "/{id}/pdfexport", produces = MediaType.APPLICATION_PDF_VALUE, consumes = MediaType.ALL_VALUE)
+    ResponseEntity<byte[]> pdfCreator(@PathVariable(name=  "id") Long id) throws BadRequestException, PdfException {
+        try {
+            Test test= service.findById(id).get();
+
+            byte[] contents = pdfService.pdfCreator(test);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            String testname = test.getName() + "_" +
+                    test.getPosition() + "_" +
+                    test.getLanguage() + ".pdf";
+            testname = testname.replaceAll("\\s+", "_");
+            headers.setContentDispositionFormData(testname, testname);
+            headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+            headers.add("testname", testname);
+            return new ResponseEntity<byte[]>(contents, headers, HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            throw new BadRequestException(BadRequestException.NOT_EXISTING_DATA_REQUESTED);
+        } catch (PdfException e) {
+            throw new PdfException(PdfException.ERROR_CREATING_DOCUMENT);
+        }
+    }
+
+
 }
