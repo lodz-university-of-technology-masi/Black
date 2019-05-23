@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import pl.masi.entity.User;
 import pl.masi.entity.base.BaseEntity;
+import pl.masi.repository.UserRepository;
 import pl.masi.service.UserService;
 
 import java.util.Optional;
@@ -28,16 +29,31 @@ public class AclManagementService {
         ALL_PERMISSIONS = perms;
     }
 
+    public static CumulativePermission OWNER_PERMISSIONS;
+    static {
+        CumulativePermission perms = new CumulativePermission();
+        perms.set(BasePermission.READ);
+        perms.set(BasePermission.WRITE);
+        perms.set(BasePermission.DELETE);
+        // Indicates object owner
+        perms.set(BasePermission.ADMINISTRATION);
+
+        OWNER_PERMISSIONS = perms;
+    }
+
     @Autowired
     private MutableAclService aclService;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Transactional
-    public void createDefaultPermissions(BaseEntity entity) {
+    public void createOwnerPermissions(BaseEntity entity) {
         ObjectIdentity oid = new CustomObjectIdentity(entity.getClass().getCanonicalName(), entity.getId().toString());
 
         MutableAcl acl = aclService.createAcl(oid);
 
-        acl.insertAce(0, ALL_PERMISSIONS, new PrincipalSid(getCurrentUserSid()), true);
+        acl.insertAce(0, OWNER_PERMISSIONS, new PrincipalSid(getCurrentUserSid()), true);
 
         aclService.updateAcl(acl);
     }
@@ -76,6 +92,22 @@ public class AclManagementService {
         }
 
         aclService.updateAcl(acl);
+    }
+
+    public User getEntityOwner(BaseEntity entity) {
+        ObjectIdentity oid = new CustomObjectIdentity(entity.getClass().getCanonicalName(), entity.getId().toString());
+
+        Acl acl = aclService.readAclById(oid, null);
+        int mask = BasePermission.ADMINISTRATION.getMask();
+        Optional<AccessControlEntry> ownerAce = acl.getEntries().stream().filter(ace -> (ace.getPermission().getMask() & mask) == mask).findFirst();
+        Assert.isTrue(ownerAce.isPresent(), "Entity owner required!");
+
+        PrincipalSid sid = (PrincipalSid) ownerAce.get().getSid();
+        Optional<User> owner = userRepository.findByLogin(sid.getPrincipal());
+
+        Assert.isTrue(owner.isPresent(), "Entity owner must exist!");
+
+        return owner.get();
     }
 
     private MutableAcl getMutableAcl(ObjectIdentity oid, PrincipalSid sid) {

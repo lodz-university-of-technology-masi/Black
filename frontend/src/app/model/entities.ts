@@ -56,7 +56,7 @@ export interface Test extends MainEntity {
 
 export interface QuestionAnswer {
   id: number;
-  question: Question;
+  type: QuestionType;
   choiceAnswer?: number[];
   scaleAnswer?: number;
   numberAnswer?: number;
@@ -72,8 +72,8 @@ export interface TestAnswer extends MainEntity  {
 
 export interface QuestionAnswerEvaluation {
   id: number;
-  content: string;
-  questionAnswer: QuestionAnswer;
+  content?: string;
+  points: number
 }
 
 export interface Evaluation extends MainEntity {

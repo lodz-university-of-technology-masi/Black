@@ -2,8 +2,11 @@ package pl.masi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.acls.domain.BasePermission;
 import org.springframework.stereotype.Service;
+import pl.masi.entity.Test;
 import pl.masi.entity.TestAnswer;
+import pl.masi.entity.User;
 import pl.masi.repository.TestAnswerRepository;
 import pl.masi.service.base.EntityService;
 import pl.masi.validation.TestAnswerValidator;
@@ -23,13 +26,26 @@ public class TestAnswerService extends EntityService<TestAnswer> {
     }
 
     @Override
-    protected void beforeCreate(TestAnswer test) {
-        processTestAnswer(test);
+    protected void beforeCreate(TestAnswer testAnswer) {
+        processTestAnswer(testAnswer);
     }
 
     @Override
-    protected void beforeUpdate(TestAnswer test) {
-        processTestAnswer(test);
+    protected void beforeUpdate(TestAnswer testAnswer) {
+        processTestAnswer(testAnswer);
+    }
+
+    @Override
+    protected void afterCreate(TestAnswer testAnswer) {
+        grantTestOwnerPerms(testAnswer);
+    }
+
+    private void grantTestOwnerPerms(TestAnswer testAnswer) {
+        Test test = testAnswer.getTest();
+
+        User testOwner = aclManagementService.getEntityOwner(test);
+
+        aclManagementService.grantPermissions(testAnswer, testOwner, BasePermission.READ);
     }
 
     @Override

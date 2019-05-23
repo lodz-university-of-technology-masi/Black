@@ -24,6 +24,7 @@ public class Evaluation extends BaseEntity {
     private TestAnswer testAnswer;
 
     @OneToMany(mappedBy = "evaluation", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderColumn(name = "number")
     private List<QuestionAnswerEvaluation> answersEvaluations = new ArrayList<>();
 
 }
