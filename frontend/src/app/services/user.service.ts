@@ -19,6 +19,8 @@ export class UserService extends BaseEntityService<User> {
   private static SIGNIN_URL = 'user/signin';
   private static REGISTER_URL = 'register';
 
+  private currentUser: User;
+
   private loggedIn = false;
   role = '';
 
@@ -37,7 +39,7 @@ export class UserService extends BaseEntityService<User> {
 
     return this.http.post<void>(UserService.SIGNIN_URL, formData)
       .toPromise()
-      .then(() => this.http.get<User>(UserService.CURRENT_USER_URL).toPromise())
+      .then(() => this.loadCurrentUser())
       .then((user) => {
         this.loggedIn = true;
         this.role = user.role;
@@ -57,6 +59,7 @@ export class UserService extends BaseEntityService<User> {
   async logout(): Promise<void> {
     await this.http.post<void>(UserService.SIGNOUT_URL, {}).toPromise();
     this.loggedIn = false;
+    this.currentUser = null;
     return;
   }
 
@@ -65,7 +68,15 @@ export class UserService extends BaseEntityService<User> {
   }
 
   private async loadCurrentUser(): Promise<User> {
-    return this.http.get<User>(UserService.CURRENT_USER_URL).toPromise();
+    return this.http.get<User>(UserService.CURRENT_USER_URL).toPromise()
+      .then(user => {
+        this.currentUser = user;
+        return user
+      });
+  }
+
+  getCurrentUser(): User {
+    return this.currentUser;
   }
 
   async isLoggedIn(): Promise<boolean> {

@@ -42,7 +42,7 @@ public class QuestionAnswer extends BaseEntity {
             return null;
         }
 
-        if (body == null) {
+        if (body == null || body.isEmpty()) {
             return new ArrayList<>();
         }
 
@@ -52,7 +52,7 @@ public class QuestionAnswer extends BaseEntity {
 
     @Transient
     public void setChoiceAnswer(List<Integer> selections){
-        if (!isChoice() || selections == null) {
+        if (!isChoice() || selections == null || selections.isEmpty()) {
             return;
         }
         body = selections.stream().map(Object::toString).collect(Collectors.joining(SEPARATOR));

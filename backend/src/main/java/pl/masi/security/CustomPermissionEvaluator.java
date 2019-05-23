@@ -40,7 +40,9 @@ public class CustomPermissionEvaluator extends AclPermissionEvaluator {
             return true;
         }
 
-        if (domainObject instanceof Position && user.isRedactor() && "READ".equals(permission)) {
+        if ((domainObject instanceof Position || domainObject instanceof User) &&
+                user.isRedactor() &&
+                "READ".equals(permission)) {
             return true;
         }
 

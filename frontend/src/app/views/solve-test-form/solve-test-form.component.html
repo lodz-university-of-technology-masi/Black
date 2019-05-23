@@ -37,31 +37,32 @@
                   <label class="answers">Możliwe odpowiedzi:</label>
                 </div>
                 <label *ngFor="let choice of question.availableChoices; let idx = index;" class="row">
-                  <input type="checkbox" [(ngModel)]="answers[qidx][idx]"> {{choice}} | {{qidx}} {{idx}} <!--TODO MC Usunąć indeksy-->
+                  <input type="checkbox" [(ngModel)]="answers[qidx].choiceAnswer[idx]"> {{choice}} | {{qidx}} {{idx}} <!--TODO MC Usunąć indeksy-->
                 </label>
               </div>
               <div *ngIf="question.type === 'SCALE'" class="col-sm-12">
                 <label class="answers">Odpowiedź:</label>
                 <div class="row">
                   {{question.availableRange.min}}
-                  <mv-slider [(value)]="answers[qidx]" [min]="question.availableRange.min" [max]="question.availableRange.max"
+                  <mv-slider [(value)]="answers[qidx].scaleAnswer" [min]="question.availableRange.min" [max]="question.availableRange.max"
                              [step]="question.availableRange.step" (change)="change()"></mv-slider>
                   {{question.availableRange.max}}
                 </div>
-                <div>Wybrano: {{answers[qidx]}}</div>
+                <div>Wybrano: {{answers[qidx].scaleAnswer}}</div>
               </div>
               <div *ngIf="question.type === 'NUMBER'" class="col-sm-12">
                 <label class="answers">Odpowiedź:</label>
-                <input [(ngModel)]="answers[qidx]" type="number">
+                <input [(ngModel)]="answers[qidx].numberAnswer" type="number">
               </div>
               <div *ngIf="question.type === 'OPEN'" class="col-sm-12">
                 <label class="answers">Odpowiedź:</label>
-                <input [(ngModel)]="answers[qidx]" type="text" class="form-control">
+                <input [(ngModel)]="answers[qidx].openAnswer" type="text" class="form-control">
               </div>
             </div>
           </div>
         </div>
       </div>
+      <button (click)="onSave()" type="button" class="btn btn-success btn-save">Zapisz</button>
     </div>
   </div>
 </div>
