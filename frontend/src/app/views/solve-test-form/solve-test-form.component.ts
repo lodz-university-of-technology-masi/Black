@@ -27,7 +27,6 @@ export class SolveTestFormComponent implements OnInit {
   }
 
   async reloadComponent() {
-    console.log('init!');
     let id = this.route.snapshot.paramMap.get('id');
     this.answers=[];
     this.test = await this.testService.getOne(Number.parseInt(id));
@@ -60,12 +59,7 @@ export class SolveTestFormComponent implements OnInit {
       test: this.test,
       user: this.userService.getCurrentUser()
     };
-    console.log(testAnswer); // TODO MC Usunąć
     await this.testAnswerService.create(testAnswer);
     await this.router.navigate(['/tests']);
-  }
-
-  change() { // TODO MC Usunąć
-    console.log(this.answers)
   }
 }

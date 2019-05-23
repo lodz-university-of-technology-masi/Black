@@ -37,7 +37,7 @@
                   <label class="answers">Możliwe odpowiedzi:</label>
                 </div>
                 <label *ngFor="let choice of question.availableChoices; let idx = index;" class="row">
-                  <input type="checkbox" [(ngModel)]="answers[qidx].choiceAnswer[idx]"> {{choice}} | {{qidx}} {{idx}} <!--TODO MC Usunąć indeksy-->
+                  <input type="checkbox" [(ngModel)]="answers[qidx].choiceAnswer[idx]"> {{choice}}
                 </label>
               </div>
               <div *ngIf="question.type === 'SCALE'" class="col-sm-12">
@@ -45,7 +45,7 @@
                 <div class="row">
                   {{question.availableRange.min}}
                   <mv-slider [(value)]="answers[qidx].scaleAnswer" [min]="question.availableRange.min" [max]="question.availableRange.max"
-                             [step]="question.availableRange.step" (change)="change()"></mv-slider>
+                             [step]="question.availableRange.step"></mv-slider>
                   {{question.availableRange.max}}
                 </div>
                 <div>Wybrano: {{answers[qidx].scaleAnswer}}</div>
