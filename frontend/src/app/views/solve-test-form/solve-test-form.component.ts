@@ -11,10 +11,7 @@ import {TestService} from "../../services/test.service";
 export class SolveTestFormComponent implements OnInit {
 
   test: Test;
-  private selectedChoices: boolean[][] = [];
-  private scaleValue: number[] = [];
-  private numberValue: number[] = [];
-  private openValue: string[] = [];
+  private answers = [];
 
   constructor(private testService: TestService,
               private route: ActivatedRoute) {
@@ -32,12 +29,12 @@ export class SolveTestFormComponent implements OnInit {
     this.test = await this.testService.getOne(Number.parseInt(id));
     for (let i = 0; i < this.test.questions.length; i++) {
       if (this.test.questions[i].type === 'CHOICE') {
-        this.selectedChoices[i] = [].fill(false);
+        this.answers[i] = [].fill(false);
       }
     }
   }
 
   change() { // TODO MC Usunąć
-    console.log(this.scaleValue)
+    console.log(this.answers)
   }
 }
