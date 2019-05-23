@@ -103,14 +103,22 @@ export class TestFormComponent implements OnInit {
     this.foundSynonyms = null;
   }
 
-  async searchSynonyms(){
-    this.foundSynonyms = await this.utilsService.findSynonyms(this.selectedText);
+  async searchSynonyms(selectedText){
+    if (!selectedText){
+      this.foundSynonyms = null;
+      return;
+    }
+    this.foundSynonyms = await this.utilsService.findSynonyms(selectedText);
     this.selectedText = null;
   }
 
-  searchWiki() {
-    // TODO obsługa wikipedii
-    console.log('search wikipedia: ', this.selectedText)
+  wikiUrl(selectedText): string {
+    if (!selectedText){
+      return ''
+    }
+    let lang = this.test.language.toLowerCase();
+    let phrase = selectedText.replace(' ', '_');
+    return `https://${lang}.wikipedia.org/wiki/${phrase}`
   }
 
   public showContextMenuItems = (item: any): boolean => {
