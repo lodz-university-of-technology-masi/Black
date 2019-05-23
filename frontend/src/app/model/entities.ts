@@ -64,7 +64,7 @@ export interface QuestionAnswer {
 }
 
 export interface TestAnswer extends MainEntity  {
-  content: string;
+  content?: string;
   test: Test;
   user: User;
   questionAnswers: QuestionAnswer[];

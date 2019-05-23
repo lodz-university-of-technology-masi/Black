@@ -37,6 +37,10 @@ export class TestsComponent implements OnInit {
     this.router.navigate(['/tests', test.id]);
   }
 
+  onSolveTest(test: Test) {
+    this.router.navigate(['/solve', test.id]);
+  }
+
   onExportTest(test: Test) {
     const data = 'some text';
     const blob = new Blob([data], { type: 'application/octet-stream' });
