@@ -2,7 +2,7 @@
   <app-header></app-header>
 </section>
 <div class="table-container">
-  <button *ngIf="userService.getCurrentUser().isModeratorOrRedactor" type="button" (click)="onCreateTest()"
+  <button *ngIf="userService.isModeratorOrRedactor()" type="button" (click)="onCreateTest()"
           class="btn btn-success float-right col-md-2">
     <i class="fas fa-plus plus-ico"></i> Dodaj test
   </button>
@@ -24,22 +24,22 @@
       <th class="row-style">{{test.name}}</th>
       <th class="row-style">{{test.position.name}}</th>
       <th class="row-style">
-        <a *ngIf="userService.getCurrentUser().isModeratorOrRedactor" class="reference edit-icon"
+        <a *ngIf="userService.isModeratorOrRedactor()" class="reference edit-icon"
            (click)="onEditTest(test)">
           <i class="fas fa-edit edit-ico"></i>
         </a>
       </th>
       <th class="row-style">
-        <a *ngIf="userService.getCurrentUser().isModeratorOrRedactor" class="reference remove-ico" data-toggle="modal"
+        <a *ngIf="userService.isModeratorOrRedactor()" class="reference remove-ico" data-toggle="modal"
            data-target="#removeRedactorModal" (click)="onDeleteTest(test)">
           <i class="fas fa-trash-alt remove-ico"></i>
         </a>
       <th>
-        <a *ngIf="userService.getCurrentUser().isModeratorOrRedactor" (click)="onExportTest(test)" [href]="fileUrl"
+        <a *ngIf="userService.isModeratorOrRedactor()" (click)="onExportTest(test)" [href]="fileUrl"
            download="test_number.txt" class="btn btn-primary">Eksportuj</a>
         <a (click)="onSolveTest(test)" class="btn btn-primary">Rozwiąż test</a>
       </th>
-      <th *ngIf="userService.getCurrentUser().isModeratorOrRedactor" class="btn-assign">
+      <th *ngIf="userService.isModeratorOrRedactor()" class="btn-assign">
         <button type="button" class="btn btn-primary ">Przypisz do stanowiska</button>
       </th>
     </tr>

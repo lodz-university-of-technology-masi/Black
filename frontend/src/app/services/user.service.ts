@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Credentials} from '../model/Credentials';
 import {HttpClient} from '@angular/common/http';
-import {User} from '../model/entities';
+import {Role, User} from '../model/entities';
 import {BaseEntityService} from './base-entity.service';
 import {Router} from '@angular/router';
 import {RegisterCredential} from '../model/RegisterCredential';
@@ -87,5 +87,17 @@ export class UserService extends BaseEntityService<User> {
       .then((user) => true)
       .catch((err) => false)
     return this.loggedIn;
+  }
+
+  isModeratorOrRedactor(): boolean {
+    return (this.currentUser.role === Role.MODERATOR) || (this.currentUser.role === Role.REDACTOR)
+  }
+
+  isModerator(): boolean {
+    return this.currentUser.role === Role.MODERATOR
+  }
+
+  isRedactor(): boolean {
+    return this.currentUser.role === Role.REDACTOR
   }
 }
