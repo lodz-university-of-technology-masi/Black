@@ -3,6 +3,7 @@ import {TestService} from "../../services/test.service";
 import {Test} from "../../model/entities";
 import {Router} from "@angular/router";
 import {DomSanitizer} from "@angular/platform-browser";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-tests',
@@ -10,12 +11,15 @@ import {DomSanitizer} from "@angular/platform-browser";
   styleUrls: ['./tests.component.css']
 })
 export class TestsComponent implements OnInit {
-  tests: Test[]
+  tests: Test[];
 
   //Download file
   fileUrl;
 
-  constructor(private sanitizer: DomSanitizer, private testService: TestService, private router: Router) {
+  constructor(private sanitizer: DomSanitizer,
+              private testService: TestService,
+              private router: Router,
+              private userService: UserService) {
   }
 
   ngOnInit() {
@@ -43,7 +47,7 @@ export class TestsComponent implements OnInit {
 
   onExportTest(test: Test) {
     const data = 'some text';
-    const blob = new Blob([data], { type: 'application/octet-stream' });
+    const blob = new Blob([data], {type: 'application/octet-stream'});
     this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
   }
 
