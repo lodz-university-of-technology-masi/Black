@@ -12,11 +12,24 @@ export interface MainEntity {
   id: number;
 }
 
-export interface User extends MainEntity {
+export class User implements MainEntity {
+  id: number;
   login: string;
   email: string;
   language: string;
   role: Role;
+
+  isModeratorOrRedactor(): boolean {
+    return this.role === (Role.MODERATOR || Role.REDACTOR)
+  }
+
+  isModerator(): boolean {
+    return this.role === Role.MODERATOR
+  }
+
+  isRedactor(): boolean {
+    return this.role === Role.REDACTOR
+  }
 }
 
 export interface Position extends MainEntity {
@@ -63,7 +76,7 @@ export interface QuestionAnswer {
   openAnswer?: string;
 }
 
-export interface TestAnswer extends MainEntity  {
+export interface TestAnswer extends MainEntity {
   content?: string;
   test: Test;
   user: User;
@@ -82,7 +95,7 @@ export interface Evaluation extends MainEntity {
   answersEvaluations: QuestionAnswerEvaluation[];
 }
 
-export interface UsabilityData extends MainEntity{
+export interface UsabilityData extends MainEntity {
   ip?: string;
   browser: string;
   username?: any;
