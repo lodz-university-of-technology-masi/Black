@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {TestService} from "../../services/test.service";
-import {Test, User} from "../../model/entities";
-import {Router} from "@angular/router";
-import {DomSanitizer} from "@angular/platform-browser";
-import {UserService} from "../../services/user.service";
+import {Component, HostListener, OnInit} from '@angular/core';
+import {TestService} from '../../services/test.service';
+import {Test} from '../../model/entities';
+import {Router} from '@angular/router';
+import {DomSanitizer} from '@angular/platform-browser';
+import {UserService} from '../../services/user.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-tests',
@@ -12,14 +13,14 @@ import {UserService} from "../../services/user.service";
 })
 export class TestsComponent implements OnInit {
   tests: Test[];
-
-  //Download file
+  // Download file
   fileUrl;
 
   constructor(private sanitizer: DomSanitizer,
               private testService: TestService,
               private router: Router,
-              public userService: UserService) {
+              public userService: UserService,
+              private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -57,5 +58,43 @@ export class TestsComponent implements OnInit {
 
   onCreateTest() {
     this.router.navigate(['/tests', 'new']);
+  }
+
+  @HostListener('document:keyup', ['$event'])
+  onKeyUp(event: KeyboardEvent) {
+    if (event.key === 'PrintScreen') {
+      this.copyToClipboard();
+      event.preventDefault();
+    }
+  }
+
+  @HostListener('document:contextmenu', ['$event'])
+  onClick1($event) {
+    event.preventDefault();
+  }
+
+  @HostListener('mouseup', ['$event']) onClick($event) {
+
+    if ($event.which === 3) {
+      this.toastr.error('Nie wolno klikać prawym przyciskiem myszy!', 'Drogi kandydacie', {
+        timeOut: 3000,
+        closeButton: true,
+      });
+      $event.preventDefault();
+    }
+  }
+
+
+  copyToClipboard() {
+    const aux = document.createElement('input');
+    aux.setAttribute('value', 'print screen disabled!');
+    document.body.appendChild(aux);
+    aux.select();
+    document.execCommand('copy');
+    document.body.removeChild(aux);
+    this.toastr.error('Nie wolno robić print screen!', 'Drogi kandydacie', {
+      timeOut: 3000,
+      closeButton: true,
+    });
   }
 }
