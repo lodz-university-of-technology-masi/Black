@@ -1,20 +1,22 @@
 package pl.masi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import pl.masi.entity.Question;
 import pl.masi.entity.Question.Type;
 import pl.masi.entity.Test;
+import pl.masi.entity.User;
+import pl.masi.exception.MasiException;
 import pl.masi.utils.Range;
 
-import java.io.IOException;
+import java.io.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -25,6 +27,10 @@ public class FilesService {
     @Autowired
     private TestService testService;
 
+    @Value("${usabilitiy.screenshots.path}")
+    private String screenshotsPath;
+
+    @PreAuthorize("hasRole('ROLE_MODERATOR') || hasRole('ROLE_REDACTOR')")
     public void importTest(MultipartFile multipartFile) throws IOException {
         String csv = new String(multipartFile.getBytes());
         List<List<String>> rows = new ArrayList<>();
@@ -70,6 +76,7 @@ public class FilesService {
         testService.create(test);
     }
 
+    // FIXME sprawdzenie uprawnień
     public Optional<ByteArrayResource> exportTest(Long id) {
         Optional<Test> optionalTest = testService.findById(id);
         if (optionalTest.isPresent()) {
@@ -133,5 +140,39 @@ public class FilesService {
             }
         }
         return columns;
+    }
+
+    /**
+     * @param data base64 encoded image. Eg. "data:image/png;base64,iVBORw0K..."
+     */
+    public void saveScreenshot(String data) {
+        data = trimScreenshotHeader(data);
+
+        byte[] decoded = Base64.getDecoder().decode(data);
+
+        User currentUser = UserService.currentUser();
+
+        File file = new File(screenshotsPath + "/" + currentUser.getLogin() + "_" + LocalDateTime.now().toString() +".png");
+        file.getParentFile().mkdirs();
+        OutputStream os = null;
+        try {
+            file.createNewFile();
+            os = new FileOutputStream(file);
+            os.write(decoded);
+            os.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new MasiException("Cannot save screenshot file");
+        }
+
+    }
+
+    private String trimScreenshotHeader(String data) {
+        int idx = data.indexOf(',');
+        if (idx < 0) {
+            throw new MasiException("Illegal image format!");
+        }
+        return data.substring(idx + 1);
     }
 }
