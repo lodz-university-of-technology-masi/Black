@@ -1,0 +1,77 @@
+.container-block {
+  margin-top: 40px;
+  min-height: 25rem;
+}
+
+.panel-block {
+  float: left;
+  width: 100%;
+  padding: 50px 0;
+  background: rgb(0, 92, 153);
+  min-height: 30rem;
+}
+
+.panel-container {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 15px 20px 0px rgba(0, 0, 0, 0.1);
+  padding-bottom: 15px;
+}
+
+.test-panel-container {
+  clear: both;
+  margin: auto;
+  display: block;
+  min-height: 300px;
+  max-width: 80%;
+}
+
+.span-validate {
+  background-color: #1f281e;
+  color: white;
+  font-weight: 700;
+}
+
+.col-margin {
+  margin-left: 4.5%;
+}
+
+.mg-1 {
+  margin-top: 1%;
+}
+
+.answers {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.btn-save {
+  margin-right: 0.7%;
+}
+
+.btn-can-sav {
+  margin-right: 8%;
+  margin-top: 0.35%;
+}
+
+.align-txt-center {
+  text-align: center;
+}
+
+.test-name {
+  font-size: 30px;
+}
+
+.mg-top-20 {
+  margin-top: 20px;
+}
+
+.mg-open-number {
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+
+.mg-r {
+  margin-right: 5px;
+}
+

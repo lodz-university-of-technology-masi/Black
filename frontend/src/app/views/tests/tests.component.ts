@@ -62,25 +62,30 @@ export class TestsComponent implements OnInit {
 
   @HostListener('document:keyup', ['$event'])
   onKeyUp(event: KeyboardEvent) {
-    if (event.key === 'PrintScreen') {
-      this.copyToClipboard();
-      event.preventDefault();
+    if (this.userService.isCandidate()) {
+      if (event.key === 'PrintScreen') {
+        this.copyToClipboard();
+        event.preventDefault();
+      }
     }
   }
 
   @HostListener('document:contextmenu', ['$event'])
   onClick1($event) {
-    event.preventDefault();
+    if (this.userService.isCandidate()) {
+      event.preventDefault();
+    }
   }
 
   @HostListener('mouseup', ['$event']) onClick($event) {
-
-    if ($event.which === 3) {
-      this.toastr.error('Nie wolno klikać prawym przyciskiem myszy!', 'Drogi kandydacie', {
-        timeOut: 3000,
-        closeButton: true,
-      });
-      $event.preventDefault();
+    if (this.userService.isCandidate()) {
+      if ($event.which === 3) {
+        this.toastr.error('Nie wolno klikać prawym przyciskiem myszy!', 'Drogi kandydacie', {
+          timeOut: 3000,
+          closeButton: true,
+        });
+        $event.preventDefault();
+      }
     }
   }
 

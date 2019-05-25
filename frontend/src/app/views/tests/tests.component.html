@@ -10,7 +10,6 @@
   <table class="table main-table" *ngIf="tests && tests.length > 0; else noTestsInfo">
     <thead class="thead-dark table-hover">
     <tr>
-      <th scope="col">#</th>
       <th scope="col">Nazwa testu</th>
       <th scope="col">Stanowisko</th>
       <th scope="col"></th>
@@ -21,7 +20,6 @@
     </thead>
     <tbody>
     <tr *ngFor="let test of tests; let i = index" class="tr-style">
-      <th class="row-style">{{i}}</th>
       <th class="row-style">{{test.name}}</th>
       <th class="row-style">{{test.position.name}}</th>
       <th class="row-style">

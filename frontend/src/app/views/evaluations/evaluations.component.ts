@@ -8,6 +8,7 @@ import {ToastrService} from 'ngx-toastr';
 @Component({
   selector: 'app-tests',
   templateUrl: './evaluations.component.html',
+  styleUrls: ['./evaluations.component.css']
 })
 export class EvaluationsComponent implements OnInit {
   evaluations: Evaluation[];

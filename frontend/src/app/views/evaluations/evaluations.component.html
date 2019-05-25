@@ -6,7 +6,6 @@
   <table class="table main-table" *ngIf="evaluations && evaluations.length > 0; else noTestsInfo">
     <thead class="thead-dark table-hover">
     <tr>
-      <th scope="col">#</th>
       <th scope="col">Użytkownik</th>
       <th scope="col">Test</th>
       <th scope="col">Punkty</th>
@@ -15,7 +14,6 @@
     </thead>
     <tbody>
     <tr *ngFor="let evaluation of evaluations; let i = index" class="tr-style">
-      <th class="row-style">{{i}}</th>
       <th class="row-style">{{evaluation.testAnswer.user.login}}</th>
       <th class="row-style">{{evaluation.testAnswer.test.name}}</th>
       <th class="row-style">{{evaluation.pointsSum}}</th>

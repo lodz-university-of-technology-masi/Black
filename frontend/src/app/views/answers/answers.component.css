@@ -1,0 +1,17 @@
+.table-container {
+  margin: 60px;
+  min-height: 25rem;
+}
+
+th {
+  text-align: center;
+}
+
+td {
+  text-align: center;
+}
+
+.table-label {
+  position: relative;
+  top: 15px;
+}
