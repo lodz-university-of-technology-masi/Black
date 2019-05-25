@@ -26,6 +26,8 @@ import {RedactorFormComponent} from './views/redactor-form/redactor-form.compone
 import {ContextMenuModule} from 'ngx-contextmenu';
 import {SolveTestFormComponent} from './views/solve-test-form/solve-test-form.component';
 import {NgxBootstrapSliderModule} from "ngx-bootstrap-slider";
+import {AnswersComponent} from "./views/answers/answers.component";
+import {EvaluationFormComponent} from "./views/evaluation-form/evaluation-form.component";
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import {NgxBootstrapSliderModule} from "ngx-bootstrap-slider";
     PositionFormComponent,
     RedactorsComponent,
     RedactorFormComponent,
-    SolveTestFormComponent
+    SolveTestFormComponent,
+    AnswersComponent,
+    EvaluationFormComponent
   ],
   imports: [
     BrowserModule,

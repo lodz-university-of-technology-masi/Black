@@ -8,23 +8,15 @@
       <li *ngIf="userService.isModerator()" class="nav-item">
         <a class="nav-link" [routerLink]="'/positions'">Stanowiska</a>
       </li>
-      <li *ngIf="userService.isModerator()" class="nav-item">
+      <li *ngIf="userService.isModeratorOrRedactor()" class="nav-item">
         <a class="nav-link" [routerLink]="'/tests'">Testy</a>
       </li>
-      <li *ngIf="userService.isRedactor()" class="nav-item">
-        <a class="nav-link" [routerLink]="'/tests'">Wszystkie testy</a>
-      </li>
-      <li *ngIf="userService.isRedactor()" class="nav-item">
-        <a class="nav-link" [routerLink]="'/tests'">Przetłumacz test</a>
-      </li>
-      <li *ngIf="userService.isRedactor()" class="nav-item">
-        <a class="nav-link" [routerLink]="'/tests'">Zaimportuj test (CSV)</a>
-      </li>
-      <li *ngIf="userService.isRedactor()" class="nav-item">
-        <a class="nav-link" [routerLink]="'/tests'">Sprawdź test</a>
+      <li *ngIf="userService.isModeratorOrRedactor()" class="nav-item">
+        <a class="nav-link" [routerLink]="'/answers'">Odpowiedzi</a>
       </li>
     </ul>
     <ul class="navbar-nav navbar-right">
+      <li class="text-light">{{userService.getCurrentUser().login}}</li>
       <li (click)="logout()" class="nav-item" style="color: white; font-weight: 500"> <i class="fas fa-sign-out-alt" style="font-size: 1.65em"></i>  </li>
     </ul>
   </div>
