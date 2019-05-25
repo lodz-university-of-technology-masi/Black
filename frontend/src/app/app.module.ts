@@ -29,6 +29,7 @@ import {NgxBootstrapSliderModule} from "ngx-bootstrap-slider";
 import {AnswersComponent} from "./views/answers/answers.component";
 import {EvaluationFormComponent} from "./views/evaluation-form/evaluation-form.component";
 import {EvaluationsComponent} from "./views/evaluations/evaluations.component";
+import { PermissionsFormComponent } from './views/permisions-form/permissions-form.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,9 @@ import {EvaluationsComponent} from "./views/evaluations/evaluations.component";
     SolveTestFormComponent,
     AnswersComponent,
     EvaluationFormComponent,
-    EvaluationsComponent
+    EvaluationsComponent,
+    SolveTestFormComponent,
+    PermissionsFormComponent
   ],
   imports: [
     BrowserModule,

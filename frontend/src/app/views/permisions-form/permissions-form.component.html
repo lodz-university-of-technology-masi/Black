@@ -1,0 +1,50 @@
+<section>
+  <app-header></app-header>
+</section>
+<div class="table-container">
+  <h4>Zarządzanie uprawnieniami testu numer {{testId}}</h4>
+  <label class="table-label"><h5>Użytkownicy</h5></label>
+  <table *ngIf="users && users.length > 0; else noUsersInfo" class="table" style="margin-top: 9px">
+    <thead class="thead-dark table-hover">
+    <tr>
+      <th scope="col" class="column-name">Nazwa użytkownika</th>
+      <th scope="col" class="column-name">Adres e-mail</th>
+      <th scope="col" class="column-name">Język</th>
+      <th scope="col" class="column-name"></th>
+      <th scope="col" class="column-name"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngFor="let user of users; let i =index">
+      <tr class="tr-style">
+        <th class="row-style">{{user?.login}}</th>
+        <th class="row-style">{{user?.email}}</th>
+        <th class="row-style">{{user?.language}}</th>
+        <th class="row-style">
+          <button *ngIf="showIfCandidate(user)" type="submit" (click)="addPermissionCandidate(user)"
+                  class="btn btn-success" data-dismiss="modal">Udostępnij kandydatowi
+          </button>
+          <button *ngIf="showIfRedactor(user)" type="submit" (click)="addPermissionRedactor(user)"
+                  class="btn btn-success" data-dismiss="modal">Udostępnij redaktorowi
+          </button>
+        </th>
+        <th *ngIf="false" class="row-style"> <!--TODO WS MC Revoke ^^-->
+          <button *ngIf="showIfCandidate(user)" type="submit" (click)="removePermissionCandidate(user)"
+                  class="btn btn-danger" data-dismiss="modal">Cofnij udostępnienie kandydatowi
+          </button>
+          <button *ngIf="showIfRedactor(user)" type="submit" (click)="removePermissionRedactor(user)"
+                  class="btn btn-danger" data-dismiss="modal">Cofnij udostępnienie redaktorowi
+          </button>
+        </th>
+      </tr>
+    </ng-container>
+    </tbody>
+  </table>
+  <ng-template #noUsersInfo>
+    <div class="alert alert-info" role="alert"
+         style="min-width: 100%; min-height: 350px; position: center; text-align: center; padding-top: 200px">
+      <div style="display: inline-block"><strong>Brak użytkowników</strong>
+      </div>
+    </div>
+  </ng-template>
+</div>

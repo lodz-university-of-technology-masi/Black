@@ -13,6 +13,7 @@ import {SolveTestFormComponent} from "./views/solve-test-form/solve-test-form.co
 import {AnswersComponent} from "./views/answers/answers.component";
 import {EvaluationFormComponent} from "./views/evaluation-form/evaluation-form.component";
 import {EvaluationsComponent} from "./views/evaluations/evaluations.component";
+import {PermissionsFormComponent} from "./views/permisions-form/permissions-form.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -29,6 +30,7 @@ const routes: Routes = [
   {path: 'answers', component: AnswersComponent},
   {path: 'evaluations', component: EvaluationsComponent},
   {path: 'evaluations/:id', component: EvaluationFormComponent},
+  {path: 'permissions/:id', component: PermissionsFormComponent},
 ];
 
 for (const route of routes) {
