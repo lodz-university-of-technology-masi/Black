@@ -1,5 +1,6 @@
 package pl.masi.email;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
@@ -7,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService {
 
-
+@Autowired
     private EmailConfiguration emailCfg;
 
     public void sendEmail(String to, String content) {
