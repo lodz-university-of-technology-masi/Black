@@ -13,23 +13,10 @@ export interface MainEntity {
 }
 
 export interface User extends MainEntity {
-  // id: number;
   login: string;
   email: string;
   language: string;
   role: Role;
-
-  // isModeratorOrRedactor(): boolean { //FIXME MC Sprawdzić czy te metody tutaj działają prawidłowo
-  //   return this.role === (Role.MODERATOR || Role.REDACTOR)
-  // }
-  //
-  // isModerator(): boolean {
-  //   return this.role === Role.MODERATOR
-  // }
-  //
-  // isRedactor(): boolean {
-  //   return this.role === Role.REDACTOR
-  // }
 }
 
 export interface Position extends MainEntity {

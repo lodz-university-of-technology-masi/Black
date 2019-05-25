@@ -9,21 +9,15 @@ import {ToastrService} from 'ngx-toastr';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
-  isLoggedIn: boolean;
-  role: string;
-  userService: UserService;
   title = 'frontend';
 
-  constructor(userService: UserService,
+  constructor(public userService: UserService,
               private router: Router,
               private toastr: ToastrService) {
     this.userService = userService;
 
   }
   async ngOnInit() {
-    this.isLoggedIn = await this.userService.isLoggedIn();
-    this.role = this.userService.role;
   }
 
   async logout() {
@@ -34,6 +28,12 @@ export class HeaderComponent implements OnInit {
       closeButton: true,
     });
   }
-
+  logoUrl(){
+    if (this.userService.loggedIn) {
+      return '/tests'
+    } else {
+      return '/login'
+    }
+  }
 
 }

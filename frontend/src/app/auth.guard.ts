@@ -20,7 +20,7 @@ export class AuthGuard implements CanActivate {
   }
 
   async checkLogin(url: string): Promise<boolean> {
-    if (await this.userService.isLoggedIn()) {
+    if (await this.userService.checkLoggedIn()) {
       return true;
     }
 

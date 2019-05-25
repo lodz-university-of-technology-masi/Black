@@ -1,26 +1,26 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand logo" href="login">MASI <i class="fas fa-rocket"></i> </a>
-  <div *ngIf="isLoggedIn" class="collapse navbar-collapse" id="navbarText">
+  <a class="navbar-brand logo" [routerLink]="logoUrl()">MASI <i class="fas fa-rocket"></i> </a>
+  <div *ngIf="userService.loggedIn" class="collapse navbar-collapse" id="navbarText">
     <ul class="navbar-nav mr-auto">
-      <li *ngIf="role === 'MODERATOR'" class="nav-item">
+      <li *ngIf="userService.isModerator()" class="nav-item">
         <a class="nav-link" [routerLink]="'/redactors'">Redaktorzy</a>
       </li>
-      <li *ngIf="role === 'MODERATOR'" class="nav-item">
+      <li *ngIf="userService.isModerator()" class="nav-item">
         <a class="nav-link" [routerLink]="'/positions'">Stanowiska</a>
       </li>
-      <li *ngIf="role === 'MODERATOR'" class="nav-item">
+      <li *ngIf="userService.isModerator()" class="nav-item">
         <a class="nav-link" [routerLink]="'/tests'">Testy</a>
       </li>
-      <li *ngIf="role === 'REDACTOR'" class="nav-item">
+      <li *ngIf="userService.isRedactor()" class="nav-item">
         <a class="nav-link" [routerLink]="'/tests'">Wszystkie testy</a>
       </li>
-      <li *ngIf="role === 'REDACTOR'" class="nav-item">
+      <li *ngIf="userService.isRedactor()" class="nav-item">
         <a class="nav-link" [routerLink]="'/tests'">Przetłumacz test</a>
       </li>
-      <li *ngIf="role === 'REDACTOR'" class="nav-item">
+      <li *ngIf="userService.isRedactor()" class="nav-item">
         <a class="nav-link" [routerLink]="'/tests'">Zaimportuj test (CSV)</a>
       </li>
-      <li *ngIf="role === 'REDACTOR'" class="nav-item">
+      <li *ngIf="userService.isRedactor()" class="nav-item">
         <a class="nav-link" [routerLink]="'/tests'">Sprawdź test</a>
       </li>
     </ul>

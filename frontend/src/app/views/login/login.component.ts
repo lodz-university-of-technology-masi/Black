@@ -13,7 +13,6 @@ import {Role} from '../../model/entities';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-  private isLoggedIn = false;
 
   private userService: UserService;
   private router: Router;
@@ -38,11 +37,7 @@ export class LoginComponent implements OnInit {
     await this.userService.login(credentials).then((user) => {
       switch (user.role) {
         case Role.MODERATOR:
-          this.router.navigateByUrl('/positions')
-          break;
         case Role.REDACTOR:
-          this.router.navigateByUrl('/tests')
-          break;
         case Role.CANDIDATE:
           this.router.navigateByUrl('/tests')
           break;

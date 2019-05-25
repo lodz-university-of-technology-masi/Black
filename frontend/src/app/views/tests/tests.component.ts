@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TestService} from "../../services/test.service";
-import {Test} from "../../model/entities";
+import {Test, User} from "../../model/entities";
 import {Router} from "@angular/router";
 import {DomSanitizer} from "@angular/platform-browser";
 import {UserService} from "../../services/user.service";
@@ -19,7 +19,7 @@ export class TestsComponent implements OnInit {
   constructor(private sanitizer: DomSanitizer,
               private testService: TestService,
               private router: Router,
-              private userService: UserService) {
+              public userService: UserService) {
   }
 
   ngOnInit() {
