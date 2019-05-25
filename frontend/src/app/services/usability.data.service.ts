@@ -6,12 +6,13 @@ import {UsabilityData} from '../model/entities';
 import {DeviceDetectorService} from "ngx-device-detector";
 import {ToastrService} from "ngx-toastr";
 import {ViewportScroller} from "@angular/common";
+import * as html2canvas from 'html2canvas';
 
 
 const DEBUG = false;
 
 function log(...args: any) {
-  if(DEBUG) {
+  if (DEBUG) {
     console.log.apply(console, arguments)
   }
 }
@@ -20,6 +21,9 @@ function log(...args: any) {
   providedIn: 'root'
 })
 export class UsabilityDataService extends BaseEntityService<UsabilityData> {
+
+  private static USABILITY_URL = 'usability';
+  private static USABILITY_SCREENSHOT_URL = `${UsabilityDataService.USABILITY_URL}/screenshot`;
 
   private measurementStarted = false;
   private windowHeight: number;
@@ -51,7 +55,7 @@ export class UsabilityDataService extends BaseEntityService<UsabilityData> {
       timeElapsed: endTime.getTime() - this.startTime.getTime(),
       distance: this.distance,
       fail: fail,
-      error: fail ? this.errorCode: null
+      error: fail ? this.errorCode : null
     };
 
     try {
@@ -64,11 +68,21 @@ export class UsabilityDataService extends BaseEntityService<UsabilityData> {
       throw err
     }
     log('UsabilityData:', data)
-    // TODO screenshot
+    this.takeScreenshot()
   }
 
-  private startMeasurement() {
-    // TODO screenshot
+  private async takeScreenshot() {
+    try {
+      let canvas = await html2canvas(document.body)
+      let dataURL = canvas.toDataURL();
+      await this.http.post<any>(UsabilityDataService.USABILITY_SCREENSHOT_URL, dataURL).toPromise();
+    } catch (err) {
+      console.error(err)
+      this.toastr.error('Nie udało się zapisać zrzutu ekranu', 'Błąd', {
+        timeOut: 3000,
+        closeButton: true,
+      });
+    }
   }
 
   private async abortMeasurement() {
@@ -77,7 +91,7 @@ export class UsabilityDataService extends BaseEntityService<UsabilityData> {
   }
 
   private clearCounters() {
-    this.measurementStarted = false
+    this.measurementStarted = false;
     this.startTime = null;
     this.clickCounter = 0;
     this.distance = 0;
@@ -107,7 +121,7 @@ export class UsabilityDataService extends BaseEntityService<UsabilityData> {
           log('measurement started')
           this.measurementStarted = true;
           this.startTime = new Date();
-          this.startMeasurement()
+          this.takeScreenshot()
           this.toastr.success('Rozpoczęto zbieranie metryk', 'Pomiar rozpoczęty', {
             timeOut: 3000,
             closeButton: true,
@@ -140,11 +154,11 @@ export class UsabilityDataService extends BaseEntityService<UsabilityData> {
   }
 
   onMouseClick(evt: any) {
-    if(!this.measurementStarted) {
+    if (!this.measurementStarted) {
       return;
     }
 
-    let [xScrollOffset, yScrollOffset]= this.scroller.getScrollPosition();
+    let [xScrollOffset, yScrollOffset] = this.scroller.getScrollPosition();
 
     let currentX = evt.clientX + xScrollOffset;
     let currentY = evt.clientY + yScrollOffset;
@@ -171,14 +185,15 @@ export class UsabilityDataService extends BaseEntityService<UsabilityData> {
     }
   }
 
-  onFocus(){
+  onFocus() {
     //TODO wznowienie odliczania czasu
   }
-  onBlur(){
+
+  onBlur() {
     //TODO stop odliczania czasu
   }
 
   getEntityUrl(): string {
-    return 'usability';
+    return UsabilityDataService.USABILITY_URL;
   }
 }

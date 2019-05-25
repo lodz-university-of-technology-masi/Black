@@ -1,12 +1,14 @@
 package pl.masi.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.masi.entity.UsabilityData;
+import pl.masi.service.FilesService;
 import pl.masi.service.UsabilityDataService;
 import pl.masi.service.base.EntityService;
 
@@ -21,6 +23,9 @@ public class UsabilityDataController {
 
     @Autowired
     private UsabilityDataService service;
+
+    @Autowired
+    private FilesService filesService;
 
     protected EntityService<UsabilityData> getEntityService() {
         return service;
@@ -53,8 +58,8 @@ public class UsabilityDataController {
     }
 
     @PostMapping(path = "/screenshot")
-    public ResponseEntity uploadScreenshot() {
-        // TODO
-        return ResponseEntity.badRequest().build();
+    public ResponseEntity uploadScreenshot(@RequestBody String data) {
+        filesService.saveScreenshot(data);
+        return ResponseEntity.ok().build();
     }
 }
