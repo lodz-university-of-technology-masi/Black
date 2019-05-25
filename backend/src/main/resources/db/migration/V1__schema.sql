@@ -74,10 +74,11 @@ create table question
 
 create table test_answer
 (
-    id      bigserial primary key,
-    content text,
-    test_id bigint references test (id),
-    user_id bigint references "user" (id)
+    id        bigserial primary key,
+    content   text,
+    test_id   bigint references test (id),
+    user_id   bigint references "user" (id),
+    evaluated boolean not null default false
 );
 
 create table question_answer

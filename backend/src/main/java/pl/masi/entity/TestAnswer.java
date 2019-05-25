@@ -1,6 +1,7 @@
 package pl.masi.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -33,5 +34,8 @@ public class TestAnswer extends BaseEntity {
     @OneToMany(mappedBy = "answer", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderColumn(name = "number")
     private List<QuestionAnswer> questionAnswers = new ArrayList<>();
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private boolean evaluated;
 
 }

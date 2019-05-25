@@ -68,6 +68,7 @@ export interface TestAnswer extends MainEntity {
   test: Test;
   user: User;
   questionAnswers: QuestionAnswer[];
+  evaluated?: boolean
 }
 
 export interface QuestionAnswerEvaluation {
@@ -80,6 +81,7 @@ export interface Evaluation extends MainEntity {
   content: string;
   testAnswer: TestAnswer;
   answersEvaluations: QuestionAnswerEvaluation[];
+  pointsSum?: number;
 }
 
 export interface UsabilityData extends MainEntity {

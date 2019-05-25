@@ -88,8 +88,8 @@ VALUES (5, 1, 'OPEN', 'treść pytania 2', NULL, 3);
 INSERT INTO public.question (id, number, type, content, body, test_id)
 VALUES (6, 2, 'OPEN', 'treść pytania 3', NULL, 3);
 
-INSERT INTO public.test_answer (id, content, test_id, user_id)
-VALUES (1, 'bardzo istotne pola', 1, 2);
+INSERT INTO public.test_answer (id, content, test_id, user_id, evaluated)
+VALUES (1, 'bardzo istotne pola', 1, 2, true);
 
 INSERT INTO public.question_answer (id, answer_id, type, body, number)
 VALUES (1, 1, 'CHOICE', '1;2', 0);
