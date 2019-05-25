@@ -6,7 +6,7 @@
       <div class="container">
         <div class="row justify-content-end">
           <div class="col-md-auto translate-btn">
-            <button (click)="onTranslate()" type="button" class="btn btn-primary">Przetłumacz na EN</button>
+            <button (click)="onTranslate()" type="button" class="btn btn-primary">Przetłumacz na {{targetLang}}</button>
           </div>
         </div>
         <div class="row">
@@ -115,15 +115,15 @@
     </div>
     <context-menu [disabled]="!selectedText" (close)="onContextMenuClosed()">
       <ng-template contextMenuItem passive="true">
-        <div (click)="searchSynonyms()">
+        <div (click)="searchSynonyms(selectedText)">
           Znajdź synonim
         </div>
       </ng-template>
       <ng-template contextMenuItem divider="true"></ng-template>
       <ng-template contextMenuItem passive="true">
-        <div (click)="searchWiki()">
-          Szukaj w wikipedi
-        </div>
+        <a [href]="wikiUrl(selectedText)" target="_blank">
+          Szukaj w wiki
+        </a>
       </ng-template>
       <ng-template contextMenuItem divider="true"></ng-template>
       <ng-template contextMenuItem passive="true">

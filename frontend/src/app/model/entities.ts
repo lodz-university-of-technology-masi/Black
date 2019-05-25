@@ -56,33 +56,35 @@ export interface Test extends MainEntity {
 
 export interface QuestionAnswer {
   id: number;
-  question: Question;
+  type: QuestionType;
   choiceAnswer?: number[];
   scaleAnswer?: number;
   numberAnswer?: number;
   openAnswer?: string;
 }
 
-export interface TestAnswer extends MainEntity  {
-  content: string;
+export interface TestAnswer extends MainEntity {
+  content?: string;
   test: Test;
   user: User;
   questionAnswers: QuestionAnswer[];
+  evaluated?: boolean
 }
 
 export interface QuestionAnswerEvaluation {
   id: number;
-  content: string;
-  questionAnswer: QuestionAnswer;
+  content?: string;
+  points: number
 }
 
 export interface Evaluation extends MainEntity {
   content: string;
   testAnswer: TestAnswer;
   answersEvaluations: QuestionAnswerEvaluation[];
+  pointsSum?: number;
 }
 
-export interface UsabilityData extends MainEntity{
+export interface UsabilityData extends MainEntity {
   ip?: string;
   browser: string;
   username?: any;

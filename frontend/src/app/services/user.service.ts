@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Credentials} from '../model/Credentials';
 import {HttpClient} from '@angular/common/http';
-import {User} from '../model/entities';
+import {Role, User} from '../model/entities';
 import {BaseEntityService} from './base-entity.service';
 import {Router} from '@angular/router';
 import {RegisterCredential} from '../model/RegisterCredential';
@@ -19,7 +19,9 @@ export class UserService extends BaseEntityService<User> {
   private static SIGNIN_URL = 'user/signin';
   private static REGISTER_URL = 'register';
 
-  private loggedIn = false;
+  private currentUser: User;
+
+  private _loggedIn = false;
   role = '';
 
   constructor(http: HttpClient, private router: Router) {
@@ -37,9 +39,9 @@ export class UserService extends BaseEntityService<User> {
 
     return this.http.post<void>(UserService.SIGNIN_URL, formData)
       .toPromise()
-      .then(() => this.http.get<User>(UserService.CURRENT_USER_URL).toPromise())
+      .then(() => this.loadCurrentUser())
       .then((user) => {
-        this.loggedIn = true;
+        this._loggedIn = true;
         this.role = user.role;
 
         return user;
@@ -56,7 +58,8 @@ export class UserService extends BaseEntityService<User> {
 
   async logout(): Promise<void> {
     await this.http.post<void>(UserService.SIGNOUT_URL, {}).toPromise();
-    this.loggedIn = false;
+    this._loggedIn = false;
+    this.currentUser = null;
     return;
   }
 
@@ -65,16 +68,44 @@ export class UserService extends BaseEntityService<User> {
   }
 
   private async loadCurrentUser(): Promise<User> {
-    return this.http.get<User>(UserService.CURRENT_USER_URL).toPromise();
+    return this.http.get<User>(UserService.CURRENT_USER_URL).toPromise()
+      .then(user => {
+        this.currentUser = user;
+        this._loggedIn = true;
+        return user
+      });
   }
 
-  async isLoggedIn(): Promise<boolean> {
-    if (this.loggedIn) {
-      return this.loggedIn;
+  getCurrentUser(): User {
+    return this.currentUser;
+  }
+  get loggedIn(): boolean {
+    return this._loggedIn
+  }
+
+  async checkLoggedIn(): Promise<boolean> {
+    if (this._loggedIn) {
+      return this._loggedIn;
     }
-    this.loggedIn = await this.loadCurrentUser()
+    this._loggedIn = await this.loadCurrentUser()
       .then((user) => true)
       .catch((err) => false)
-    return this.loggedIn;
+    return this._loggedIn;
+  }
+
+  isModeratorOrRedactor(): boolean {
+      return this.currentUser && (this.currentUser.role === Role.MODERATOR || this.currentUser.role === Role.REDACTOR)
+  }
+
+  isModerator(): boolean {
+    return this.currentUser && this.currentUser.role === Role.MODERATOR
+  }
+
+  isRedactor(): boolean {
+    return this.currentUser && this.currentUser.role === Role.REDACTOR
+  }
+
+  isCandidate(): boolean {
+    return this.currentUser && this.currentUser.role == Role.CANDIDATE
   }
 }

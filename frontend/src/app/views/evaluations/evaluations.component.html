@@ -1,0 +1,37 @@
+<section>
+  <app-header></app-header>
+</section>
+<div class="table-container">
+  <label class="table-label"><h5>Oceny</h5></label>
+  <table class="table main-table" *ngIf="evaluations && evaluations.length > 0; else noTestsInfo">
+    <thead class="thead-dark table-hover">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Użytkownik</th>
+      <th scope="col">Test</th>
+      <th scope="col">Punkty</th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let evaluation of evaluations; let i = index" class="tr-style">
+      <th class="row-style">{{i}}</th>
+      <th class="row-style">{{evaluation.testAnswer.user.login}}</th>
+      <th class="row-style">{{evaluation.testAnswer.test.name}}</th>
+      <th class="row-style">{{evaluation.pointsSum}}</th>
+      <th class="row-style">
+        <a class="btn-assign">
+          <button type="button" class="btn btn-primary " (click)="onShowEvaluation(evaluation)">Zobacz ocenę</button>
+        </a>
+      </th>
+    </tr>
+    </tbody>
+  </table>
+  <ng-template #noTestsInfo>
+    <div class="alert alert-info" role="alert"
+         style="min-width: 100%; min-height: 350px; position: center; text-align: center; padding-top: 200px">
+      <div style="display: inline-block"><strong>Brak ocen</strong>
+      </div>
+    </div>
+  </ng-template>
+</div>

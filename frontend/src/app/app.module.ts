@@ -24,7 +24,11 @@ import {PositionFormComponent} from './views/position-form/position-form.compone
 import {RedactorsComponent} from './views/redactors/redactors.component';
 import {RedactorFormComponent} from './views/redactor-form/redactor-form.component';
 import {ContextMenuModule} from 'ngx-contextmenu';
-
+import {SolveTestFormComponent} from './views/solve-test-form/solve-test-form.component';
+import {NgxBootstrapSliderModule} from "ngx-bootstrap-slider";
+import {AnswersComponent} from "./views/answers/answers.component";
+import {EvaluationFormComponent} from "./views/evaluation-form/evaluation-form.component";
+import {EvaluationsComponent} from "./views/evaluations/evaluations.component";
 
 @NgModule({
   declarations: [
@@ -40,7 +44,11 @@ import {ContextMenuModule} from 'ngx-contextmenu';
     HeaderComponent,
     PositionFormComponent,
     RedactorsComponent,
-    RedactorFormComponent
+    RedactorFormComponent,
+    SolveTestFormComponent,
+    AnswersComponent,
+    EvaluationFormComponent,
+    EvaluationsComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +62,8 @@ import {ContextMenuModule} from 'ngx-contextmenu';
     ContextMenuModule.forRoot({
       useBootstrap4: true,
     }),
-    DeviceDetectorModule.forRoot()
+    DeviceDetectorModule.forRoot(),
+    NgxBootstrapSliderModule
   ],
   providers: [
     {

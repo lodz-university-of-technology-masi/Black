@@ -1,16 +1,22 @@
 package pl.masi.utils;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
-import org.springframework.validation.Validator;
 import pl.masi.dto.RegistrationRequestDto;
 import pl.masi.entity.User;
+import pl.masi.repository.UserRepository;
+import pl.masi.validation.base.BaseValidator;
 
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RegisterValidator implements Validator {
+@Component
+public class RegisterValidator extends BaseValidator<RegistrationRequestDto> {
+
+    @Autowired
+    private UserRepository userRepository;
 
     public static final String EMAIL_PATTERN = "^[a-zA-z0-9]+[\\._a-zA-Z0-9]*@[a-zA-Z0-9]+{2,}\\.[a-zA-Z]{2,}[\\.a-zA-Z0-9]*$";
 
@@ -26,39 +32,33 @@ public class RegisterValidator implements Validator {
     }
 
     @Override
+    public void validateObj(RegistrationRequestDto obj, Errors errors) {
+        Optional<User> oldUser = userRepository.findByLogin(obj.getLogin());
+        loginExists(oldUser, errors);
+
+        if (obj.getEmail() != null) {
+            boolean isMatch = checkEmailOrPassword(EMAIL_PATTERN, obj.getEmail());
+            if (!isMatch) {
+                errors.rejectValue("email", "Illegal email format");
+            }
+        }
+
+        if (obj.getPassword() != null) {
+            boolean isMatch = checkEmailOrPassword(PASSWORD_PATTERN, obj.getPassword());
+            if (!isMatch) {
+                errors.rejectValue("password", "Password too weak");
+            }
+        }
+    }
+
+    @Override
     public boolean supports(Class<?> cls) {
         return User.class.equals(cls);
     }
 
-    @Override
-    public void validate(Object obj, Errors errors) {
-        RegistrationRequestDto u = (RegistrationRequestDto) obj;
-
-        ValidationUtils.rejectIfEmpty(errors, "login", "error.userName.empty");
-        ValidationUtils.rejectIfEmpty(errors, "password", "error.userPassword.empty");
-        ValidationUtils.rejectIfEmpty(errors, "email", "error.userEmail.empty");
-        ValidationUtils.rejectIfEmpty(errors, "language", "error.language.empty");
-
-
-        if (u.getEmail() != null) {
-            boolean isMatch = checkEmailOrPassword(EMAIL_PATTERN, u.getEmail());
-            if (!isMatch) {
-                errors.rejectValue("email", "error.userEmailIsNotMatch");
-            }
-        }
-
-        if (u.getPassword() != null) {
-            boolean isMatch = checkEmailOrPassword(PASSWORD_PATTERN, u.getPassword());
-            if (!isMatch) {
-                errors.rejectValue("password", "error.userPasswordIsNotMatch");
-            }
-        }
-
-    }
-
-    public void validateEmailExist(Optional<User> user, Errors errors) {
+    public void loginExists(Optional<User> user, Errors errors) {
         if (user.isPresent()) {
-            errors.rejectValue("email", "error.userEmailExist");
+            errors.rejectValue("login", "Already exists");
         }
     }
 }

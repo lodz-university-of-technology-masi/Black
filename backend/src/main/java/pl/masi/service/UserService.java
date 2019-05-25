@@ -11,10 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.BindingResult;
 import pl.masi.dto.RegistrationRequestDto;
 import pl.masi.entity.*;
-import pl.masi.exception.ValidationException;
 import pl.masi.repository.UserRepository;
 import pl.masi.service.base.EntityService;
 import pl.masi.utils.RegisterValidator;
@@ -28,6 +26,9 @@ public class UserService extends EntityService<User> implements UserDetailsServi
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RegisterValidator registerValidator;
 
     private static final HashSet<String> REDACTOR_CAN_CREATE = new HashSet<>();
     private static final HashSet<String> CANDIDATE_CAN_CREATE = new HashSet<>();
@@ -82,28 +83,22 @@ public class UserService extends EntityService<User> implements UserDetailsServi
 
     @Transactional
     public void addUser(RegistrationRequestDto userEntity) {
+
+        registerValidator.validate(userEntity);
+
         User user = new User();
         user.setLogin(userEntity.getLogin());
         user.setEmail(userEntity.getEmail());
         user.setPassword(this.passwordEncoder.encode(userEntity.getPassword()));
         user.setRole(User.Role.CANDIDATE);
         user.setLanguage(userEntity.getLanguage());
-        this.userRepository.saveAndFlush(user);
+        this.create(user);
     }
 
     @Transactional
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public void addRedactor(RegistrationRequestDto userEntity, BindingResult result) {
-
-        Optional<User> oldUser = this.getByLogin(userEntity.getLogin());
-
-        new RegisterValidator().validateEmailExist(oldUser, result);
-
-        new RegisterValidator().validate(userEntity, result);
-
-        if (result.hasErrors()) {
-            throw new ValidationException(result);
-        }
+    public void addRedactor(RegistrationRequestDto userEntity) {
+        registerValidator.validate(userEntity);
 
         User user = new User();
         user.setLogin(userEntity.getLogin());
@@ -111,7 +106,7 @@ public class UserService extends EntityService<User> implements UserDetailsServi
         user.setPassword(this.passwordEncoder.encode(userEntity.getPassword()));
         user.setRole(User.Role.REDACTOR);
         user.setLanguage(userEntity.getLanguage());
-        this.userRepository.saveAndFlush(user);
+        this.create(user);
     }
 
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
