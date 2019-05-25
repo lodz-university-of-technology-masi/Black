@@ -5,6 +5,7 @@ import {Position, Question, QuestionType, Test} from "../../model/entities";
 import {PositionService} from "../../services/position.service";
 import {ContextMenuComponent, ContextMenuService} from "ngx-contextmenu";
 import {UtilsService} from "../../services/utils.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-test-form',
@@ -27,7 +28,8 @@ export class TestFormComponent implements OnInit {
               private router: Router,
               private route: ActivatedRoute,
               private positionService: PositionService,
-              private utilsService: UtilsService ) {
+              private utilsService: UtilsService,
+              private toastr: ToastrService) {
   }
 
   async ngOnInit() {
@@ -83,8 +85,16 @@ export class TestFormComponent implements OnInit {
   }
 
   async onTranslate(){
-    let translatedTest = await this.testService.translateTest(this.test.id, "EN")
+    let translatedTest = await this.testService.translateTest(this.test.id, this.targetLang)
     await this.router.navigate(['/tests', translatedTest.id]);
+    this.toastr.info('Test został pomyślnie przetłumaczony', 'Sukces', {
+      timeOut: 3000,
+      closeButton: true,
+    });
+  }
+
+  get targetLang () {
+    return this.test.language === 'PL' ? 'EN' : 'PL'
   }
 
   trackChoices(index, choice) {
