@@ -53,7 +53,11 @@ public class AclManagementService {
 
         MutableAcl acl = aclService.createAcl(oid);
 
-        acl.insertAce(0, OWNER_PERMISSIONS, new PrincipalSid(getCurrentUserSid()), true);
+        if (entity instanceof User) {
+            acl.insertAce(0, OWNER_PERMISSIONS, new PrincipalSid(getUserSid((User)entity)), true);
+        } else {
+            acl.insertAce(0, OWNER_PERMISSIONS, new PrincipalSid(getCurrentUserSid()), true);
+        }
 
         aclService.updateAcl(acl);
     }

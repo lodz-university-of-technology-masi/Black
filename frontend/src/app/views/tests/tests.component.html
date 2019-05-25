@@ -17,7 +17,6 @@
       <th scope="col"></th>
       <th scope="col"></th>
       <th scope="col"></th>
-      <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
@@ -31,11 +30,6 @@
           <i class="fas fa-edit edit-ico"></i>
         </a>
       </th>
-      <th class="row-style">
-        <a *ngIf="userService.isModeratorOrRedactor()" class="reference remove-ico" data-toggle="modal"
-           data-target="#removeRedactorModal" (click)="onDeleteTest(test)">
-          <i class="fas fa-trash-alt remove-ico"></i>
-        </a>
       <th *ngIf="userService.isModeratorOrRedactor()" class="btn-assign">
         <button type="button" class="btn btn-primary " (click)="onAuthorize(test)">Uprawnienia</button>
       </th>
@@ -44,8 +38,11 @@
            download="test_number.txt" class="btn btn-primary">Eksportuj</a>
         <a *ngIf="userService.isCandidate()" (click)="onSolveTest(test)" class="btn btn-primary">Rozwiąż test</a>
       </th>
-      <th *ngIf="userService.isModeratorOrRedactor()" class="btn-assign">
-        <button type="button" class="btn btn-primary ">Przypisz do stanowiska</button>
+      <th class="row-style">
+        <a *ngIf="userService.isModeratorOrRedactor()" class="reference remove-ico" data-toggle="modal"
+           data-target="#removeRedactorModal" (click)="onDeleteTest(test)">
+          <i class="fas fa-trash-alt remove-ico"></i>
+        </a>
       </th>
     </tr>
     </tbody>

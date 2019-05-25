@@ -1,0 +1,70 @@
+<app-header></app-header>
+<div class=" panel-block">
+  <div class="container-block">
+    <div class="panel-container test-panel-container" *ngIf="test">
+      <div class="container">
+        <div class="row">
+          <div class="form-group col-md-11 col-margin">
+            <h6><span class="badge badge-default float-left span-alert span-validate">Nazwa testu</span></h6>
+            <input [ngModel]="test.name" type="text" class="form-control" id="testName" disabled>
+          </div>
+        </div>
+      </div>
+      <div *ngFor="let entry of model; let qidx=index" class="card">
+        <div class="card-body container">
+          <div class="row">
+            <div class="col-md-11 col-margin">
+              <h6><span class="badge badge-default float-left span-alert span-validate">Treść pytania</span></h6>
+              <textarea [ngModel]="entry.question.content" class="form-control" disabled></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 col-margin">
+              <div *ngIf="entry.question.type === 'CHOICE'" class="col-sm-12">
+                <div class="row mg-1">
+                  <label class="answers"> Wybrana odpowiedź </label>
+                </div>
+                <label *ngFor="let choice of entry.question.availableChoices; let idx = index;" class="row">
+                  <input type="checkbox" [ngModel]="entry.answer.choiceAnswer[idx]" disabled> {{choice}}
+                </label>
+              </div>
+              <div *ngIf="entry.question.type === 'SCALE'" class="col-sm-12">
+                <div class="row">
+                  {{entry.question.availableRange.min}}
+                  <mv-slider [value]="entry.answer.scaleAnswer" [min]="entry.question.availableRange.min" [max]="entry.question.availableRange.max"
+                             [step]="entry.question.availableRange.step" [enabled]="false"></mv-slider>
+                  {{entry.question.availableRange.max}}
+                </div>
+                <div>Wybrano: {{entry.answer.scaleAnswer}}</div>
+              </div>
+              <div *ngIf="entry.question.type === 'NUMBER'" class="col-sm-12">
+                <label class="answers">Odpowiedź:</label>
+                <input [ngModel]="entry.answer.numberAnswer" type="number" disabled>
+              </div>
+              <div *ngIf="entry.question.type === 'OPEN'" class="col-sm-12">
+                <label class="answers">Odpowiedź:</label>
+                <input [ngModel]="entry.answer.openAnswer" type="text" class="form-control" disabled>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 col-margin">
+              <h6><span class="badge badge-default float-left span-alert span-validate">Przyznane punkty</span></h6>
+              <input [(ngModel)]="entry.evaluation.points" type="number" [disabled]="isReadonly">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-11 col-margin">
+              <h6><span class="badge badge-default float-left span-alert span-validate">Komentarz</span></h6>
+              <textarea [(ngModel)]="entry.evaluation.content" class="form-control" [disabled]="isReadonly"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-end btn-can-sav">
+        <button *ngIf="!isReadonly" (click)="onSave()" type="button" class="btn btn-success btn-save">Zapisz</button>
+        <button (click)="router.navigate(['answers'])" type="button" class="btn btn-light">Wróć</button>
+      </div>
+    </div>
+  </div>
+</div>

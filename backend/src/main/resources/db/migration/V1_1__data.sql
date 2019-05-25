@@ -6,6 +6,8 @@ INSERT INTO public.acl_class (id, class, class_id_type)
 VALUES (3, 'pl.masi.entity.TestAnswer', null);
 INSERT INTO public.acl_class (id, class, class_id_type)
 VALUES (4, 'pl.masi.entity.Evaluation', null);
+INSERT INTO public.acl_class (id, class, class_id_type)
+VALUES (5, 'pl.masi.entity.User', null);
 
 INSERT INTO public.acl_sid (id, principal, sid)
 VALUES (1, true, 'moderator');
@@ -34,6 +36,18 @@ VALUES (5, 3, '1', null, 3, false);
 INSERT INTO public.acl_object_identity (id, object_id_class, object_id_identity, parent_object, owner_sid,
                                         entries_inheriting)
 VALUES (6, 4, '1', null, 2, false);
+INSERT INTO public.acl_object_identity (id, object_id_class, object_id_identity, parent_object, owner_sid,
+                                        entries_inheriting)
+VALUES (7, 5, '1', null, 1, false);
+INSERT INTO public.acl_object_identity (id, object_id_class, object_id_identity, parent_object, owner_sid,
+                                        entries_inheriting)
+VALUES (8, 5, '2', null, 2, false);
+INSERT INTO public.acl_object_identity (id, object_id_class, object_id_identity, parent_object, owner_sid,
+                                        entries_inheriting)
+VALUES (9, 5, '3', null, 3, false);
+INSERT INTO public.acl_object_identity (id, object_id_class, object_id_identity, parent_object, owner_sid,
+                                        entries_inheriting)
+VALUES (10, 5, '4', null, 4, false);
 
 INSERT INTO public.acl_entry (id, acl_object_identity, ace_order, sid, mask, granting, audit_success, audit_failure)
 VALUES (1, 1, 0, 1, 27, true, false, true);
@@ -88,8 +102,8 @@ VALUES (5, 1, 'OPEN', 'treść pytania 2', NULL, 3);
 INSERT INTO public.question (id, number, type, content, body, test_id)
 VALUES (6, 2, 'OPEN', 'treść pytania 3', NULL, 3);
 
-INSERT INTO public.test_answer (id, content, test_id, user_id)
-VALUES (1, 'bardzo istotne pola', 1, 2);
+INSERT INTO public.test_answer (id, content, test_id, user_id, evaluated)
+VALUES (1, 'bardzo istotne pola', 1, 2, true);
 
 INSERT INTO public.question_answer (id, answer_id, type, body, number)
 VALUES (1, 1, 'CHOICE', '1;2', 0);

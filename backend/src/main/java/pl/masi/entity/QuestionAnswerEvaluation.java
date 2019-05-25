@@ -7,7 +7,6 @@ import pl.masi.entity.base.BaseEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Getter

@@ -5,17 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.masi.dto.RegistrationRequestDto;
-import pl.masi.entity.User;
-import pl.masi.exception.ValidationException;
 import pl.masi.service.UserService;
-import pl.masi.utils.RegisterValidator;
-
-import java.util.Optional;
 
 
 @Controller
@@ -26,27 +20,16 @@ public class RegisterController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<Void> registerUser(@RequestBody RegistrationRequestDto register, BindingResult result) {
-
-        Optional<User> oldUser = userService.getByLogin(register.getLogin());
-
-        new RegisterValidator().validateEmailExist(oldUser, result);
-
-        new RegisterValidator().validate(register, result);
-
-        if (result.hasErrors()) {
-            throw new ValidationException(result);
-        }
-
+    public ResponseEntity<Void> registerUser(@RequestBody RegistrationRequestDto register) {
         userService.addUser(register);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
     @PostMapping(path = "/redactor")
-    public ResponseEntity<Void> registerRedactor(@RequestBody RegistrationRequestDto register, BindingResult result) {
+    public ResponseEntity<Void> registerRedactor(@RequestBody RegistrationRequestDto register) {
 
-        userService.addRedactor(register,result);
+        userService.addRedactor(register);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
