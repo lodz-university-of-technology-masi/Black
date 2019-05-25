@@ -41,6 +41,10 @@ export class TestsComponent implements OnInit {
     this.router.navigate(['/tests', test.id]);
   }
 
+  onAuthorize(test: Test) {
+    this.router.navigate(['/permissions', test.id]);
+  }
+
   onSolveTest(test: Test) {
     this.router.navigate(['/solve', test.id]);
   }
