@@ -1,10 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TestService} from "../../services/test.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {PositionService} from "../../services/position.service";
-import {UtilsService} from "../../services/utils.service";
-import {ToastrService} from "ngx-toastr";
-import {Test, User} from "../../model/entities";
+import {Role, Test, User} from "../../model/entities";
 import {UserService} from "../../services/user.service";
 
 @Component({
@@ -19,13 +16,10 @@ export class PermissionsFormComponent implements OnInit {
   users: User[];
   languages: string[];
 
-  constructor(private testService: TestService, //TODO MC Usunąć niepotrzebne
+  constructor(private testService: TestService,
               private router: Router,
               private route: ActivatedRoute,
-              private userService: UserService,
-              private positionService: PositionService,
-              private utilsService: UtilsService,
-              private toastr: ToastrService) {
+              private userService: UserService) {
     this.languages = ['PL', 'EN'];
   }
 
@@ -39,25 +33,34 @@ export class PermissionsFormComponent implements OnInit {
       position: undefined,
       questions: []
     };
-    this.userService.getRedactors().then((item) => {
-      this.users = item;
+    this.userService.getAll().then((item) => {
+      this.users = item.filter(user => {
+        return (user.role === Role.CANDIDATE) || (user.role === Role.REDACTOR)
+      });
     });
-    // console.log(this.userService.getAllUsers())
   }
 
-  addPermisionCandidate(user) {
-    this.testService.makeAvaliableForCandidate(this.test, user);
+  addPermissionCandidate(user) {
+    this.testService.changeAvailabilityForUser(this.test, user);
   }
 
-  addPermisionRedactor(user) {
-    //TODO MC
+  addPermissionRedactor(user) {
+    this.testService.changeAvailabilityForUser(this.test, user);
   }
 
-  removePermisionCandidate(user) {
-    //TODO MC
+  removePermissionCandidate(user) {
+    console.error("Unimplemented!")//TODO MC
   }
 
-  removePermisionRedactor(user) {
-    //TODO MC
+  removePermissionRedactor(user) {
+    console.error("Unimplemented!")//TODO MC
+  }
+
+  showIfCandidate(user): boolean {
+    return user.role === Role.CANDIDATE
+  }
+
+  showIfRedactor(user): boolean {
+    return user.role === Role.REDACTOR
   }
 }

@@ -11,6 +11,7 @@
       <th scope="col" class="column-name">Adres e-mail</th>
       <th scope="col" class="column-name">Język</th>
       <th scope="col" class="column-name"></th>
+      <th scope="col" class="column-name"></th>
     </tr>
     </thead>
     <tbody>
@@ -20,16 +21,18 @@
         <th class="row-style">{{user?.email}}</th>
         <th class="row-style">{{user?.language}}</th>
         <th class="row-style">
-          <button type="submit" (click)="addPermisionCandidate(user)"
+          <button *ngIf="showIfCandidate(user)" type="submit" (click)="addPermissionCandidate(user)"
                   class="btn btn-success" data-dismiss="modal">Udostępnij kandydatowi
           </button>
-          <button type="submit" (click)="addPermisionRedactor(user)"
+          <button *ngIf="showIfRedactor(user)" type="submit" (click)="addPermissionRedactor(user)"
                   class="btn btn-success" data-dismiss="modal">Udostępnij redaktorowi
           </button>
-          <button type="submit" (click)="removePermisionCandidate(user)"
+        </th>
+        <th *ngIf="false" class="row-style"> <!--TODO WS MC Revoke ^^-->
+          <button *ngIf="showIfCandidate(user)" type="submit" (click)="removePermissionCandidate(user)"
                   class="btn btn-danger" data-dismiss="modal">Cofnij udostępnienie kandydatowi
           </button>
-          <button type="submit" (click)="removePermisionRedactor(user)"
+          <button *ngIf="showIfRedactor(user)" type="submit" (click)="removePermissionRedactor(user)"
                   class="btn btn-danger" data-dismiss="modal">Cofnij udostępnienie redaktorowi
           </button>
         </th>
