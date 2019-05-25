@@ -50,20 +50,20 @@
           <div class="row">
             <div class="col-md-11 col-margin">
               <h6><span class="badge badge-default float-left span-alert span-validate">Przyznane punkty</span></h6>
-              <input [(ngModel)]="entry.evaluation.points" type="number">
+              <input [(ngModel)]="entry.evaluation.points" type="number" [disabled]="isReadonly">
             </div>
           </div>
           <div class="row">
             <div class="col-md-11 col-margin">
               <h6><span class="badge badge-default float-left span-alert span-validate">Komentarz</span></h6>
-              <textarea [(ngModel)]="entry.evaluation.content" class="form-control"></textarea>
+              <textarea [(ngModel)]="entry.evaluation.content" class="form-control" [disabled]="isReadonly"></textarea>
             </div>
           </div>
         </div>
       </div>
       <div class="row justify-content-end btn-can-sav">
-        <button (click)="onSave()" type="button" class="btn btn-success btn-save">Zapisz</button>
-        <button (click)="router.navigate(['answers'])" type="button" class="btn btn-light">Anuluj</button>
+        <button *ngIf="!isReadonly" (click)="onSave()" type="button" class="btn btn-success btn-save">Zapisz</button>
+        <button (click)="router.navigate(['answers'])" type="button" class="btn btn-light">Wróć</button>
       </div>
     </div>
   </div>

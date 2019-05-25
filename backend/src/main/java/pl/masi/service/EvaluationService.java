@@ -8,6 +8,7 @@ import pl.masi.entity.Evaluation;
 import pl.masi.entity.TestAnswer;
 import pl.masi.entity.User;
 import pl.masi.repository.EvaluationRepository;
+import pl.masi.repository.TestAnswerRepository;
 import pl.masi.service.base.EntityService;
 import pl.masi.validation.EvaluationValidator;
 import pl.masi.validation.base.EntityValidator;
@@ -23,6 +24,9 @@ public class EvaluationService extends EntityService<Evaluation> {
 
     @Autowired
     private TestAnswerService testAnswerService;
+
+    @Autowired
+    private TestAnswerRepository testAnswerRepository;
 
     private void processTestAnswer(Evaluation evaluation) {
         evaluation.getAnswersEvaluations().forEach(evAns -> evAns.setEvaluation(evaluation));
@@ -41,6 +45,9 @@ public class EvaluationService extends EntityService<Evaluation> {
     @Override
     protected void afterCreate(Evaluation evaluation) {
         TestAnswer answer = testAnswerService.findById(evaluation.getTestAnswer().getId()).get();
+        answer.setEvaluated(true);
+        testAnswerRepository.save(answer);
+
         User answerOwner = answer.getUser();
         aclManagementService.grantPermissions(evaluation, answerOwner, BasePermission.READ);
     }

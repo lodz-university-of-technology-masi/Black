@@ -30,6 +30,8 @@ export class EvaluationFormComponent implements OnInit {
     evaluation: QuestionAnswerEvaluation
   }[] = [];
 
+  isReadonly: boolean = true;
+
   constructor(private testService: TestService,
               private evaluationService: EvaluationService,
               private testAnswerService: TestAnswerService,
@@ -50,7 +52,8 @@ export class EvaluationFormComponent implements OnInit {
     let evalId = this.route.snapshot.paramMap.get('id');
 
     if (evalId === 'new') {
-      let ansId = this.route.snapshot.queryParamMap.get('ans')
+      this.isReadonly = false;
+      let ansId = this.route.snapshot.queryParamMap.get('ans');
 
       this.testAnswer = await this.testAnswerService.getOne(Number.parseInt(ansId));
       this.test = await this.testService.getOne(this.testAnswer.test.id)
@@ -58,7 +61,7 @@ export class EvaluationFormComponent implements OnInit {
 
       let answersEvaluations: QuestionAnswerEvaluation[] = [];
 
-      for (let i =0; this.testAnswer.questionAnswers.length > i; i++) {
+      for (let i = 0; this.testAnswer.questionAnswers.length > i; i++) {
         let questionEvaluations = {
           id: null,
           content: '',
@@ -82,8 +85,18 @@ export class EvaluationFormComponent implements OnInit {
       }
 
     } else {
-      // TODO
-      // this.evaluation = await this.evaluationService.getOne(Number.parseInt(evalId));
+      this.isReadonly = true;
+      this.evaluation = await this.evaluationService.getOne(Number.parseInt(evalId));
+      this.testAnswer = await this.testAnswerService.getOne(this.evaluation.testAnswer.id);
+      this.test = await this.testService.getOne(this.testAnswer.test.id);
+      for (let i = 0; this.testAnswer.questionAnswers.length > i; i++) {
+        this.model.push({
+          question: this.test.questions[i],
+          answer: this.testAnswer.questionAnswers[i],
+          evaluation: this.evaluation.answersEvaluations[i]
+        })
+
+      }
     }
 
   }

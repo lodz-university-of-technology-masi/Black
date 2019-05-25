@@ -7,7 +7,7 @@ import {TestAnswerService} from "../../services/test-answer.service";
 @Component({
   selector: 'app-tests',
   templateUrl: './answers.component.html',
-  styleUrls: ['./answers.component.css']
+  // styleUrls: ['./answers.component.css']
 })
 export class AnswersComponent implements OnInit {
   testAnswers: TestAnswer[];

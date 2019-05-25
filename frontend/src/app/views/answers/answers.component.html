@@ -10,6 +10,7 @@
       <th scope="col">Użytkownik</th>
       <th scope="col">Test</th>
       <th scope="col">Stanowisko</th>
+      <th scope="col">Oceniony</th>
       <th scope="col"></th>
     </tr>
     </thead>
@@ -19,9 +20,10 @@
       <th class="row-style">{{answer.user.login}}</th>
       <th class="row-style">{{answer.test.name}}</th>
       <th class="row-style">{{answer.test.position.name}}</th>
+      <th class="row-style">{{answer.evaluated ? 'Tak' : 'Nie'}}</th>
       <th class="row-style">
-        <a *ngIf="userService.isModeratorOrRedactor()" class="btn-assign" (click)="onReviewTestAnswer(answer)">
-          <button type="button" class="btn btn-primary ">Oceń</button>
+        <a *ngIf="userService.isModeratorOrRedactor() && !answer.evaluated" class="btn-assign">
+          <button type="button" class="btn btn-primary " (click)="onReviewTestAnswer(answer)">Oceń</button>
         </a>
       </th>
     </tr>

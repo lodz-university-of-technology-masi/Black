@@ -2,6 +2,9 @@
   <a class="navbar-brand logo" [routerLink]="logoUrl()">MASI <i class="fas fa-rocket"></i> </a>
   <div *ngIf="userService.loggedIn" class="collapse navbar-collapse" id="navbarText">
     <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="'/tests'">Testy</a>
+      </li>
       <li *ngIf="userService.isModerator()" class="nav-item">
         <a class="nav-link" [routerLink]="'/redactors'">Redaktorzy</a>
       </li>
@@ -9,10 +12,10 @@
         <a class="nav-link" [routerLink]="'/positions'">Stanowiska</a>
       </li>
       <li *ngIf="userService.isModeratorOrRedactor()" class="nav-item">
-        <a class="nav-link" [routerLink]="'/tests'">Testy</a>
-      </li>
-      <li *ngIf="userService.isModeratorOrRedactor()" class="nav-item">
         <a class="nav-link" [routerLink]="'/answers'">Odpowiedzi</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="'/evaluations'">Oceny</a>
       </li>
     </ul>
     <ul class="navbar-nav navbar-right">

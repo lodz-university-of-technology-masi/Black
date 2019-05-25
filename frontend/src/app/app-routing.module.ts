@@ -12,6 +12,7 @@ import {RedactorFormComponent} from './views/redactor-form/redactor-form.compone
 import {SolveTestFormComponent} from "./views/solve-test-form/solve-test-form.component";
 import {AnswersComponent} from "./views/answers/answers.component";
 import {EvaluationFormComponent} from "./views/evaluation-form/evaluation-form.component";
+import {EvaluationsComponent} from "./views/evaluations/evaluations.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -26,6 +27,7 @@ const routes: Routes = [
   {path: 'redactors/:id', component: RedactorFormComponent},
   {path: 'solve/:id', component: SolveTestFormComponent},
   {path: 'answers', component: AnswersComponent},
+  {path: 'evaluations', component: EvaluationsComponent},
   {path: 'evaluations/:id', component: EvaluationFormComponent},
 ];
 
