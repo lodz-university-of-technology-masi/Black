@@ -26,6 +26,7 @@ import {RedactorFormComponent} from './views/redactor-form/redactor-form.compone
 import {ContextMenuModule} from 'ngx-contextmenu';
 import {SolveTestFormComponent} from './views/solve-test-form/solve-test-form.component';
 import {NgxBootstrapSliderModule} from "ngx-bootstrap-slider";
+import { PermissionsFormComponent } from './views/permisions-form/permissions-form.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import {NgxBootstrapSliderModule} from "ngx-bootstrap-slider";
     PositionFormComponent,
     RedactorsComponent,
     RedactorFormComponent,
-    SolveTestFormComponent
+    SolveTestFormComponent,
+    PermissionsFormComponent
   ],
   imports: [
     BrowserModule,

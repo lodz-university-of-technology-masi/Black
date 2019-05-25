@@ -10,6 +10,7 @@ import {PositionFormComponent} from './views/position-form/position-form.compone
 import {RedactorsComponent} from './views/redactors/redactors.component';
 import {RedactorFormComponent} from './views/redactor-form/redactor-form.component';
 import {SolveTestFormComponent} from "./views/solve-test-form/solve-test-form.component";
+import {PermissionsFormComponent} from "./views/permisions-form/permissions-form.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
@@ -23,6 +24,7 @@ const routes: Routes = [
   {path: 'redactors', component: RedactorsComponent},
   {path: 'redactors/:id', component: RedactorFormComponent},
   {path: 'solve/:id', component: SolveTestFormComponent},
+  {path: 'permissions/:id', component: PermissionsFormComponent},
 ];
 
 for (const route of routes) {

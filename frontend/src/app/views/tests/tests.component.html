@@ -17,6 +17,7 @@
       <th scope="col"></th>
       <th scope="col"></th>
       <th scope="col"></th>
+      <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
@@ -35,6 +36,9 @@
            data-target="#removeRedactorModal" (click)="onDeleteTest(test)">
           <i class="fas fa-trash-alt remove-ico"></i>
         </a>
+      <th *ngIf="userService.isModeratorOrRedactor()" class="btn-assign">
+        <button type="button" class="btn btn-primary " (click)="onAuthorize(test)">Uprawnienia</button>
+      </th>
       <th>
         <a *ngIf="userService.isModeratorOrRedactor()" (click)="onExportTest(test)" [href]="fileUrl"
            download="test_number.txt" class="btn btn-primary">Eksportuj</a>
