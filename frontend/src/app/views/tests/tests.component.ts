@@ -1,10 +1,12 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
 import {TestService} from '../../services/test.service';
 import {Test} from '../../model/entities';
 import {Router} from '@angular/router';
 import {DomSanitizer} from '@angular/platform-browser';
 import {UserService} from '../../services/user.service';
 import {ToastrService} from 'ngx-toastr';
+import {UtilsService} from "../../services/utils.service";
+import {FileUploader} from "ng2-file-upload";
 
 @Component({
   selector: 'app-tests',
@@ -13,8 +15,11 @@ import {ToastrService} from 'ngx-toastr';
 })
 export class TestsComponent implements OnInit {
   tests: Test[];
-  // Download file
-  fileUrl;
+
+  @ViewChild('fileInput') fileInput: ElementRef;
+
+  uploader: FileUploader;
+  isDropOver: boolean;
 
   constructor(private sanitizer: DomSanitizer,
               private testService: TestService,
@@ -23,8 +28,13 @@ export class TestsComponent implements OnInit {
               private toastr: ToastrService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadTests();
+    const headers = [{name: 'Accept', value: '*/*'}];
+    this.uploader = new FileUploader({url: 'api/' + UtilsService.FILES_URL + '/import', autoUpload: true, headers: headers});
+    this.uploader.onCompleteAll = () => {
+      this.loadTests();
+      alert('Plik załadowany')};
   }
 
   async loadTests() {
@@ -51,12 +61,18 @@ export class TestsComponent implements OnInit {
   }
 
   onExportTest(test: Test) {
-    const data = 'some text';
-    const blob = new Blob([data], {type: 'application/octet-stream'});
-    this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
+    return "api/" + UtilsService.FILES_URL + "/" + test.id
   }
 
   onCreateTest() {
     this.router.navigate(['/tests', 'new']);
+  }
+
+  fileOverAnother(e: any): void {
+    this.isDropOver = e;
+  }
+
+  fileClicked() {
+    this.fileInput.nativeElement.click();
   }
 }

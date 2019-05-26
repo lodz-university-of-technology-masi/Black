@@ -8,6 +8,7 @@ import {HttpClient} from "@angular/common/http";
 export class UtilsService {
 
   private static SYNONYMS_URL = "synonyms";
+  static FILES_URL = "files";
 
   constructor(private http: HttpClient) {
   }

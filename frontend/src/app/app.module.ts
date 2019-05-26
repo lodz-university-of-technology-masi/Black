@@ -29,7 +29,8 @@ import {NgxBootstrapSliderModule} from "ngx-bootstrap-slider";
 import {AnswersComponent} from "./views/answers/answers.component";
 import {EvaluationFormComponent} from "./views/evaluation-form/evaluation-form.component";
 import {EvaluationsComponent} from "./views/evaluations/evaluations.component";
-import { PermissionsFormComponent } from './views/permisions-form/permissions-form.component';
+import {PermissionsFormComponent} from './views/permisions-form/permissions-form.component';
+import {FileUploadModule} from "ng2-file-upload";
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { PermissionsFormComponent } from './views/permisions-form/permissions-fo
       useBootstrap4: true,
     }),
     DeviceDetectorModule.forRoot(),
-    NgxBootstrapSliderModule
+    NgxBootstrapSliderModule,
+    FileUploadModule
   ],
   providers: [
     {
