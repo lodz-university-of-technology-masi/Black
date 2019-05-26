@@ -65,6 +65,8 @@ INSERT INTO public.acl_entry (id, acl_object_identity, ace_order, sid, mask, gra
 VALUES (7, 3, 1, 3, 1, true, false, true);
 INSERT INTO public.acl_entry (id, acl_object_identity, ace_order, sid, mask, granting, audit_success, audit_failure)
 VALUES (8, 5, 1, 2, 1, true, false, true);
+INSERT INTO public.acl_entry (id, acl_object_identity, ace_order, sid, mask, granting, audit_success, audit_failure)
+VALUES (9, 6, 1, 3, 1, true, false, true);
 
 INSERT INTO public."user" (id, login, email, language, password, role, registration_token)
 VALUES (1, 'moderator', 'moderator1234@mailinator.com', 'PL',
@@ -115,12 +117,12 @@ VALUES (3, 1, 'NUMBER', '1234.334', 2);
 INSERT INTO public.evaluation (id, content, answer_id)
 VALUES (1, 'komentarz do test', 1);
 
-INSERT INTO public.question_answer_evaluation (id, evaluation_id, number, content)
-VALUES (1, 1, 0, 'Ocena odpowiedzi 1');
-INSERT INTO public.question_answer_evaluation (id, evaluation_id, number, content)
-VALUES (2, 1, 1, 'Ocena odpowiedzi 2');
-INSERT INTO public.question_answer_evaluation (id, evaluation_id, number, content)
-VALUES (3, 1, 2, 'Ocena odpowiedzi 3');
+INSERT INTO public.question_answer_evaluation (id, evaluation_id, number, content, points)
+VALUES (1, 1, 0, 'Ocena odpowiedzi 1', 1);
+INSERT INTO public.question_answer_evaluation (id, evaluation_id, number, content, points)
+VALUES (2, 1, 1, 'Ocena odpowiedzi 2', 1);
+INSERT INTO public.question_answer_evaluation (id, evaluation_id, number, content, points)
+VALUES (3, 1, 2, 'Ocena odpowiedzi 3', 3);
 
 
 SELECT setval('user_id_seq', (select max(id) from "user"), true);
