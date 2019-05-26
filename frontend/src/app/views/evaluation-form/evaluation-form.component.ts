@@ -1,18 +1,16 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {TestService} from "../../services/test.service";
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {TestService} from '../../services/test.service';
 import {
   Evaluation,
-  Position,
   Question, QuestionAnswer,
   QuestionAnswerEvaluation,
-  QuestionType,
   Test,
   TestAnswer
-} from "../../model/entities";
-import {ToastrService} from "ngx-toastr";
-import {EvaluationService} from "../../services/evaluation.service";
-import {TestAnswerService} from "../../services/test-answer.service";
+} from '../../model/entities';
+import {ToastrService} from 'ngx-toastr';
+import {EvaluationService} from '../../services/evaluation.service';
+import {TestAnswerService} from '../../services/test-answer.service';
 
 @Component({
   selector: 'app-test-form',
@@ -30,7 +28,7 @@ export class EvaluationFormComponent implements OnInit {
     evaluation: QuestionAnswerEvaluation
   }[] = [];
 
-  isReadonly: boolean = true;
+  isReadonly = true;
 
   constructor(private testService: TestService,
               private evaluationService: EvaluationService,
@@ -41,28 +39,25 @@ export class EvaluationFormComponent implements OnInit {
   }
 
   async ngOnInit() {
-    // this.route.url.subscribe(queryParams => {
-    //   this.reloadComponent()
-    // });
-    await this.reloadComponent()
+    await this.reloadComponent();
   }
 
   async reloadComponent() {
 
-    let evalId = this.route.snapshot.paramMap.get('id');
+    const evalId = this.route.snapshot.paramMap.get('id');
 
     if (evalId === 'new') {
       this.isReadonly = false;
-      let ansId = this.route.snapshot.queryParamMap.get('ans');
+      const ansId = this.route.snapshot.queryParamMap.get('ans');
 
       this.testAnswer = await this.testAnswerService.getOne(Number.parseInt(ansId));
       this.test = await this.testService.getOne(this.testAnswer.test.id)
       this.model = [];
 
-      let answersEvaluations: QuestionAnswerEvaluation[] = [];
+      const answersEvaluations: QuestionAnswerEvaluation[] = [];
 
       for (let i = 0; this.testAnswer.questionAnswers.length > i; i++) {
-        let questionEvaluations = {
+        const questionEvaluations = {
           id: null,
           content: '',
           points: 0,
@@ -73,16 +68,15 @@ export class EvaluationFormComponent implements OnInit {
           question: this.test.questions[i],
           answer: this.testAnswer.questionAnswers[i],
           evaluation: questionEvaluations
-        })
-
+        });
       }
 
       this.evaluation = {
         id: null,
         answersEvaluations,
-        content: "",
+        content: '',
         testAnswer: this.testAnswer,
-      }
+      };
 
     } else {
       this.isReadonly = true;
@@ -94,11 +88,9 @@ export class EvaluationFormComponent implements OnInit {
           question: this.test.questions[i],
           answer: this.testAnswer.questionAnswers[i],
           evaluation: this.evaluation.answersEvaluations[i]
-        })
-
+        });
       }
     }
-
   }
 
   async onSave() {
@@ -109,5 +101,4 @@ export class EvaluationFormComponent implements OnInit {
       closeButton: true,
     });
   }
-
 }

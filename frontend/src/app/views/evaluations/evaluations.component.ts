@@ -1,19 +1,22 @@
-import {Component, OnInit} from '@angular/core';
-import {Evaluation, Test, TestAnswer, User} from "../../model/entities";
-import {Router} from "@angular/router";
-import {UserService} from "../../services/user.service";
-import {EvaluationService} from "../../services/evaluation.service";
+import {Component, HostListener, OnInit} from '@angular/core';
+import {Evaluation} from '../../model/entities';
+import {Router} from '@angular/router';
+import {UserService} from '../../services/user.service';
+import {EvaluationService} from '../../services/evaluation.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-tests',
   templateUrl: './evaluations.component.html',
+  styleUrls: ['./evaluations.component.css']
 })
 export class EvaluationsComponent implements OnInit {
   evaluations: Evaluation[];
 
   constructor(private evaluationService: EvaluationService,
               private router: Router,
-              public userService: UserService) {
+              public userService: UserService,
+              private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -24,7 +27,7 @@ export class EvaluationsComponent implements OnInit {
     this.evaluations = await this.evaluationService.getAll();
     this.evaluations.forEach(e => {
       e.pointsSum = this.getPoints(e);
-    })
+    });
   }
 
   onShowEvaluation(evaluation: Evaluation) {

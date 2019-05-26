@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {TestService} from "../../services/test.service";
-import {Test, User} from "../../model/entities";
-import {Router} from "@angular/router";
-import {DomSanitizer} from "@angular/platform-browser";
-import {UserService} from "../../services/user.service";
+import {Component, HostListener, OnInit} from '@angular/core';
+import {TestService} from '../../services/test.service';
+import {Test} from '../../model/entities';
+import {Router} from '@angular/router';
+import {DomSanitizer} from '@angular/platform-browser';
+import {UserService} from '../../services/user.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-tests',
@@ -12,14 +13,14 @@ import {UserService} from "../../services/user.service";
 })
 export class TestsComponent implements OnInit {
   tests: Test[];
-
-  //Download file
+  // Download file
   fileUrl;
 
   constructor(private sanitizer: DomSanitizer,
               private testService: TestService,
               private router: Router,
-              public userService: UserService) {
+              public userService: UserService,
+              private toastr: ToastrService) {
   }
 
   ngOnInit() {
