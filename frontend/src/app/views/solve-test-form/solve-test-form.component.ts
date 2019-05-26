@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {QuestionAnswer, Test, TestAnswer} from "../../model/entities";
-import {ActivatedRoute, Router} from "@angular/router";
-import {TestService} from "../../services/test.service";
-import {TestAnswerService} from "../../services/test-answer.service";
-import {UserService} from "../../services/user.service";
+import {Component, HostListener, OnInit} from '@angular/core';
+import {QuestionAnswer, Test, TestAnswer} from '../../model/entities';
+import {ActivatedRoute, Router} from '@angular/router';
+import {TestService} from '../../services/test.service';
+import {TestAnswerService} from '../../services/test-answer.service';
+import {UserService} from '../../services/user.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-solve-test-form',
@@ -19,20 +20,21 @@ export class SolveTestFormComponent implements OnInit {
               private router: Router,
               private userService: UserService,
               private testAnswerService: TestAnswerService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private toastr: ToastrService) {
   }
 
   async ngOnInit() {
-    await this.reloadComponent()
+    await this.reloadComponent();
   }
 
   async reloadComponent() {
-    let id = this.route.snapshot.paramMap.get('id');
-    this.answers=[];
+    const id = this.route.snapshot.paramMap.get('id');
+    this.answers = [];
     this.test = await this.testService.getOne(Number.parseInt(id));
 
-    for(const question of this.test.questions){
-      let answer: QuestionAnswer = {
+    for (const question of this.test.questions) {
+      const answer: QuestionAnswer = {
         id: null,
         type: question.type,
         choiceAnswer: []
@@ -42,18 +44,18 @@ export class SolveTestFormComponent implements OnInit {
   }
 
   async onSave() {
-    for(const answer of this.answers) {
-      if (answer.type === "CHOICE") {
-        let choices = [];
+    for (const answer of this.answers) {
+      if (answer.type === 'CHOICE') {
+        const choices = [];
         for (let i = 0; i < answer.choiceAnswer.length; i++) {
           if (answer.choiceAnswer[i] as unknown === true) {
-            choices.push(i)
+            choices.push(i);
           }
         }
         answer.choiceAnswer = choices;
       }
     }
-    let testAnswer: TestAnswer = {
+    const testAnswer: TestAnswer = {
       id: null,
       questionAnswers: this.answers,
       test: this.test,

@@ -3,6 +3,7 @@ import {TestService} from "../../services/test.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Role, Test, User} from "../../model/entities";
 import {UserService} from "../../services/user.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-permisions-form',
@@ -19,7 +20,8 @@ export class PermissionsFormComponent implements OnInit {
   constructor(private testService: TestService,
               private router: Router,
               private route: ActivatedRoute,
-              private userService: UserService) {
+              private userService: UserService,
+              private toastr: ToastrService,) {
     this.languages = ['PL', 'EN'];
   }
 
@@ -40,12 +42,20 @@ export class PermissionsFormComponent implements OnInit {
     });
   }
 
-  addPermissionCandidate(user) {
-    this.testService.changeAvailabilityForUser(this.test, user);
+  async addPermissionCandidate(user) {
+    await this.testService.changeAvailabilityForUser(this.test, user);
+    this.toastr.success('Test został udostępniony kandydatowi', 'Sukces', {
+      timeOut: 3000,
+      closeButton: true,
+    });
   }
 
-  addPermissionRedactor(user) {
-    this.testService.changeAvailabilityForUser(this.test, user);
+  async addPermissionRedactor(user) {
+    await this.testService.changeAvailabilityForUser(this.test, user);
+    this.toastr.success('Test został udostępniony redaktorowi', 'Sukces', {
+      timeOut: 3000,
+      closeButton: true,
+    });
   }
 
   removePermissionCandidate(user) {

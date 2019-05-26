@@ -2,3 +2,12 @@
   font-size: 21px;
   color: white
 }
+
+.logged-as {
+  margin-right: 15px;
+  cursor: default;
+}
+
+.log-out:hover {
+  cursor: pointer;
+}

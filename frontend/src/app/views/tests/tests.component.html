@@ -13,7 +13,6 @@
   <table class="table main-table" *ngIf="tests && tests.length > 0; else noTestsInfo">
     <thead class="thead-dark table-hover">
     <tr>
-      <th scope="col">#</th>
       <th scope="col">Nazwa testu</th>
       <th scope="col">Stanowisko</th>
       <th scope="col"></th>
@@ -24,7 +23,6 @@
     </thead>
     <tbody>
     <tr *ngFor="let test of tests; let i = index" class="tr-style">
-      <th class="row-style">{{i}}</th>
       <th class="row-style">{{test.name}}</th>
       <th class="row-style">{{test.position.name}}</th>
       <th class="row-style">
@@ -39,7 +37,8 @@
       <th>
         <a *ngIf="userService.isModeratorOrRedactor()" [href]="onExportTest(test)"
            download="test_number.txt" class="btn btn-primary">Eksportuj</a>
-        <a *ngIf="userService.isCandidate()" (click)="onSolveTest(test)" class="btn btn-primary">Rozwiąż test</a>
+        <button *ngIf="userService.isCandidate() && !test.solved" (click)="onSolveTest(test)" class="btn btn-primary">Rozwiąż test</button>
+        <p *ngIf="test.solved">Test został już rozwiązany</p>
       </th>
       <th class="row-style">
         <a *ngIf="userService.isModeratorOrRedactor()" class="reference remove-ico" data-toggle="modal"

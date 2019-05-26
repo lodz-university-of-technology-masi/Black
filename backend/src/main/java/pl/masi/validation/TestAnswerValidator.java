@@ -7,7 +7,10 @@ import pl.masi.entity.Question;
 import pl.masi.entity.QuestionAnswer;
 import pl.masi.entity.Test;
 import pl.masi.entity.TestAnswer;
+import pl.masi.repository.TestAnswerRepository;
 import pl.masi.repository.TestRepository;
+import pl.masi.service.TestAnswerService;
+import pl.masi.service.UserService;
 import pl.masi.validation.base.EntityValidator;
 
 import java.util.List;
@@ -19,6 +22,9 @@ public class TestAnswerValidator extends EntityValidator<TestAnswer> {
     @Autowired
     private TestRepository testRepository;
 
+    @Autowired
+    private TestAnswerRepository testAnswerRepository;
+
     @Override
     public void validateObj(TestAnswer testAnswer, Errors errors) {
         Optional<Test> test = testRepository.findById(testAnswer.getTest().getId());
@@ -26,6 +32,13 @@ public class TestAnswerValidator extends EntityValidator<TestAnswer> {
             errors.reject("Test not found");
             return;
         }
+
+        Optional<TestAnswer> ans = testAnswerRepository.findByTestAndUser(test.get(), UserService.currentUser());
+        if (ans.isPresent()){
+            errors.reject("Test already solved!");
+            return;
+        }
+
         List<Question> questions = test.get().getQuestions();
 
         if(testAnswer.getQuestionAnswers().size() != questions.size()){

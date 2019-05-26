@@ -14,20 +14,13 @@ import pl.masi.entity.base.BaseEntity;
 import pl.masi.repository.UserRepository;
 import pl.masi.service.UserService;
 
+import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AclManagementService {
-
-    public static CumulativePermission ALL_PERMISSIONS;
-    static {
-        CumulativePermission perms = new CumulativePermission();
-        perms.set(BasePermission.READ);
-        perms.set(BasePermission.WRITE);
-        perms.set(BasePermission.DELETE);
-
-        ALL_PERMISSIONS = perms;
-    }
 
     public static CumulativePermission OWNER_PERMISSIONS;
     static {
@@ -98,20 +91,23 @@ public class AclManagementService {
         aclService.updateAcl(acl);
     }
 
-    public User getEntityOwner(BaseEntity entity) {
+    public List<User> getEntityOwners(BaseEntity entity) {
         ObjectIdentity oid = new CustomObjectIdentity(entity.getClass().getCanonicalName(), entity.getId().toString());
 
         Acl acl = aclService.readAclById(oid, null);
         int mask = BasePermission.ADMINISTRATION.getMask();
-        Optional<AccessControlEntry> ownerAce = acl.getEntries().stream().filter(ace -> (ace.getPermission().getMask() & mask) == mask).findFirst();
-        Assert.isTrue(ownerAce.isPresent(), "Entity owner required!");
+        List<AccessControlEntry> ownerAces = acl.getEntries().stream().filter(ace -> (ace.getPermission().getMask() & mask) == mask).collect(Collectors.toList());
+        Assert.isTrue(!ownerAces.isEmpty(), "Entity owner required!");
 
-        PrincipalSid sid = (PrincipalSid) ownerAce.get().getSid();
-        Optional<User> owner = userRepository.findByLogin(sid.getPrincipal());
+        List<User> owners = ownerAces.stream().map(ace -> (PrincipalSid) ace.getSid())
+                .map(sid -> {
+                    Optional<User> owner = userRepository.findByLogin(sid.getPrincipal());
+                    Assert.isTrue(owner.isPresent(), "Entity owner must exist!");
+                    return owner.get();
+                }).collect(Collectors.toList());
 
-        Assert.isTrue(owner.isPresent(), "Entity owner must exist!");
 
-        return owner.get();
+        return owners;
     }
 
     private MutableAcl getMutableAcl(ObjectIdentity oid, PrincipalSid sid) {

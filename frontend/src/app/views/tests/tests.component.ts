@@ -1,9 +1,10 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {TestService} from "../../services/test.service";
-import {Test} from "../../model/entities";
-import {Router} from "@angular/router";
-import {DomSanitizer} from "@angular/platform-browser";
-import {UserService} from "../../services/user.service";
+import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
+import {TestService} from '../../services/test.service';
+import {Test} from '../../model/entities';
+import {Router} from '@angular/router';
+import {DomSanitizer} from '@angular/platform-browser';
+import {UserService} from '../../services/user.service';
+import {ToastrService} from 'ngx-toastr';
 import {UtilsService} from "../../services/utils.service";
 import {FileUploader} from "ng2-file-upload";
 
@@ -23,7 +24,8 @@ export class TestsComponent implements OnInit {
   constructor(private sanitizer: DomSanitizer,
               private testService: TestService,
               private router: Router,
-              public userService: UserService) {
+              public userService: UserService,
+              private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
