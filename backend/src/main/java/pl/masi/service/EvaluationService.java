@@ -2,8 +2,10 @@ package pl.masi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.acls.domain.BasePermission;
 import org.springframework.stereotype.Service;
+import pl.masi.email.EmailService;
 import pl.masi.entity.Evaluation;
 import pl.masi.entity.TestAnswer;
 import pl.masi.entity.User;
@@ -27,6 +29,9 @@ public class EvaluationService extends EntityService<Evaluation> {
 
     @Autowired
     private TestAnswerRepository testAnswerRepository;
+
+    @Autowired
+    private EmailService emailService;
 
     private void processTestAnswer(Evaluation evaluation) {
         evaluation.getAnswersEvaluations().forEach(evAns -> evAns.setEvaluation(evaluation));
@@ -60,5 +65,14 @@ public class EvaluationService extends EntityService<Evaluation> {
     @Override
     protected EntityValidator<Evaluation> getEntityValidator() {
         return evaluationValidator;
+    }
+
+    @PreAuthorize("hasRole('ROLE_MODERATOR') || hasRole('ROLE_REDACTOR')")
+    public void notifyCandidate(Long id) {
+        Evaluation evaluation = findById(id).get();
+
+        String content = "Zdobyta liczba punktów: " + evaluation.getPoints();
+
+        emailService.sendEmail(evaluation.getTestAnswer().getUser().getEmail(), content);
     }
 }

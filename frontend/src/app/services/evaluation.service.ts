@@ -12,6 +12,10 @@ export class EvaluationService extends BaseEntityService<Evaluation> {
     super(http);
   }
 
+  public async sendEmailNotification(evaluation: Evaluation) {
+    return this.http.post(`${this.getEntityUrl()}/${evaluation.id}/sendemail`, null).toPromise()
+  }
+
   getEntityUrl(): string {
     return 'evaluations';
   }

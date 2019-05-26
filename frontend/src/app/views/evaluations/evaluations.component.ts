@@ -43,4 +43,12 @@ export class EvaluationsComponent implements OnInit {
     }
     return sum;
   }
+
+  async sendEmail(evaluation: Evaluation) {
+    await this.evaluationService.sendEmailNotification(evaluation);
+    this.toastr.success('Powiadomienie email zostało wysłane', 'Wysłano', {
+      timeOut: 3000,
+      closeButton: true,
+    });
+  }
 }

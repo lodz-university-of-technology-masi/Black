@@ -10,6 +10,7 @@
       <th scope="col">Test</th>
       <th scope="col">Punkty</th>
       <th scope="col"></th>
+      <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
@@ -20,6 +21,11 @@
       <th class="row-style">
         <a class="btn-assign">
           <button type="button" class="btn btn-primary " (click)="onShowEvaluation(evaluation)">Zobacz ocenę</button>
+        </a>
+      </th>
+      <th class="row-style">
+        <a class="btn-assign">
+          <button *ngIf="userService.isModeratorOrRedactor()" type="button" class="btn btn-primary " (click)="sendEmail(evaluation)">Wyślij powiadomienie</button>
         </a>
       </th>
     </tr>

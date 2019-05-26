@@ -1,5 +1,6 @@
 package pl.masi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,5 +27,17 @@ public class Evaluation extends BaseEntity {
     @OneToMany(mappedBy = "evaluation", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderColumn(name = "number")
     private List<QuestionAnswerEvaluation> answersEvaluations = new ArrayList<>();
+
+    @JsonIgnore
+    public int getPoints() {
+        if (getAnswersEvaluations() != null) {
+            int sum = 0;
+            for (QuestionAnswerEvaluation e: getAnswersEvaluations()) {
+                sum += e.getPoints() == null ? 0 : e.getPoints();
+            }
+            return sum;
+        }
+        return 0;
+    }
 
 }
