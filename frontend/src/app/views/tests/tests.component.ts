@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {TestService} from "../../services/test.service";
-import {Test, User} from "../../model/entities";
+import {Test} from "../../model/entities";
 import {Router} from "@angular/router";
 import {DomSanitizer} from "@angular/platform-browser";
 import {UserService} from "../../services/user.service";
+import {UtilsService} from "../../services/utils.service";
 
 @Component({
   selector: 'app-tests',
@@ -12,9 +13,6 @@ import {UserService} from "../../services/user.service";
 })
 export class TestsComponent implements OnInit {
   tests: Test[];
-
-  //Download file
-  fileUrl;
 
   constructor(private sanitizer: DomSanitizer,
               private testService: TestService,
@@ -50,9 +48,7 @@ export class TestsComponent implements OnInit {
   }
 
   onExportTest(test: Test) {
-    const data = 'some text';
-    const blob = new Blob([data], {type: 'application/octet-stream'});
-    this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(blob));
+    return "api/" + UtilsService.FILES_URL + "/" + test.id
   }
 
   onCreateTest() {

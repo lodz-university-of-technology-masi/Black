@@ -34,7 +34,7 @@
         <button type="button" class="btn btn-primary " (click)="onAuthorize(test)">Uprawnienia</button>
       </th>
       <th>
-        <a *ngIf="userService.isModeratorOrRedactor()" (click)="onExportTest(test)" [href]="fileUrl"
+        <a *ngIf="userService.isModeratorOrRedactor()" [href]="onExportTest(test)"
            download="test_number.txt" class="btn btn-primary">Eksportuj</a>
         <a *ngIf="userService.isCandidate()" (click)="onSolveTest(test)" class="btn btn-primary">Rozwiąż test</a>
       </th>
