@@ -19,6 +19,7 @@
       <th scope="col"></th>
       <th scope="col"></th>
       <th scope="col"></th>
+      <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
@@ -35,10 +36,14 @@
         <button type="button" class="btn btn-primary " (click)="onAuthorize(test)">Uprawnienia</button>
       </th>
       <th>
-        <a *ngIf="userService.isModeratorOrRedactor()" [href]="onExportTest(test)"
-           download="test_number.txt" class="btn btn-primary">Eksportuj</a>
+        <a *ngIf="userService.isModeratorOrRedactor()" [href]="onExportTestToCsv(test)"
+           download="test_number.txt" class="btn btn-primary">Eksportuj do CSV</a>
         <button *ngIf="userService.isCandidate() && !test.solved" (click)="onSolveTest(test)" class="btn btn-primary">Rozwiąż test</button>
         <p *ngIf="test.solved">Test został już rozwiązany</p>
+      </th>
+      <th *ngIf="userService.isModeratorOrRedactor()">
+        <a *ngIf="userService.isModeratorOrRedactor()" [href]="onExportTestToPdf(test)"
+           download="test_number.txt" class="btn btn-primary">Eksportuj do PDF</a>
       </th>
       <th class="row-style">
         <a *ngIf="userService.isModeratorOrRedactor()" class="reference remove-ico" data-toggle="modal"
