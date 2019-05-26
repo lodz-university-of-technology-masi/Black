@@ -40,7 +40,7 @@
                   <label class="answers">Możliwe odpowiedzi:</label>
                 </div>
                 <div class="item" *ngFor="let choice of question.availableChoices; let idx = index;">
-                  <input type="checkbox" [ngModel]="answers[qidx].choiceAnswer[idx]" id="ïnput">
+                  <input type="checkbox" [(ngModel)]="answers[qidx].choiceAnswer[idx]" id="ïnput">
                   <label for="ïnput">  {{choice}}</label>
                 </div>
               </div>
