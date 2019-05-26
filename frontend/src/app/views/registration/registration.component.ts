@@ -50,7 +50,6 @@ export class RegistrationComponent implements OnInit {
         },
         (error) => {
           this.isRegistrationFailed = true;
-          this.errorMessage = 'Błąd';
           throw error
         });
   }

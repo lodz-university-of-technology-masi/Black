@@ -19,6 +19,12 @@ export class AppComponent  {
   @HostListener('document:keyup', ['$event'])
   handleDeleteKeyboardEvent(evt: KeyboardEvent) {
     this.usabilityService.onKeyUp(evt)
+    if (this.userService.isCandidate()) {
+      if (evt.key === 'PrintScreen') {
+        this.copyToClipboard();
+        event.preventDefault();
+      }
+    }
   }
 
   @HostListener('mouseup', ['$event'])
@@ -29,28 +35,14 @@ export class AppComponent  {
   @HostListener('contextmenu', ['$event'])
   onRightMouseClick(evt) {
     this.usabilityService.onMouseClick(evt)
+    if (this.userService.isCandidate()) {
+      event.preventDefault();
+    }
   }
 
   @HostListener('window:resize', ['$event'])
   onWindowResize(evt) {
     this.usabilityService.onWindowResize(evt)
-  }
-
-  @HostListener('document:keyup', ['$event'])
-  onKeyUp(event: KeyboardEvent) {
-    if (this.userService.isCandidate()) {
-      if (event.key === 'PrintScreen') {
-        this.copyToClipboard();
-        event.preventDefault();
-      }
-    }
-  }
-
-  @HostListener('document:contextmenu', ['$event'])
-  onClick1($event) {
-    if (this.userService.isCandidate()) {
-      event.preventDefault();
-    }
   }
 
   @HostListener('mouseup', ['$event']) onClick($event) {
