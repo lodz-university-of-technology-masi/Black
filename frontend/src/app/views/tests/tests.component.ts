@@ -60,8 +60,12 @@ export class TestsComponent implements OnInit {
     this.router.navigate(['/solve', test.id]);
   }
 
-  onExportTest(test: Test) {
+  onExportTestToCsv(test: Test) {
     return "api/" + UtilsService.FILES_URL + "/" + test.id
+  }
+
+  onExportTestToPdf(test: Test) {
+    return "api/tests/"+ test.id + "/pdfexport"
   }
 
   onCreateTest() {

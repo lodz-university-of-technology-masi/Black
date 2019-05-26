@@ -50,7 +50,7 @@ public class TestController extends EntityController<Test> {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping(path = "/{id}/pdfexport", produces = MediaType.APPLICATION_PDF_VALUE, consumes = MediaType.ALL_VALUE)
+    @GetMapping(path = "/{id}/pdfexport", produces = MediaType.APPLICATION_PDF_VALUE, consumes = MediaType.ALL_VALUE)
     ResponseEntity<byte[]> pdfCreator(@PathVariable(name=  "id") Long id) throws BadRequestException, PdfException {
         try {
             Test test= service.findById(id).get();
