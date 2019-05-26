@@ -119,6 +119,9 @@ export class TestFormComponent implements OnInit {
       return;
     }
     this.foundSynonyms = await this.utilsService.findSynonyms(selectedText);
+    if (!this.foundSynonyms || !this.foundSynonyms.length) {
+      this.foundSynonyms = ['Nie znaleziono synonimów']
+    }
     this.selectedText = null;
   }
 
