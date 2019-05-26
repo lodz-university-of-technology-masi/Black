@@ -58,8 +58,11 @@ public class TestController extends EntityController<Test> {
             byte[] contents = pdfService.pdfCreator(test);
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_PDF);
+
+            String positionName = test.getPosition() == null? "" : test.getPosition().getName();
+
             String testname = test.getName() + "_" +
-                    test.getPosition() + "_" +
+                    positionName + "_" +
                     test.getLanguage() + ".pdf";
             testname = testname.replaceAll("\\s+", "_");
             headers.setContentDispositionFormData(testname, testname);
