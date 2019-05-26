@@ -52,6 +52,7 @@ export interface Test extends MainEntity {
   language: string;
   position: Position;
   questions: Question[];
+  solved?: boolean,
 }
 
 export interface QuestionAnswer {

@@ -1,5 +1,7 @@
 package pl.masi.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -32,4 +34,14 @@ public class Test extends BaseEntity {
     @OneToMany(mappedBy = "test", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderColumn(name = "number")
     private List<Question> questions = new ArrayList<>();
+
+
+    /**
+     * Flaga uzupełniana tylko w przypadku pobierania testu przez kandydata.
+     * Oznacza, czy test został już rozwiązany przez kandydata.
+     */
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+    private boolean solved;
 }
