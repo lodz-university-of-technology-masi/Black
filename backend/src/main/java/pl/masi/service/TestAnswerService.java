@@ -12,6 +12,8 @@ import pl.masi.service.base.EntityService;
 import pl.masi.validation.TestAnswerValidator;
 import pl.masi.validation.base.EntityValidator;
 
+import java.util.List;
+
 @Service
 public class TestAnswerService extends EntityService<TestAnswer> {
 
@@ -43,9 +45,11 @@ public class TestAnswerService extends EntityService<TestAnswer> {
     private void grantTestOwnerPerms(TestAnswer testAnswer) {
         Test test = testAnswer.getTest();
 
-        User testOwner = aclManagementService.getEntityOwner(test);
+        List<User> owners= aclManagementService.getEntityOwners(test);
 
-        aclManagementService.grantPermissions(testAnswer, testOwner, BasePermission.READ);
+        for (User owner : owners) {
+            aclManagementService.grantPermissions(testAnswer, owner, BasePermission.READ);
+        }
     }
 
     @Override

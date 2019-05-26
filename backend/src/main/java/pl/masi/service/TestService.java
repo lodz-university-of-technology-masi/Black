@@ -78,7 +78,7 @@ public class TestService extends EntityService<Test> {
                 perms.set(BasePermission.READ);
                 break;
             case ALL:
-                perms.set(AclManagementService.ALL_PERMISSIONS);
+                perms.set(AclManagementService.OWNER_PERMISSIONS);
                 break;
         }
 

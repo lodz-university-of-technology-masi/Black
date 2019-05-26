@@ -50,7 +50,8 @@
           </div>
           <div class="row">
             <div class="col-md-11 col-margin">
-              <p class="answers">Liczba przyznanych punktów: {{entry.evaluation.points}}</p>
+              <span class="answers mg-r">Liczba przyznanych punktów: </span>
+              <input [(ngModel)]="entry.evaluation.points" type="number">
             </div>
           </div>
           <div class="row">
