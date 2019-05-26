@@ -34,7 +34,7 @@
       <th>
         <a *ngIf="userService.isModeratorOrRedactor()" (click)="onExportTest(test)" [href]="fileUrl"
            download="test_number.txt" class="btn btn-primary">Eksportuj</a>
-        <a *ngIf="userService.isCandidate()" (click)="onSolveTest(test)" class="btn btn-primary">Rozwiąż test</a>
+        <button *ngIf="userService.isCandidate()" (click)="onSolveTest(test)" class="btn btn-primary">Rozwiąż test</button>
       </th>
       <th class="row-style">
         <a *ngIf="userService.isModeratorOrRedactor()" class="reference remove-ico" data-toggle="modal"

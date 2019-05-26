@@ -7,12 +7,18 @@
       <div class="container">
         <div class="row">
           <div class="form-group col-md-11 col-margin">
-            <h6>Test o nazwie: </h6>
-            <h2>{{test.name}}</h2>
-            <h6>Język testu: </h6>
-            <label>{{test.language}}</label>
-            <h6>Test na stanowisko: </h6>
-            <label>{{test.position.name}}</label>
+            <div class="top-wrapper mg-top-2">
+              <div class="bold-text">Test o nazwie:</div>
+              <div class="normal-text">{{test.name}}</div>
+            </div>
+            <div class="top-wrapper">
+              <div class="bold-text">Język testu:</div>
+              <div class="normal-text">{{test.language}}</div>
+            </div>
+            <div class="top-wrapper">
+              <div class="bold-text">Test na stanowisko:</div>
+              <div class="normal-text">{{test.position.name}}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -20,50 +26,50 @@
         <div class="card-body container">
           <div class="row">
             <div class="col-md-11 col-margin">
-              <h5>Pytanie numer {{qidx+1}}</h5>
+              <h6>Pytanie numer: {{qidx + 1}}</h6>
+              <h6>Typ pytania: {{question.type}}</h6>
               <h6>Treść pytania:</h6>
               <label>{{question.content}}</label>
             </div>
           </div>
-          <div class="row" style="margin-top: 2%">
-            <div class="col-md-11 col-margin">
-              <h6>Typ pytania</h6>
-              <label>{{question.type}}</label>
-            </div>
-          </div>
+
           <div class="row">
             <div class="col-md-12 col-margin">
               <div *ngIf="question.type === 'CHOICE'" class="col-sm-12">
                 <div class="row mg-1">
                   <label class="answers">Możliwe odpowiedzi:</label>
                 </div>
-                <label *ngFor="let choice of question.availableChoices; let idx = index;" class="row">
-                  <input type="checkbox" [(ngModel)]="answers[qidx].choiceAnswer[idx]"> {{choice}}
-                </label>
+                <div class="item" *ngFor="let choice of question.availableChoices; let idx = index;">
+                  <input type="checkbox" [ngModel]="answers[qidx].choiceAnswer[idx]" id="ïnput">
+                  <label for="ïnput">  {{choice}}</label>
+                </div>
               </div>
               <div *ngIf="question.type === 'SCALE'" class="col-sm-12">
                 <label class="answers">Odpowiedź:</label>
                 <div class="row">
                   {{question.availableRange.min}}
-                  <mv-slider [(value)]="answers[qidx].scaleAnswer" [min]="question.availableRange.min" [max]="question.availableRange.max"
+                  <mv-slider [(value)]="answers[qidx].scaleAnswer" [min]="question.availableRange.min"
+                             [max]="question.availableRange.max"
                              [step]="question.availableRange.step"></mv-slider>
                   {{question.availableRange.max}}
                 </div>
                 <div>Wybrano: {{answers[qidx].scaleAnswer}}</div>
               </div>
               <div *ngIf="question.type === 'NUMBER'" class="col-sm-12">
-                <label class="answers">Odpowiedź:</label>
+                <span class="answers mg-r">Odpowiedź:</span>
                 <input [(ngModel)]="answers[qidx].numberAnswer" type="number">
               </div>
               <div *ngIf="question.type === 'OPEN'" class="col-sm-12">
-                <label class="answers">Odpowiedź:</label>
+                <span class="answers mg-r">Odpowiedź:</span>
                 <input [(ngModel)]="answers[qidx].openAnswer" type="text" class="form-control">
               </div>
             </div>
           </div>
         </div>
       </div>
-      <button (click)="onSave()" type="button" class="btn btn-success btn-save">Zapisz</button>
+      <div class="row justify-content-end btn-can-sav">
+        <button (click)="onSave()" type="button" class="btn btn-success btn-save">Zapisz</button>
+      </div>
     </div>
   </div>
 </div>
