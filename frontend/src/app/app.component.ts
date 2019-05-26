@@ -30,6 +30,15 @@ export class AppComponent  {
   @HostListener('mouseup', ['$event'])
   onLeftMiddleMouseClick(evt) {
     this.usabilityService.onMouseClick(evt)
+    if (this.userService.isCandidate()) {
+      if (evt.which === 3) {
+        this.toastr.error('Nie wolno klikać prawym przyciskiem myszy!', 'Drogi kandydacie', {
+          timeOut: 3000,
+          closeButton: true,
+        });
+        evt.preventDefault();
+      }
+    }
   }
 
   @HostListener('contextmenu', ['$event'])
@@ -44,19 +53,6 @@ export class AppComponent  {
   onWindowResize(evt) {
     this.usabilityService.onWindowResize(evt)
   }
-
-  @HostListener('mouseup', ['$event']) onClick($event) {
-    if (this.userService.isCandidate()) {
-      if ($event.which === 3) {
-        this.toastr.error('Nie wolno klikać prawym przyciskiem myszy!', 'Drogi kandydacie', {
-          timeOut: 3000,
-          closeButton: true,
-        });
-        $event.preventDefault();
-      }
-    }
-  }
-
 
   copyToClipboard() {
     const aux = document.createElement('input');
