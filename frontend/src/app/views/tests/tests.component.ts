@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {TestService} from "../../services/test.service";
 import {Test} from "../../model/entities";
 import {Router} from "@angular/router";
 import {DomSanitizer} from "@angular/platform-browser";
 import {UserService} from "../../services/user.service";
 import {UtilsService} from "../../services/utils.service";
+import {FileUploader} from "ng2-file-upload";
 
 @Component({
   selector: 'app-tests',
@@ -14,14 +15,24 @@ import {UtilsService} from "../../services/utils.service";
 export class TestsComponent implements OnInit {
   tests: Test[];
 
+  @ViewChild('fileInput') fileInput: ElementRef;
+
+  uploader: FileUploader;
+  isDropOver: boolean;
+
   constructor(private sanitizer: DomSanitizer,
               private testService: TestService,
               private router: Router,
               public userService: UserService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadTests();
+    const headers = [{name: 'Accept', value: '*/*'}];
+    this.uploader = new FileUploader({url: 'api/' + UtilsService.FILES_URL + '/import', autoUpload: true, headers: headers});
+    this.uploader.onCompleteAll = () => {
+      this.loadTests();
+      alert('Plik załadowany')};
   }
 
   async loadTests() {
@@ -53,5 +64,13 @@ export class TestsComponent implements OnInit {
 
   onCreateTest() {
     this.router.navigate(['/tests', 'new']);
+  }
+
+  fileOverAnother(e: any): void {
+    this.isDropOver = e;
+  }
+
+  fileClicked() {
+    this.fileInput.nativeElement.click();
   }
 }
