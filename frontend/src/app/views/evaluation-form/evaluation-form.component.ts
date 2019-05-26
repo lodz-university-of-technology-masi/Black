@@ -66,7 +66,7 @@ export class EvaluationFormComponent implements OnInit {
 
         this.model.push({
           question: this.test.questions[i],
-          answer: this.testAnswer.questionAnswers[i],
+          answer: this.processQuestionAnswer(this.testAnswer.questionAnswers[i]),
           evaluation: questionEvaluations
         });
       }
@@ -86,11 +86,22 @@ export class EvaluationFormComponent implements OnInit {
       for (let i = 0; this.testAnswer.questionAnswers.length > i; i++) {
         this.model.push({
           question: this.test.questions[i],
-          answer: this.testAnswer.questionAnswers[i],
+          answer: this.processQuestionAnswer(this.testAnswer.questionAnswers[i]),
           evaluation: this.evaluation.answersEvaluations[i]
         });
       }
     }
+  }
+
+  private processQuestionAnswer(ans: QuestionAnswer): QuestionAnswer {
+    let vals = []
+    if (ans.choiceAnswer && ans.choiceAnswer.length) {
+      ans.choiceAnswer.forEach(value => {
+        vals[value] = true;
+      });
+      ans.choiceAnswer = vals
+    }
+    return ans
   }
 
   async onSave() {
