@@ -25,7 +25,7 @@
     <tbody>
     <tr *ngFor="let test of tests; let i = index" class="tr-style">
       <th class="row-style">{{test.name}}</th>
-      <th class="row-style">{{test.position.name}}</th>
+      <th class="row-style">{{test.position?.name}}</th>
       <th class="row-style">
         <a *ngIf="userService.isModeratorOrRedactor()" class="reference edit-icon"
            (click)="onEditTest(test)">
