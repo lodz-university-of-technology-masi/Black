@@ -24,7 +24,7 @@ services:
     container_name: masi_proxy
     restart: always
     ports:
-      - "8888:80"
+      - "6071:80"
     volumes:
       - ./frontend/:/usr/share/nginx/html
       - ./nginx.conf:/etc/nginx/nginx.conf
