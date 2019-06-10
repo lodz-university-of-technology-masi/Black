@@ -18,11 +18,10 @@ public class PersistenceJPAConfig{
         return transactionManager;
     }
 
-    // FIXME remove for production
     @Bean
     public FlywayMigrationStrategy flywayMigrationStrategy() {
         return flyway -> {
-            flyway.clean();
+//            flyway.clean();
             flyway.migrate();
         };
     }
