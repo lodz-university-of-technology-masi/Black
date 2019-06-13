@@ -22,7 +22,8 @@ public class RegisterValidator extends BaseValidator<RegistrationRequestDto> {
 
     //    Validates a strong password. It must be between 8 and 10 characters, contain at least one digit and one alphabetic character,
     //    and must not contain special characters
-    public static final String PASSWORD_PATTERN = "(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,10})$";
+//    public static final String PASSWORD_PATTERN = "(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,10})$";
+    public static final String PASSWORD_PATTERN = ".*";
 
     public static boolean checkEmailOrPassword(String pattern, String pStr) {
 
