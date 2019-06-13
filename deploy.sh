@@ -3,6 +3,7 @@ rm -rf masi_deploy
 rm masi_deploy.tar
 mkdir -p masi_deploy/backend
 mkdir -p masi_deploy/frontend
+mkdir -p masi_deploy/postgres-data
 
 # budowanie backendu
 cd ./backend/
