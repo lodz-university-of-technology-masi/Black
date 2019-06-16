@@ -73,6 +73,7 @@ public class FilesService {
         });
         test.setLanguage(rows.get(0).get(2)); // TODO MC Sprawdzenie czy każde pytanie ma taki sam język
         test.setQuestions(questions);
+        test.setName(multipartFile.getOriginalFilename());
         testService.create(test);
     }
 
